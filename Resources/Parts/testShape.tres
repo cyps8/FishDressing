@@ -7,3 +7,7 @@
 script = ExtResource("1_fpksp")
 name = "test_shape"
 texture = ExtResource("2_js54u")
+colorShader = false
+redChannel = false
+greenChannel = false
+blueChannel = false

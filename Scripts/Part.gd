@@ -10,8 +10,37 @@ var controlGrouped: bool = false
 
 var deleted = false
 
+var partData: PartData
+
+var inDanger: bool = false
+
+@export var colorShader: Material
+
+@export var selectedRef: TextureRect
+
+@export var dangerRef: TextureRect
+
 func SetTexture(tex: Texture2D):
 	texture_normal = tex
+	selectedRef.texture = tex
+	dangerRef.texture = tex
+	if partData.colorShader:
+		material = colorShader
+	selectedRef.visible = false
+	dangerRef.visible = false
+
+func SetColors(red: Color, green: Color = Color.WHITE, blue: Color = Color.WHITE):
+	if partData.colorShader:
+		if partData.redChannel:
+			material.set_shader_parameter("red_color", red)
+		if partData.greenChannel:
+			material.set_shader_parameter("green_color", green)
+		if partData.blueChannel:
+			material.set_shader_parameter("blue_color", blue)
+
+func UpdateDuplicateRefs():
+	selectedRef = $Selected
+	dangerRef = $Danger
 
 func GenerateClickMask():
 	var data = texture_normal.get_image()
@@ -30,19 +59,30 @@ func Clicked():
 	if Input.is_action_pressed("Control") && !Input.is_action_just_released("Interact2"):
 		SetControlGroup(!controlGrouped)
 
+func SetDanger(value: bool):
+	if inDanger == value:
+		return
+	inDanger = value
+	if inDanger:
+		dangerRef.visible = true
+	else:
+		dangerRef.visible = false
+
 func SetControlGroup(value: bool):
+	if controlGrouped == value:
+		return
 	controlGrouped = value
 	if controlGrouped:
-		self_modulate = Color(1, 1, 0, 1.0)
+		selectedRef.visible = true
 	else:
-		self_modulate = Color(1, 1, 1, 1.0)
+		selectedRef.visible = false
 
 func UpdateMovePosition():
 	position = get_viewport().get_mouse_position() - (selectOffset * currentScale).rotated(currentRotation)
 
 func SetScale(value: float):
+	currentScale *= value / scale.x
 	scale = Vector2(value, value)
-	currentScale = value
 
 func ScaleBy(value: float):
 	if scale.x * value > 0.2 and scale.x * value < 5.0:
@@ -56,11 +96,17 @@ func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 		return true
 	return false
 
+func SpawnAnimation():
+	var defaultScale: float = scale.x
+	SetScale(defaultScale * 1.2)
+	var spawnTween = create_tween()
+	spawnTween.tween_method(SetScale, defaultScale * 1.2, defaultScale, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 func Delete():
 	if deleted:
 		return
 	deleted = true
-	modulate = Color(1.0, .3, .3, 1.0)
+	SetDanger(true)
 	button_down.disconnect(Pressed)
 	var ori: Vector2 = position - size * 0.5
 	pivot_offset = size * 0.5

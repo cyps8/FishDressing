@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=26 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Texture2D" uid="uid://d11xw0j231ik8" path="res://Assets/Art/Sprites/icon.svg" id="1_6umiy"]
@@ -11,8 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://yq0o6gp3gjjs" path="res://Nodes/decor_button.tscn" id="8_eernm"]
 [ext_resource type="Resource" uid="uid://dxnprb17srg6g" path="res://Resources/Parts/default.tres" id="9_7h8tb"]
 [ext_resource type="Resource" uid="uid://dkl32775eo8kw" path="res://Resources/Parts/testShape.tres" id="10_o1q3g"]
-[ext_resource type="Shader" path="res://Scripts/Shaders/color_swap.gdshader" id="12_prx5v"]
-[ext_resource type="Texture2D" uid="uid://cjnme0xw1y0c1" path="res://Assets/Art/Sprites/redball.png" id="13_cwk0y"]
+[ext_resource type="Resource" uid="uid://cy3bbo3lssdso" path="res://Resources/Parts/circle.tres" id="11_cruwb"]
+[ext_resource type="Material" uid="uid://cur4klb3sdnwb" path="res://Resources/Materials/ColorMat.tres" id="12_2sx1l"]
+[ext_resource type="Resource" uid="uid://xbj7n4fqy7xn" path="res://Resources/Parts/blocks.tres" id="12_6a04t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
 shader = ExtResource("3_tpo2n")
@@ -40,17 +41,15 @@ height = 1080
 fill_from = Vector2(0.203077, 0.461538)
 fill_to = Vector2(0.655385, 0.337607)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n775b"]
-shader = ExtResource("12_prx5v")
-shader_parameter/red_color = Color(0.419608, 0.384314, 1, 1)
-shader_parameter/green_color = Color(1, 1, 1, 1)
-shader_parameter/blue_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oe62a"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3agex"]
-shader = ExtResource("12_prx5v")
-shader_parameter/red_color = Color(0.772549, 1, 0, 1)
-shader_parameter/green_color = Color(1, 1, 1, 1)
-shader_parameter/blue_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fu7jy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycj3h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rnnn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ag2ck"]
 
 [node name="Root" type="Node2D"]
 script = ExtResource("1_e3qh4")
@@ -68,6 +67,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_lasq8")
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("2_rrrc7")
 
 [node name="C" type="Control" parent="MainMenu"]
@@ -117,7 +117,8 @@ layer = -5
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
-partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g")])
+partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t")])
+colorMaterial = ExtResource("12_2sx1l")
 
 [node name="c" type="Control" parent="HUD"]
 layout_mode = 3
@@ -138,13 +139,66 @@ layout_mode = 0
 offset_left = 30.0
 offset_top = 43.0
 offset_right = 548.0
-offset_bottom = 811.0
+offset_bottom = 723.0
 horizontal_scroll_mode = 0
 
 [node name="Decors" type="GridContainer" parent="HUD/c/Panel/Scroll"]
 unique_name_in_owner = true
 layout_mode = 2
 columns = 4
+
+[node name="ColorR" type="ColorPickerButton" parent="HUD/c/Panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 72.0
+offset_top = 771.0
+offset_right = 175.0
+offset_bottom = 824.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+
+[node name="ColorG" type="ColorPickerButton" parent="HUD/c/Panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 206.0
+offset_top = 771.0
+offset_right = 309.0
+offset_bottom = 824.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+
+[node name="ColorB" type="ColorPickerButton" parent="HUD/c/Panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 339.0
+offset_top = 770.0
+offset_right = 442.0
+offset_bottom = 823.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+color = Color(1, 1, 1, 1)
+edit_alpha = false
+
+[node name="OverrideDefault" type="CheckButton" parent="HUD/c/Panel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 693.0
+offset_right = 424.0
+offset_bottom = 748.0
+text = "Override default colour"
 
 [node name="Fish" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
@@ -155,19 +209,9 @@ position = Vector2(903, 571)
 scale = Vector2(2.03906, 5.40625)
 texture = ExtResource("1_6umiy")
 
-[node name="Redball" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_n775b")
-position = Vector2(440, 368)
-texture = ExtResource("13_cwk0y")
-
-[node name="Redball4" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_3agex")
-position = Vector2(333, 223)
-texture = ExtResource("13_cwk0y")
-
-[node name="Redball2" type="Sprite2D" parent="."]
-position = Vector2(525, 200)
-texture = ExtResource("13_cwk0y")
-
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/QuitButton" to="MainMenu" method="ExitButton"]
+[connection signal="color_changed" from="HUD/c/Panel/ColorR" to="HUD" method="ColorPickChanged" binds= [1]]
+[connection signal="color_changed" from="HUD/c/Panel/ColorG" to="HUD" method="ColorPickChanged" binds= [2]]
+[connection signal="color_changed" from="HUD/c/Panel/ColorB" to="HUD" method="ColorPickChanged" binds= [3]]
+[connection signal="toggled" from="HUD/c/Panel/OverrideDefault" to="HUD" method="SetOverride"]

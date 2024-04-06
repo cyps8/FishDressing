@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cur4klb3sdnwb"]
+
+[ext_resource type="Shader" path="res://Scripts/Shaders/color_swap.gdshader" id="1_7xkuq"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_7xkuq")
+shader_parameter/red_color = Color(1, 1, 1, 1)
+shader_parameter/green_color = Color(1, 1, 1, 1)
+shader_parameter/blue_color = Color(1, 1, 1, 1)

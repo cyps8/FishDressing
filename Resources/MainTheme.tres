@@ -81,4 +81,5 @@ Button/styles/focus = SubResource("StyleBoxFlat_4cjiv")
 Button/styles/hover = SubResource("StyleBoxFlat_gfkw3")
 Button/styles/normal = SubResource("StyleBoxFlat_1in38")
 Button/styles/pressed = SubResource("StyleBoxFlat_llbpl")
+ColorPickerButton/font_sizes/font_size = 16
 Panel/styles/panel = SubResource("StyleBoxFlat_kx2po")
