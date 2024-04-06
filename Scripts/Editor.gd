@@ -10,12 +10,9 @@ static var ins: Editor
 
 @export var partDataList: Array[PartData]
 
-var currentPart: Part
+var currentPartGroup: Array[Part] = []
 
-var selectOffset: Vector2 = Vector2(0, 0)
-
-var currentRotation: float = 0.0
-var currentScale: float = 1.0
+var currentlyManipulating: bool = false
 
 var fishRef: CanvasGroup
 
@@ -39,44 +36,51 @@ func CreateNewDecor(id: int = 0):
 	var mousePos = get_viewport().get_mouse_position()
 	newDecor.position = mousePos
 	fishRef.add_child(newDecor)
-	selectOffset = newDecor.size / 2
-	currentPart = newDecor
-	currentRotation = 0
-	currentScale = 1.0
+	newDecor.selectOffset = newDecor.size / 2
+	for part in currentPartGroup:
+		part.SetControlGroup(false)
+	currentPartGroup.clear()
+	currentPartGroup.append(newDecor)
+	currentlyManipulating = true
 	SpawnAnimation()
 
 func SpawnAnimation():
-	SetPartScale(1.2, currentPart)
-	var spawnTween = currentPart.create_tween()
-	spawnTween.tween_method(SetPartScale.bind(currentPart), 1.2, 1.0, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	SetScale(1.2)
+	var spawnTween = create_tween()
+	spawnTween.tween_method(SetScale, 1.2, 1.0, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func _process(_delta):
-	if currentPart:
-		if IsInSafeZone():
-			currentPart.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		else:
-			currentPart.modulate = Color(1.0, .3, .3, 1.0)
-		if Input.is_action_pressed("Interact"):
+	if currentPartGroup.size() > 0:
+		if Input.is_action_just_pressed("Delete"):
+			for part in currentPartGroup:
+				part.SetControlGroup(false)
+				part.Delete()
+			currentPartGroup.clear()
+			currentlyManipulating = false
+			return
+		if Input.is_action_pressed("Interact") && currentlyManipulating:
+			for part in currentPartGroup:
+				UpdateSafeColour(part)
 			if Input.is_action_just_released("ScrollDown"):
 				if Input.is_action_pressed("Shift"):
 					RotatePart(0.05)
 				else:
-					SetPartScale(currentPart.scale.x * 0.9, currentPart)
+					ChangeScale(0.9)
 			elif Input.is_action_just_released("ScrollUp"):
 				if Input.is_action_pressed("Shift"):
 					RotatePart(-0.05)
 				else:
-					SetPartScale(currentPart.scale.x * 1.1, currentPart)
+					ChangeScale(1.1)
 			if Input.is_action_pressed("ScaleUp"):
 				if Input.is_action_pressed("Shift"):
-					SetPartScale(currentPart.scale.x * 1.05, currentPart)
+					ChangeScale(1.05)
 				else:
-					SetPartScale(currentPart.scale.x * 1.01, currentPart)
+					ChangeScale(1.01)
 			elif Input.is_action_pressed("ScaleDown"):
 				if Input.is_action_pressed("Shift"):
-					SetPartScale(currentPart.scale.x * 0.95, currentPart)
+					ChangeScale(0.95)
 				else:
-					SetPartScale(currentPart.scale.x * 0.99, currentPart)
+					ChangeScale(0.99)
 			if Input.is_action_pressed("RotateLeft"):
 				if Input.is_action_pressed("Shift"):
 					RotatePart(-0.05)
@@ -97,50 +101,94 @@ func _process(_delta):
 					MoveToBottom()
 				else:
 					MoveDown()
-			currentPart.position = get_viewport().get_mouse_position() - (selectOffset * currentScale).rotated(currentRotation)
+			for part in currentPartGroup:
+				part.UpdateMovePosition()
 		elif Input.is_action_just_released("Interact"):
-			if !IsInSafeZone():
-				currentPart.Delete()
-			currentPart = null
-			currentRotation = 0
-			currentScale = 1.0
+			var partsToDelete: Array[Part] = []
+			for part in currentPartGroup:
+				if !part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
+					part.SetControlGroup(false)
+					partsToDelete.append(part)
+			for part in partsToDelete:
+				part.Delete()
+				currentPartGroup.erase(part)
+			for part in currentPartGroup:
+				if !part.controlGrouped:
+					currentPartGroup.erase(part)
+			currentlyManipulating = false
+		elif Input.is_action_just_pressed("Interact") && !currentlyManipulating:
+			for part in currentPartGroup:
+				part.SetControlGroup(false)
 
-func IsInSafeZone() -> bool:
-	var fishBody: Sprite2D = fishRef.get_node("FishBody") as Sprite2D
-	var fBSize = fishBody.texture.get_size() * fishBody.scale
-	var partPos = currentPart.position + (currentPart.size * currentPart.scale * 0.5).rotated(currentPart.rotation)
-	if partPos.x > fishBody.position.x - (fBSize.x * 0.5) - 50 and partPos.x < fishBody.position.x + (fBSize.x * 0.5) + 50 and partPos.y > fishBody.position.y - (fBSize.y * 0.5) - 50 and partPos.y < fishBody.position.y + (fBSize.y * 0.5) + 50:
-		return true
-	return false
+func UpdateSafeColour(part: Part):
+	if part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
+		part.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	else:
+		part.modulate = Color(1.0, .3, .3, 1.0)
 
 func RotatePart(amount: float):
-	currentPart.rotation += amount
-	currentRotation += amount
+	for part in currentPartGroup:
+		part.rotation += amount
+		part.currentRotation += amount
 
-func SetPartScale(value: float, part: Part):
-	if value > 0.2 and value < 5.0:
-		if part == currentPart:
-			currentScale *= value / part.scale.x 
-		part.scale = Vector2(value, value)
+func SetScale(value: float):
+	for part in currentPartGroup:
+		part.SetScale(value)
 
-func SelectPart(part: Part):
-	currentPart = part
-	selectOffset = get_viewport().get_mouse_position() - part.position
-	currentRotation = 0
-	currentScale = 1.0
+func ChangeScale(value: float):
+	for part in currentPartGroup:
+		part.ScaleBy(value)
+
+func SelectPart(selectedPart: Part):
+	if !currentPartGroup.has(selectedPart):
+		currentPartGroup.append(selectedPart)
+	for part in currentPartGroup:
+		if !part.controlGrouped && part != selectedPart:
+			currentPartGroup.erase(part)
+	currentlyManipulating = true
+	for part in currentPartGroup:
+		part.selectOffset = get_viewport().get_mouse_position() - part.position
+		part.currentScale = 1.0
+		part.currentRotation = 0.0
+	
+func Duplicate(selectedPart: Part):
+	if !currentPartGroup.has(selectedPart):
+		currentPartGroup.append(selectedPart)
+	var dupedParts: Array[Part] = []
+	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	for part in currentPartGroup:
+		var dupedPart: Part = part.duplicate()
+		fishRef.add_child(dupedPart)
+		dupedPart.SetControlGroup(part.controlGrouped)
+		part.SetControlGroup(false)
+		dupedParts.append(dupedPart)
+	currentPartGroup = dupedParts
+	currentlyManipulating = true
+	for part in currentPartGroup:
+		part.selectOffset = get_viewport().get_mouse_position() - part.position
+		part.currentScale = 1.0
+		part.currentRotation = 0.0
 
 func MoveUp():
-	var index = currentPart.get_index()
-	if index < fishRef.get_child_count():
-		fishRef.move_child(currentPart, index + 1)
+	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	for part in currentPartGroup:
+		var index = part.get_index()
+		if index < fishRef.get_child_count():
+			fishRef.move_child(part, index + 1)
 
 func MoveDown():
-	var index = currentPart.get_index()
-	if index > 1:
-		fishRef.move_child(currentPart, index - 1)
+	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
+	for part in currentPartGroup:
+		var index = part.get_index()
+		if index > 1:
+			fishRef.move_child(part, index - 1)
 
 func MoveToTop():
-	fishRef.move_child(currentPart, 1)
+	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
+	for part in currentPartGroup:
+		fishRef.move_child(part, 1)
 
 func MoveToBottom():
-	fishRef.move_child(currentPart, fishRef.get_child_count() - 1)
+	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	for part in currentPartGroup:
+		fishRef.move_child(part, fishRef.get_child_count() - 1)
