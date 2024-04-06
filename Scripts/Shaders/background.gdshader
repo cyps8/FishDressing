@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec3 color_hue;
+uniform vec4 color_hue : source_color = vec4(1.0);
 
 vec2 random2( vec2 p ) {
 	return fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3))))*43758.5453);
@@ -29,6 +29,6 @@ void fragment() {
 	}
 	color += m_dist;
 	color += 1.0-step(0.0, m_dist);
-	COLOR = vec4(color_hue, color.b);
+	COLOR = vec4(color_hue.rgb, color.b);
 	//COLOR = texture(image, UV);
 }
