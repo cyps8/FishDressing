@@ -1,0 +1,145 @@
+[gd_scene load_steps=18 format=3 uid="uid://bergx8lgo33nd"]
+
+[ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
+[ext_resource type="Texture2D" uid="uid://d11xw0j231ik8" path="res://Assets/Art/Sprites/icon.svg" id="1_6umiy"]
+[ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
+[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="2_rrrc7"]
+[ext_resource type="Shader" path="res://Scripts/Shaders/background.gdshader" id="3_tpo2n"]
+[ext_resource type="Theme" uid="uid://ns1ce5pc8bkk" path="res://Resources/MainTheme.tres" id="4_8dgoj"]
+[ext_resource type="Script" path="res://Scripts/Editor.gd" id="5_ah6qd"]
+[ext_resource type="PackedScene" uid="uid://dcwy18q1sia7h" path="res://Nodes/part.tscn" id="7_awn31"]
+[ext_resource type="PackedScene" uid="uid://yq0o6gp3gjjs" path="res://Nodes/decor_button.tscn" id="8_eernm"]
+[ext_resource type="Resource" uid="uid://dxnprb17srg6g" path="res://Resources/Parts/default.tres" id="9_7h8tb"]
+[ext_resource type="Resource" uid="uid://dkl32775eo8kw" path="res://Resources/Parts/testShape.tres" id="10_o1q3g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
+shader = ExtResource("3_tpo2n")
+shader_parameter/color_hue = Vector3(0, 0.81, 0.89)
+
+[sub_resource type="Gradient" id="Gradient_4r7yq"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lasq8"]
+gradient = SubResource("Gradient_4r7yq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_djwkn"]
+shader = ExtResource("1_0doew")
+shader_parameter/line_thickness = 8.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_rdtk6"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.363636, 0.772727)
+colors = PackedColorArray(0, 0.572549, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xhx1q"]
+gradient = SubResource("Gradient_rdtk6")
+width = 500
+height = 1080
+fill_from = Vector2(0.203077, 0.461538)
+fill_to = Vector2(0.655385, 0.337607)
+
+[node name="Root" type="Node2D"]
+script = ExtResource("1_e3qh4")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+material = SubResource("ShaderMaterial_kt6u2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_lasq8")
+
+[node name="MainMenu" type="CanvasLayer" parent="."]
+script = ExtResource("2_rrrc7")
+
+[node name="C" type="Control" parent="MainMenu"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_8dgoj")
+
+[node name="Group" type="CanvasGroup" parent="MainMenu/C"]
+material = SubResource("ShaderMaterial_djwkn")
+
+[node name="Back" type="TextureRect" parent="MainMenu/C/Group"]
+offset_left = -376.0
+offset_right = 682.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_xhx1q")
+
+[node name="StartButton" type="Button" parent="MainMenu/C/Group"]
+offset_left = 136.0
+offset_top = 547.0
+offset_right = 397.0
+offset_bottom = 625.0
+theme = ExtResource("4_8dgoj")
+text = "START"
+
+[node name="OptionsButton" type="Button" parent="MainMenu/C/Group"]
+offset_left = 166.0
+offset_top = 665.0
+offset_right = 427.0
+offset_bottom = 743.0
+theme = ExtResource("4_8dgoj")
+text = "OPTIONS"
+
+[node name="QuitButton" type="Button" parent="MainMenu/C/Group"]
+offset_left = 184.0
+offset_top = 785.0
+offset_right = 445.0
+offset_bottom = 863.0
+theme = ExtResource("4_8dgoj")
+text = "FIN"
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = -5
+script = ExtResource("5_ah6qd")
+partIns = ExtResource("7_awn31")
+decorButtonIns = ExtResource("8_eernm")
+partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g")])
+
+[node name="c" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("4_8dgoj")
+
+[node name="Panel" type="Panel" parent="HUD/c"]
+layout_mode = 0
+offset_left = 1336.0
+offset_top = 139.0
+offset_right = 1900.0
+offset_bottom = 982.0
+
+[node name="Scroll" type="ScrollContainer" parent="HUD/c/Panel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 43.0
+offset_right = 548.0
+offset_bottom = 811.0
+horizontal_scroll_mode = 0
+
+[node name="Decors" type="GridContainer" parent="HUD/c/Panel/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 4
+
+[node name="Fish" type="CanvasGroup" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_djwkn")
+
+[node name="FishBody" type="Sprite2D" parent="Fish"]
+position = Vector2(903, 571)
+scale = Vector2(2.03906, 5.40625)
+texture = ExtResource("1_6umiy")
+
+[connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
+[connection signal="pressed" from="MainMenu/C/Group/QuitButton" to="MainMenu" method="ExitButton"]

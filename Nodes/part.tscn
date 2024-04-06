@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcwy18q1sia7h"]
+
+[ext_resource type="Script" path="res://Scripts/Part.gd" id="1_bleap"]
+[ext_resource type="Texture2D" uid="uid://dp80rp7a3ms51" path="res://Assets/Art/Sprites/TestShape.png" id="2_b0jga"]
+
+[node name="Part" type="TextureButton"]
+offset_right = 128.0
+offset_bottom = 128.0
+texture_normal = ExtResource("2_b0jga")
+script = ExtResource("1_bleap")
+
+[connection signal="button_down" from="." to="." method="Pressed"]
