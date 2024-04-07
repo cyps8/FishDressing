@@ -31,7 +31,7 @@ void fragment() {
 
 	// If the alpha exists at least a little bit, amplify the colors.
 	// This ensures alpha and colors remain precise even when reading from screen.
-	if (c.a > 0.0001) {
+	if (c.a > 0.9999) {
 		c.rgb /= c.a;
 	}
 	

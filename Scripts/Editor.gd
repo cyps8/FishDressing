@@ -58,34 +58,18 @@ func CreateNewDecor(id: int = 0):
 	newDecor.position = mousePos
 	fishRef.add_child(newDecor)
 	newDecor.selectOffset = newDecor.size / 2
-	for part in currentPartGroup:
-		part.SetControlGroup(false)
-	currentPartGroup.clear()
-	currentPartGroup.append(newDecor)
+	ClearControlGroup()
+	newDecor.SetControlGroup(true)
 	currentlyManipulating = true
 	newDecor.SpawnAnimation()
+	AudioPlayer.ins.PlaySound(0)
 
 func _process(_delta):
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
-		var allInGroup = true
-		for part in fishRef.get_children():
-			if part.is_in_group("Part") && !part.controlGrouped:
-				part.SetControlGroup(true)
-				if !currentPartGroup.has(part):
-					currentPartGroup.append(part)
-				allInGroup = false
-		if allInGroup:
-			for part in fishRef.get_children():
-				if part.is_in_group("Part"):
-					part.SetControlGroup(false)
-			currentPartGroup.clear()
-			
+		SelectAll()
 	if currentPartGroup.size() > 0:
 		if Input.is_action_just_pressed("Delete"):
-			for part in currentPartGroup:
-				part.SetControlGroup(false)
-				part.Delete()
-			currentPartGroup.clear()
+			DeleteAllSelected()
 			currentlyManipulating = false
 			return
 		if Input.is_action_pressed("Interact") && currentlyManipulating:
@@ -133,22 +117,22 @@ func _process(_delta):
 					MoveDown()
 			for part in currentPartGroup:
 				part.UpdateMovePosition()
-		elif Input.is_action_just_released("Interact"):
+		elif Input.is_action_just_released("Interact") && !Input.is_action_pressed("Control"):
 			var partsToDelete: Array[Part] = []
 			for part in currentPartGroup:
 				if !part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
-					part.SetControlGroup(false)
 					partsToDelete.append(part)
-			for part in partsToDelete:
-				part.Delete()
-				currentPartGroup.erase(part)
-			for part in currentPartGroup:
-				if !part.controlGrouped:
-					currentPartGroup.erase(part)
+			while partsToDelete.size() > 0:
+				partsToDelete[0].Delete()
+				partsToDelete.remove_at(0)
 			currentlyManipulating = false
-		elif Input.is_action_just_pressed("Interact") && !currentlyManipulating:
-			for part in currentPartGroup:
-				part.SetControlGroup(false)
+
+func ClickedOut():
+	ClearControlGroup()
+
+func ClearControlGroup():
+	while currentPartGroup.size() > 0:
+		currentPartGroup[0].SetControlGroup(false)
 
 func UpdateSafeColour(part: Part):
 	if part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
@@ -163,7 +147,7 @@ func RotatePart(amount: float):
 
 func SetScale(value: float):
 	for part in currentPartGroup:
-		part.SetScale(value)
+		part.SetScale(value, false)
 
 func ChangeScale(value: float):
 	for part in currentPartGroup:
@@ -171,35 +155,45 @@ func ChangeScale(value: float):
 
 func SelectPart(selectedPart: Part):
 	if !currentPartGroup.has(selectedPart):
-		currentPartGroup.append(selectedPart)
-	for part in currentPartGroup:
-		if !part.controlGrouped && part != selectedPart:
-			currentPartGroup.erase(part)
+		ClearControlGroup()
+		selectedPart.SetControlGroup(true)
 	currentlyManipulating = true
 	for part in currentPartGroup:
-		part.selectOffset = get_viewport().get_mouse_position() - part.position
-		part.currentScale = 1.0
-		part.currentRotation = 0.0
-	
+		part.ResetMoveValues()
+		part.SpawnAnimation()
+	AudioPlayer.ins.PlaySound(0)
+
+func SelectAll():
+	var allInGroup = true
+	for part in fishRef.get_children():
+		if part.is_in_group("Part") && !part.controlGrouped:
+			part.SetControlGroup(true)
+			part.ResetMoveValues()
+			part.SpawnAnimation(false)
+			allInGroup = false
+	if allInGroup:
+		ClearControlGroup()
+	else:
+		AudioPlayer.ins.PlaySound(0)
+
 func Duplicate(selectedPart: Part):
 	if !currentPartGroup.has(selectedPart):
-		currentPartGroup.append(selectedPart)
+		selectedPart.SetControlGroup(true)
 	var dupedParts: Array[Part] = []
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
 	for part in currentPartGroup:
 		var dupedPart: Part = part.duplicate()
 		dupedPart.UpdateDuplicateRefs()
 		fishRef.add_child(dupedPart)
-		dupedPart.SetControlGroup(part.controlGrouped)
+		dupedPart.SetControlGroup(true)
 		part.SetControlGroup(false)
 		dupedParts.append(dupedPart)
 	currentPartGroup = dupedParts
 	currentlyManipulating = true
 	for part in currentPartGroup:
-		part.selectOffset = get_viewport().get_mouse_position() - part.position
-		part.currentScale = 1.0
-		part.currentRotation = 0.0
+		part.ResetMoveValues()
 		part.SpawnAnimation()
+	AudioPlayer.ins.PlaySound(0)
 
 func MoveUp():
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
@@ -236,6 +230,10 @@ func ColorPickChanged(newColor: Color, val: int = 1):
 		3:
 			pickedColorB = newColor
 			colorMaterial.set_shader_parameter("blue_color", newColor)
+
+func DeleteAllSelected():
+	while currentPartGroup.size() > 0:
+		currentPartGroup[0].Delete()
 
 func SetOverride(value: bool):
 	overrideColours = value

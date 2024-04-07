@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://bnhtcjjstv2k8"]
+
+[ext_resource type="Script" path="res://Scripts/Fishdata.gd" id="1_50oir"]
+[ext_resource type="Texture2D" uid="uid://c1c4agnhbjc4k" path="res://Assets/Art/Sprites/salmon.png" id="2_vm885"]
+
+[resource]
+script = ExtResource("1_50oir")
+name = "Salmon"
+texture = ExtResource("2_vm885")

@@ -1,24 +1,24 @@
 [gd_scene load_steps=8 format=3 uid="uid://dcwy18q1sia7h"]
 
 [ext_resource type="Script" path="res://Scripts/Part.gd" id="1_bleap"]
-[ext_resource type="Texture2D" uid="uid://dp80rp7a3ms51" path="res://Assets/Art/Sprites/TestShape.png" id="2_b0jga"]
 [ext_resource type="Material" uid="uid://cur4klb3sdnwb" path="res://Resources/Materials/ColorMat.tres" id="3_e8ncf"]
 [ext_resource type="Shader" path="res://Scripts/Shaders/Selected.gdshader" id="4_nk5id"]
+[ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/blocks.png" id="5_obuv5"]
 [ext_resource type="Shader" path="res://Scripts/Shaders/Danger.gdshader" id="5_wva8l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lrp4m"]
 shader = ExtResource("4_nk5id")
-shader_parameter/color_hue = Color(1, 1, 0, 1)
+shader_parameter/color_hue = Color(0.996078, 1, 0.278431, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mmmkw"]
 shader = ExtResource("5_wva8l")
-shader_parameter/color_hue = Color(1, 0, 0, 1)
+shader_parameter/color_hue = Color(1, 0.196078, 0.145098, 1)
 
 [node name="Part" type="TextureButton" node_paths=PackedStringArray("selectedRef", "dangerRef") groups=["Part"]]
 offset_right = 128.0
 offset_bottom = 128.0
 button_mask = 3
-texture_normal = ExtResource("2_b0jga")
+texture_normal = ExtResource("5_obuv5")
 script = ExtResource("1_bleap")
 colorShader = ExtResource("3_e8ncf")
 selectedRef = NodePath("Selected")
@@ -30,7 +30,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-texture = ExtResource("2_b0jga")
+texture = ExtResource("5_obuv5")
 
 [node name="Danger" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_mmmkw")
@@ -38,7 +38,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-texture = ExtResource("2_b0jga")
+texture = ExtResource("5_obuv5")
 
 [connection signal="button_down" from="." to="." method="Pressed"]
 [connection signal="pressed" from="." to="." method="Clicked"]

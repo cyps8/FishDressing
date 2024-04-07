@@ -20,6 +20,10 @@ var inDanger: bool = false
 
 @export var dangerRef: TextureRect
 
+var spawnTween: Tween
+
+var defaultScale: float = 1.0
+
 func SetTexture(tex: Texture2D):
 	texture_normal = tex
 	selectedRef.texture = tex
@@ -49,7 +53,7 @@ func GenerateClickMask():
 	texture_click_mask = bitmap
 
 func Pressed():
-	if Input.is_action_just_pressed("Interact"):
+	if Input.is_action_just_pressed("Interact") && !Input.is_action_pressed("Control"):
 		if !Input.is_action_just_pressed("Interact2"):
 			Editor.ins.SelectPart(self)
 		else:
@@ -58,6 +62,10 @@ func Pressed():
 func Clicked():
 	if Input.is_action_pressed("Control") && !Input.is_action_just_released("Interact2"):
 		SetControlGroup(!controlGrouped)
+		if controlGrouped: 
+			ResetMoveValues()
+			SpawnAnimation(false)
+			AudioPlayer.ins.PlaySound(0)
 
 func SetDanger(value: bool):
 	if inDanger == value:
@@ -74,15 +82,21 @@ func SetControlGroup(value: bool):
 	controlGrouped = value
 	if controlGrouped:
 		selectedRef.visible = true
+		if !Editor.ins.currentPartGroup.has(self):
+			Editor.ins.currentPartGroup.append(self)
 	else:
 		selectedRef.visible = false
+		if Editor.ins.currentPartGroup.has(self):
+			Editor.ins.currentPartGroup.erase(self)
 
 func UpdateMovePosition():
 	position = get_viewport().get_mouse_position() - (selectOffset * currentScale).rotated(currentRotation)
 
-func SetScale(value: float):
+func SetScale(value: float, move: bool):
 	currentScale *= value / scale.x
 	scale = Vector2(value, value)
+	if move:
+		UpdateMovePosition()
 
 func ScaleBy(value: float):
 	if scale.x * value > 0.2 and scale.x * value < 5.0:
@@ -96,15 +110,28 @@ func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 		return true
 	return false
 
-func SpawnAnimation():
-	var defaultScale: float = scale.x
-	SetScale(defaultScale * 1.2)
-	var spawnTween = create_tween()
-	spawnTween.tween_method(SetScale, defaultScale * 1.2, defaultScale, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+func SpawnAnimation(move: bool = true):
+	if spawnTween && spawnTween.is_running():
+		spawnTween.kill()
+	else:
+		defaultScale = scale.x
+	if move:
+		pivot_offset = Vector2.ZERO
+	else:
+		pivot_offset = size * 0.5
+	SetScale(defaultScale * 1.2, move)
+	spawnTween = create_tween()
+	spawnTween.tween_method(SetScale.bind(move), defaultScale * 1.2, defaultScale, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func ResetMoveValues():
+	selectOffset = get_viewport().get_mouse_position() - position
+	currentScale = 1.0
+	currentRotation = 0.0
 
 func Delete():
 	if deleted:
 		return
+	SetControlGroup(false)
 	deleted = true
 	SetDanger(true)
 	button_down.disconnect(Pressed)

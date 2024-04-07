@@ -3,9 +3,9 @@ shader_type canvas_item;
 uniform vec4 color_hue : source_color = vec4(1.0);
 
 void fragment() {
-	if (COLOR.a > 0.1 && COLOR.r < 0.1 && COLOR.g < 0.1 && COLOR.b < 0.1)
+	if (COLOR.a > 0.1)
 	{
-		COLOR = vec4(color_hue.rgb, 1);
+		COLOR = vec4(color_hue.rgb, 0.9 * (cos((TIME * -10.0) + ((UV.x / TEXTURE_PIXEL_SIZE.x + UV.y / TEXTURE_PIXEL_SIZE.y) * .2)) * 1.5));
 	}
 	else
 	{
