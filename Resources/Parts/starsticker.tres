@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://br608y3be78w7"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_xmeeu"]
+[ext_resource type="Texture2D" uid="uid://bl3lqtfqp0nbu" path="res://Assets/Art/Sprites/ActualParts/accessories_star.png" id="2_lfo5g"]
+
+[resource]
+script = ExtResource("1_xmeeu")
+name = "Star Sticker"
+texture = ExtResource("2_lfo5g")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 0, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16

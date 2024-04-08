@@ -66,18 +66,20 @@ func ReturnToMenu():
 		HideHUD()
 	if cogMenu.is_inside_tree():
 		HideCogMenu()
-	ShowMenu()
+	var delay: Tween = create_tween()
+	delay.tween_interval(0.5)
+	delay.tween_callback(ShowMenu)
 
 func HideMenu():
 	mainMenu.SetActive(false)
 	var hideMenuTween: Tween = create_tween()
-	hideMenuTween.tween_property(mainMenu, "offset:x", -500, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	hideMenuTween.tween_property(mainMenu, "offset:x", -2500, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 	hideMenuTween.tween_callback(remove_child.bind(mainMenu))
 
 func ShowMenu():
 	add_child(mainMenu)
 	var showMenuTween: Tween = create_tween()
-	showMenuTween.tween_property(mainMenu, "offset:x", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	showMenuTween.tween_property(mainMenu, "offset:x", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	showMenuTween.tween_callback(mainMenu.SetActive.bind(true))
 
 func ShowHUD():

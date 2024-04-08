@@ -6,8 +6,10 @@ func StartButton():
 	if !menuActive:
 		return
 	Game.ins.HideMenu()
-	Game.ins.ShowFish()
-	Game.ins.ShowFishPicker()
+	var delay: Tween = create_tween()
+	delay.tween_interval(0.5)
+	delay.tween_callback(Game.ins.ShowFish)
+	delay.tween_callback(Game.ins.ShowFishPicker)
 
 func SettingsButton():
 	if !menuActive:

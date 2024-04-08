@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://3d40btxn8mhh"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_1jqq0"]
+[ext_resource type="Texture2D" uid="uid://dicamfs1dbqcl" path="res://Assets/Art/Sprites/UI/icon_fishslider.png" id="2_pbe3l"]
+
+[resource]
+script = ExtResource("1_1jqq0")
+name = "Secret Unused Fish"
+texture = ExtResource("2_pbe3l")
+colorShader = false
+redChannel = false
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 17

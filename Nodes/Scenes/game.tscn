@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=131 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Theme" uid="uid://ns1ce5pc8bkk" path="res://Resources/MainTheme.tres" id="4_8dgoj"]
 [ext_resource type="Script" path="res://Scripts/Editor.gd" id="5_ah6qd"]
 [ext_resource type="Script" path="res://Scripts/MenuButton.gd" id="6_j1bsi"]
+[ext_resource type="Texture2D" uid="uid://dgdm4cqrgccc6" path="res://Assets/Art/Sprites/Background/cover3.png" id="6_libr3"]
 [ext_resource type="PackedScene" uid="uid://dcwy18q1sia7h" path="res://Nodes/part.tscn" id="7_awn31"]
 [ext_resource type="PackedScene" uid="uid://yq0o6gp3gjjs" path="res://Nodes/decor_button.tscn" id="8_eernm"]
 [ext_resource type="Resource" uid="uid://dxnprb17srg6g" path="res://Resources/TestParts/default.tres" id="9_7h8tb"]
@@ -82,9 +83,13 @@
 [ext_resource type="Resource" uid="uid://dlf4tvxvi01g0" path="res://Resources/Parts/pleatedskirt.tres" id="58_4yjuv"]
 [ext_resource type="Resource" uid="uid://cmdbnexq8ldng" path="res://Resources/Parts/octopusskirt.tres" id="59_yfvb3"]
 [ext_resource type="Resource" uid="uid://cpyknjxhsbql8" path="res://Resources/Parts/humantub.tres" id="60_lfgmg"]
+[ext_resource type="Resource" uid="uid://dr332mhh2ndvc" path="res://Resources/Parts/bandaid.tres" id="60_obymy"]
+[ext_resource type="Resource" uid="uid://bins0ywd6eois" path="res://Resources/Parts/heartsticker.tres" id="61_8twpi"]
 [ext_resource type="Resource" uid="uid://c2y05x53w3ea5" path="res://Resources/Parts/beachumbrella.tres" id="61_ddr6f"]
 [ext_resource type="Resource" uid="uid://xsvl4pxknir7" path="res://Resources/Parts/rainumbrella.tres" id="62_6qmmj"]
+[ext_resource type="Resource" uid="uid://br608y3be78w7" path="res://Resources/Parts/starsticker.tres" id="62_ggtai"]
 [ext_resource type="Resource" uid="uid://b4eciv1ljhta1" path="res://Resources/Parts/stylishwig.tres" id="63_icmkg"]
+[ext_resource type="Resource" uid="uid://dhectv0jtpq2g" path="res://Resources/Parts/fishsticker.tres" id="63_xua50"]
 [ext_resource type="Resource" uid="uid://cuni7v86gyu0n" path="res://Resources/Parts/afrowig.tres" id="64_ry3pm"]
 [ext_resource type="Texture2D" uid="uid://dhq2t1rw6otm3" path="res://Assets/Art/Sprites/UI/AllIcon.png" id="66_y13vy"]
 [ext_resource type="Texture2D" uid="uid://bogr7vv8gh70q" path="res://Assets/Art/Sprites/UI/HeadIcon.png" id="66_yj4ta"]
@@ -92,12 +97,14 @@
 [ext_resource type="Texture2D" uid="uid://blou278knef63" path="res://Assets/Art/Sprites/UI/icon_settings.png" id="68_6fhhy"]
 [ext_resource type="Texture2D" uid="uid://cr6ny0g2pdhlo" path="res://Assets/Art/Sprites/UI/LowerIcon.png" id="68_oc0b2"]
 [ext_resource type="Texture2D" uid="uid://d170snr27w4gj" path="res://Assets/Art/Sprites/UI/AccessoriesIcon.png" id="69_a3glx"]
+[ext_resource type="Resource" uid="uid://3d40btxn8mhh" path="res://Resources/TestParts/unusedfish.tres" id="69_su5xo"]
 [ext_resource type="Script" path="res://Scripts/Toolbar.gd" id="71_35idl"]
 [ext_resource type="Texture2D" uid="uid://c0yersrykq50c" path="res://Assets/Art/Sprites/UI/icon_deleteall.png" id="72_lp31v"]
 [ext_resource type="Texture2D" uid="uid://c0eftt5ch5wsv" path="res://Assets/Art/Sprites/UI/icon_selectall.png" id="73_fvuql"]
 [ext_resource type="Texture2D" uid="uid://dwm8gs7mh0enc" path="res://Assets/Art/Sprites/UI/icon_undo.png" id="74_efact"]
 [ext_resource type="Texture2D" uid="uid://cx5r3b38qfbem" path="res://Assets/Art/Sprites/UI/icon_redo.png" id="75_5lu0h"]
 [ext_resource type="Texture2D" uid="uid://c7nvh0nkqy04m" path="res://Assets/Art/Sprites/UI/icon_delete.png" id="76_em32d"]
+[ext_resource type="Texture2D" uid="uid://ss6cae0rlaxk" path="res://Assets/Art/Sprites/UI/CamIcon.png" id="77_rvlwx"]
 [ext_resource type="Texture2D" uid="uid://c0adu6qa1lq0j" path="res://Assets/Art/Sprites/UI/icon_duplicate.png" id="77_ywrid"]
 [ext_resource type="Texture2D" uid="uid://di78e1ar5ac03" path="res://Assets/Art/Sprites/UI/icon_flipV.png" id="78_tlryf"]
 [ext_resource type="Texture2D" uid="uid://c7ipcryj167hb" path="res://Assets/Art/Sprites/UI/icon_flipH.png" id="79_3jqv7"]
@@ -124,17 +131,6 @@ shader = ExtResource("1_0doew")
 shader_parameter/line_thickness = 8.0
 shader_parameter/line_color = Color(0.129412, 0.129412, 0.129412, 1)
 
-[sub_resource type="Gradient" id="Gradient_rdtk6"]
-offsets = PackedFloat32Array(0, 0.349425, 0.558621, 0.583908)
-colors = PackedColorArray(0.293232, 0.645745, 1, 1, 0.102179, 0.607438, 1, 1, 0, 0.572549, 1, 1, 0.278431, 0.466667, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xhx1q"]
-gradient = SubResource("Gradient_rdtk6")
-width = 500
-height = 1080
-fill_from = Vector2(0.516923, 0.564103)
-fill_to = Vector2(0.646154, 0.534188)
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oe62a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fu7jy"]
@@ -148,6 +144,15 @@ fill_to = Vector2(0.646154, 0.534188)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lgp1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jp7pg"]
+
+[sub_resource type="Gradient" id="Gradient_0mdcr"]
+offsets = PackedFloat32Array(0, 0.445977, 0.708046)
+colors = PackedColorArray(0.160784, 0.239216, 0.25098, 0.631373, 0.0588235, 0.117647, 0.145098, 0.184314, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ji05v"]
+gradient = SubResource("Gradient_0mdcr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14hiv"]
 bg_color = Color(1, 1, 0, 0.423529)
@@ -189,34 +194,33 @@ theme = ExtResource("4_8dgoj")
 material = SubResource("ShaderMaterial_djwkn")
 
 [node name="Back" type="TextureRect" parent="MainMenu/C/Group"]
-offset_left = -376.0
-offset_right = 682.0
+offset_right = 2319.0
 offset_bottom = 1080.0
-texture = SubResource("GradientTexture2D_xhx1q")
+texture = ExtResource("6_libr3")
 
 [node name="StartButton" type="Button" parent="MainMenu/C/Group"]
-offset_left = 136.0
-offset_top = 547.0
-offset_right = 397.0
-offset_bottom = 625.0
+offset_left = 69.0
+offset_top = 422.0
+offset_right = 330.0
+offset_bottom = 500.0
 theme = ExtResource("4_8dgoj")
 text = "START"
 script = ExtResource("6_j1bsi")
 
 [node name="OptionsButton" type="Button" parent="MainMenu/C/Group"]
-offset_left = 166.0
-offset_top = 665.0
-offset_right = 427.0
-offset_bottom = 743.0
+offset_left = 99.0
+offset_top = 540.0
+offset_right = 360.0
+offset_bottom = 618.0
 theme = ExtResource("4_8dgoj")
 text = "OPTIONS"
 script = ExtResource("6_j1bsi")
 
 [node name="QuitButton" type="Button" parent="MainMenu/C/Group"]
-offset_left = 184.0
-offset_top = 785.0
-offset_right = 445.0
-offset_bottom = 863.0
+offset_left = 117.0
+offset_top = 660.0
+offset_right = 378.0
+offset_bottom = 738.0
 theme = ExtResource("4_8dgoj")
 text = "FIN"
 script = ExtResource("6_j1bsi")
@@ -228,7 +232,7 @@ layer = -5
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
-partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("28_aps35"), ExtResource("29_56opn"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("46_362h0"), ExtResource("47_4svyo"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("50_3e21i"), ExtResource("51_w5ocs"), ExtResource("52_83r24"), ExtResource("53_60jmc"), ExtResource("54_x1n26"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("57_0egem"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm")])
+partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("28_aps35"), ExtResource("29_56opn"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("46_362h0"), ExtResource("47_4svyo"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("50_3e21i"), ExtResource("51_w5ocs"), ExtResource("52_83r24"), ExtResource("53_60jmc"), ExtResource("54_x1n26"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("57_0egem"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
 colorMaterial = ExtResource("12_2sx1l")
 
 [node name="c" type="Control" parent="HUD"]
@@ -241,6 +245,7 @@ grow_vertical = 2
 theme = ExtResource("4_8dgoj")
 
 [node name="ClickedOut" type="TextureButton" parent="HUD/c"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -252,9 +257,9 @@ mouse_filter = 1
 [node name="Panel" type="Panel" parent="HUD/c"]
 layout_mode = 0
 offset_left = 1325.0
-offset_top = 139.0
+offset_top = 159.0
 offset_right = 1913.0
-offset_bottom = 999.0
+offset_bottom = 1019.0
 
 [node name="Scroll" type="ScrollContainer" parent="HUD/c/Panel"]
 layout_mode = 0
@@ -397,6 +402,19 @@ theme_override_constants/shadow_outline_size = 1
 theme_override_font_sizes/font_size = 40
 text = "The Whale Shark!"
 horizontal_alignment = 1
+
+[node name="Camera" type="Button" parent="HUD/c"]
+layout_mode = 0
+offset_left = 1471.0
+offset_top = 92.0
+offset_right = 1752.0
+offset_bottom = 150.0
+text = "TAKE A PICTURE!"
+icon = ExtResource("77_rvlwx")
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("6_j1bsi")
+silentButton = true
 
 [node name="Fish" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
@@ -646,6 +664,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("4_8dgoj")
+
+[node name="Fade" type="TextureRect" parent="CogMenu/c"]
+layout_mode = 0
+offset_top = -492.0
+offset_right = 1923.0
+offset_bottom = 1555.0
+texture = SubResource("GradientTexture2D_ji05v")
 
 [node name="Panel" type="Panel" parent="CogMenu/c"]
 layout_mode = 1
@@ -1099,5 +1124,11 @@ edit_alpha = false
 [connection signal="drag_started" from="Toolbar/c/SelectedTools/RotationSlider" to="Toolbar" method="RotationChangeStarted"]
 [connection signal="value_changed" from="Toolbar/c/SelectedTools/RotationSlider" to="Toolbar" method="RotationChanged"]
 [connection signal="color_changed" from="Toolbar/c/SelectedTools/ColorR" to="Toolbar" method="ColorPickChanged" binds= [0]]
+[connection signal="popup_closed" from="Toolbar/c/SelectedTools/ColorR" to="Toolbar" method="PickerState" binds= [false]]
+[connection signal="pressed" from="Toolbar/c/SelectedTools/ColorR" to="Toolbar" method="PickerState" binds= [true]]
 [connection signal="color_changed" from="Toolbar/c/SelectedTools/ColorG" to="Toolbar" method="ColorPickChanged" binds= [1]]
+[connection signal="popup_closed" from="Toolbar/c/SelectedTools/ColorG" to="Toolbar" method="PickerState" binds= [false]]
+[connection signal="pressed" from="Toolbar/c/SelectedTools/ColorG" to="Toolbar" method="PickerState" binds= [true]]
 [connection signal="color_changed" from="Toolbar/c/SelectedTools/ColorB" to="Toolbar" method="ColorPickChanged" binds= [2]]
+[connection signal="popup_closed" from="Toolbar/c/SelectedTools/ColorB" to="Toolbar" method="PickerState" binds= [false]]
+[connection signal="pressed" from="Toolbar/c/SelectedTools/ColorB" to="Toolbar" method="PickerState" binds= [true]]

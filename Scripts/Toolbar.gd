@@ -174,5 +174,12 @@ func RotationChanged(_val: float):
 func RotationChangeEnded(_val: float):
 	sliderRotating = false
 
+var picking: bool = false
+
 func ColorPickChanged(_newColor: Color, _val: int = 0):
-	Game.ins.hud.ChangeSelectedColourChannel(_newColor, _val)
+	if picking:
+		Game.ins.hud.ChangeSelectedColourChannel(_newColor, _val)
+
+func PickerState(value: bool):
+	picking = value
+	Game.ins.hud.clickedOut.visible = !value

@@ -42,6 +42,8 @@ var nameType: Label
 
 var texting: bool = false
 
+var clickedOut: TextureButton
+
 func _init():
 	ins = self
 
@@ -75,6 +77,8 @@ func _ready():
 
 	nameEdit = %EnterName
 	nameType = %FishType
+
+	clickedOut = %ClickedOut
 
 	ResetEditor()
 
@@ -401,3 +405,6 @@ func FlipV():
 func ChangeSelectedColourChannel(color: Color, channel: int):
 	for part in currentPartGroup:
 		part.SetColorChannel(color, channel)
+
+func TakePicture():
+	pass

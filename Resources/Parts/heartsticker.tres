@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bins0ywd6eois"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_2rvyi"]
+[ext_resource type="Texture2D" uid="uid://cfsjs5tn0ison" path="res://Assets/Art/Sprites/ActualParts/accessories_heart.png" id="2_ow2i0"]
+
+[resource]
+script = ExtResource("1_2rvyi")
+name = "Heart Sticker"
+texture = ExtResource("2_ow2i0")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.34902, 0.803922, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16

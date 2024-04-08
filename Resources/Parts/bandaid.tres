@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dr332mhh2ndvc"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_wa5if"]
+[ext_resource type="Texture2D" uid="uid://bg26sf25etvpf" path="res://Assets/Art/Sprites/ActualParts/accessories_bandaid.png" id="2_ijibo"]
+
+[resource]
+script = ExtResource("1_wa5if")
+name = "Bandaid"
+texture = ExtResource("2_ijibo")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.678431, 0.666667, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
