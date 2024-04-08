@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=20 format=3 uid="uid://ns1ce5pc8bkk"]
+[gd_resource type="Theme" load_steps=24 format=3 uid="uid://ns1ce5pc8bkk"]
 
 [ext_resource type="Texture2D" uid="uid://k06fbt6hqacu" path="res://Assets/Art/Sprites/UI/ColorPicker.png" id="1_n0htf"]
 [ext_resource type="Texture2D" uid="uid://dvj5clnnswouu" path="res://Assets/Art/Sprites/UI/UI_thing.png" id="2_2uxkv"]
@@ -121,6 +121,47 @@ texture_margin_top = 40.0
 texture_margin_right = 45.0
 texture_margin_bottom = 40.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_71tfv"]
+bg_color = Color(0.454902, 0.741176, 0.823529, 0.537255)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1x0dj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1s64"]
+bg_color = Color(0.764706, 0.988235, 0.988235, 0.721569)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5svy4"]
+bg_color = Color(0.352941, 0.823529, 0.517647, 0.721569)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3hso"]
 bg_color = Color(0.478431, 0.733333, 0.898039, 1)
 corner_radius_top_left = 5
@@ -165,6 +206,11 @@ Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/constants/outline_size = 8
 Label/font_sizes/font_size = 20
 Panel/styles/panel = SubResource("StyleBoxTexture_f1565")
+TabBar/styles/tab_disabled = SubResource("StyleBoxFlat_71tfv")
+TabBar/styles/tab_focus = SubResource("StyleBoxEmpty_1x0dj")
+TabBar/styles/tab_hovered = SubResource("StyleBoxFlat_j1s64")
+TabBar/styles/tab_selected = SubResource("StyleBoxFlat_5svy4")
+TabBar/styles/tab_unselected = SubResource("StyleBoxFlat_71tfv")
 VScrollBar/styles/grabber = SubResource("StyleBoxFlat_o3hso")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_03lj7")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_03lj7")

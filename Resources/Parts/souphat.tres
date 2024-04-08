@@ -14,4 +14,4 @@ greenChannel = true
 defaultGreen = Color(0.94902, 0.6, 0, 1)
 blueChannel = false
 defaultBlue = Color(1, 1, 1, 1)
-tags = 0
+tags = 18

@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var fishDataList: Array[FishData]
 
 var fishRef: Sprite2D
+var fishName: Label
 
 var currentFish = 0
 
@@ -12,6 +13,13 @@ var picked = false
 
 func _ready():
 	fishRef = get_parent().get_node("Fish/FishBody")
+	fishName = $c/FishName
+
+	var animateTween: Tween = create_tween().set_loops(-1)
+	animateTween.tween_property(fishName, "rotation", deg_to_rad(15), 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	animateTween.tween_property(fishName, "rotation", deg_to_rad(0), 0.25).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	animateTween.tween_property(fishName, "rotation", deg_to_rad(-15), 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	animateTween.tween_property(fishName, "rotation", deg_to_rad(0), 0.25).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 
 func Pick():
 	if picked:
@@ -39,12 +47,17 @@ func SetFish(value: int):
 	Fish()
 
 func Fish():
+	Game.ins.selectedFish = fishDataList[currentFish]
 	fishRef.texture = fishDataList[currentFish].texture
+	fishName.text = fishDataList[currentFish].name
 	if swapFishTween:
 		swapFishTween.kill()
 	swapFishTween = create_tween()
 	fishRef.scale = Vector2(.9, .9)
+	fishName.scale = Vector2(1.2, 1.2)
 	swapFishTween.tween_property(fishRef, "scale", Vector2(.75, .75), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	swapFishTween.parallel()
+	swapFishTween.tween_property(fishName, "scale", Vector2(1, 1), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 
 func _process(_delta):
 	if picked:

@@ -33,16 +33,51 @@ var overrideButton: CheckButton
 
 var showTestParts: bool = false
 
+var currentCategory: int = 0
+
+var categories: TabBar
+
+var nameEdit: LineEdit
+var nameType: Label
+
+var texting: bool = false
+
 func _init():
 	ins = self
+
+func EditorOpened():
+	nameEdit.text = ""
+	if Game.ins.selectedFish:
+		nameType.text = "The " + Game.ins.selectedFish.name + "!"
+
+	overrideButton.button_pressed = false
+	overrideColours = false
+
+	currentCategory = 0
+	categories.current_tab = 0
+
+	rPickerRef.color = Color.WHITE
+	gPickerRef.color = Color.WHITE
+	bPickerRef.color = Color.WHITE
+	pickedColorR = rPickerRef.color
+	pickedColorG = gPickerRef.color
+	pickedColorB = bPickerRef.color
+	colorMaterial.set_shader_parameter("red_color", pickedColorR)
+	colorMaterial.set_shader_parameter("green_color", pickedColorG)
+	colorMaterial.set_shader_parameter("blue_color", pickedColorB)
 
 func _ready():
 	overrideButton = %OverrideDefault
 	rPickerRef = %ColorR
 	gPickerRef = %ColorG
 	bPickerRef = %ColorB
+	categories = %Categories
+
+	nameEdit = %EnterName
+	nameType = %FishType
 
 	ResetEditor()
+
 	for i in partDataList.size():
 		var newButton: DecorButton = decorButtonIns.instantiate()
 		newButton.Setup(partDataList[i])
@@ -51,6 +86,9 @@ func _ready():
 		%Decors.add_child(newButton)
 
 		fishRef = get_parent().get_node("Fish")
+
+func InText(value: bool):
+	texting = value
 
 func CreateNewDecor(id: int = 0):
 	var newDecor = partIns.instantiate() as Part
@@ -74,34 +112,50 @@ func CreateNewDecor(id: int = 0):
 func _enter_tree():
 	UpdateTags()
 
+func CategoryChanged(value: int):
+	if currentCategory == value:
+		return
+	currentCategory = value
+	UpdateTags()
+
 func UpdateTags():
-	for decor in decorButtons:
-		if decor.partData.tags & PartData.Tag.TEST != 0:
-			decor.visible = showTestParts
-		else:
-			decor.visible = true
+	if currentCategory == 0:
+		for decor in decorButtons:
+			if decor.partData.tags & PartData.Tag.TEST != 0:
+				decor.visible = showTestParts
+			else:
+				decor.visible = true
+		return
+	else:
+		var tagToCompare: PartData.Tag
+		match currentCategory:
+			1:
+				tagToCompare = PartData.Tag.HEAD
+			2:
+				tagToCompare = PartData.Tag.UPPER
+			3:
+				tagToCompare = PartData.Tag.LOWER
+			4:
+				tagToCompare = PartData.Tag.ACCESSORY
+		for decor in decorButtons:
+			if decor.partData.tags & tagToCompare != 0:
+				if decor.partData.tags & PartData.Tag.TEST != 0:
+					decor.visible = showTestParts
+				else:
+					decor.visible = true
+			else:
+				decor.visible = false
 
 func ResetEditor():
 	currentlyManipulating = false
-
-	overrideButton.button_pressed = false
-	overrideColours = false
-
-	rPickerRef.color = Color.WHITE
-	gPickerRef.color = Color.WHITE
-	bPickerRef.color = Color.WHITE
-	pickedColorR = rPickerRef.color
-	pickedColorG = gPickerRef.color
-	pickedColorB = bPickerRef.color
-	colorMaterial.set_shader_parameter("red_color", pickedColorR)
-	colorMaterial.set_shader_parameter("green_color", pickedColorG)
-	colorMaterial.set_shader_parameter("blue_color", pickedColorB)
 
 func _process(_delta):
 	if Game.ins.cogMenu.is_inside_tree():
 		return
 	if Input.is_action_just_pressed("ui_cancel"):
 		Game.ins.ShowCogMenu()
+		return
+	if texting:
 		return
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
 		SelectAll()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=124 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -86,7 +86,12 @@
 [ext_resource type="Resource" uid="uid://xsvl4pxknir7" path="res://Resources/Parts/rainumbrella.tres" id="62_6qmmj"]
 [ext_resource type="Resource" uid="uid://b4eciv1ljhta1" path="res://Resources/Parts/stylishwig.tres" id="63_icmkg"]
 [ext_resource type="Resource" uid="uid://cuni7v86gyu0n" path="res://Resources/Parts/afrowig.tres" id="64_ry3pm"]
+[ext_resource type="Texture2D" uid="uid://dhq2t1rw6otm3" path="res://Assets/Art/Sprites/UI/AllIcon.png" id="66_y13vy"]
+[ext_resource type="Texture2D" uid="uid://bogr7vv8gh70q" path="res://Assets/Art/Sprites/UI/HeadIcon.png" id="66_yj4ta"]
+[ext_resource type="Texture2D" uid="uid://rtuwdk0cjw4" path="res://Assets/Art/Sprites/UI/UpperIcon.png" id="67_jb2wy"]
 [ext_resource type="Texture2D" uid="uid://blou278knef63" path="res://Assets/Art/Sprites/UI/icon_settings.png" id="68_6fhhy"]
+[ext_resource type="Texture2D" uid="uid://cr6ny0g2pdhlo" path="res://Assets/Art/Sprites/UI/LowerIcon.png" id="68_oc0b2"]
+[ext_resource type="Texture2D" uid="uid://d170snr27w4gj" path="res://Assets/Art/Sprites/UI/AccessoriesIcon.png" id="69_a3glx"]
 [ext_resource type="Script" path="res://Scripts/Toolbar.gd" id="71_35idl"]
 [ext_resource type="Texture2D" uid="uid://c0yersrykq50c" path="res://Assets/Art/Sprites/UI/icon_deleteall.png" id="72_lp31v"]
 [ext_resource type="Texture2D" uid="uid://c0eftt5ch5wsv" path="res://Assets/Art/Sprites/UI/icon_selectall.png" id="73_fvuql"]
@@ -120,16 +125,15 @@ shader_parameter/line_thickness = 8.0
 shader_parameter/line_color = Color(0.129412, 0.129412, 0.129412, 1)
 
 [sub_resource type="Gradient" id="Gradient_rdtk6"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0.363636, 0.772727)
-colors = PackedColorArray(0, 0.572549, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.349425, 0.558621, 0.583908)
+colors = PackedColorArray(0.293232, 0.645745, 1, 1, 0.102179, 0.607438, 1, 1, 0, 0.572549, 1, 1, 0.278431, 0.466667, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xhx1q"]
 gradient = SubResource("Gradient_rdtk6")
 width = 500
 height = 1080
-fill_from = Vector2(0.203077, 0.461538)
-fill_to = Vector2(0.655385, 0.337607)
+fill_from = Vector2(0.516923, 0.564103)
+fill_to = Vector2(0.646154, 0.534188)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oe62a"]
 
@@ -140,6 +144,10 @@ fill_to = Vector2(0.655385, 0.337607)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rnnn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ag2ck"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lgp1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jp7pg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14hiv"]
 bg_color = Color(1, 1, 0, 0.423529)
@@ -217,7 +225,6 @@ disableForWeb = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = -5
-visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
@@ -321,6 +328,76 @@ button_pressed = true
 text = "Override default colours"
 alignment = 1
 
+[node name="Categories" type="TabBar" parent="HUD/c/Panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 47.0
+offset_top = 43.0
+offset_right = 543.0
+offset_bottom = 132.0
+tab_count = 5
+tab_alignment = 1
+tab_0/title = ""
+tab_0/icon = ExtResource("66_y13vy")
+tab_1/title = ""
+tab_1/icon = ExtResource("66_yj4ta")
+tab_2/title = ""
+tab_2/icon = ExtResource("67_jb2wy")
+tab_3/title = ""
+tab_3/icon = ExtResource("68_oc0b2")
+tab_4/title = ""
+tab_4/icon = ExtResource("69_a3glx")
+
+[node name="Name" type="Label" parent="HUD/c"]
+layout_mode = 0
+offset_left = 167.0
+offset_top = 17.0
+offset_right = 561.0
+offset_bottom = 67.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.494118)
+theme_override_constants/shadow_offset_x = 7
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 1
+theme_override_font_sizes/font_size = 40
+text = "Hi, my name is: "
+horizontal_alignment = 1
+
+[node name="EnterName" type="LineEdit" parent="HUD/c/Name"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -124.0
+offset_top = 51.0
+offset_right = 526.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8lgp1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jp7pg")
+placeholder_text = "enter name..."
+alignment = 1
+max_length = 15
+expand_to_text_length = true
+
+[node name="FishType" type="Label" parent="HUD/c/Name"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -47.0
+offset_top = 126.0
+offset_right = 436.0
+offset_bottom = 176.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.494118)
+theme_override_constants/shadow_offset_x = 7
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 15
+theme_override_constants/shadow_outline_size = 1
+theme_override_font_sizes/font_size = 40
+text = "The Whale Shark!"
+horizontal_alignment = 1
+
 [node name="Fish" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_djwkn")
@@ -333,6 +410,7 @@ texture = ExtResource("50_vwc7o")
 
 [node name="FishPicker" type="CanvasLayer" parent="."]
 layer = 2
+visible = false
 script = ExtResource("17_ab2uv")
 fishDataList = Array[Resource("res://Scripts/Fishdata.gd")]([ExtResource("18_bd57s"), ExtResource("19_e6o20"), ExtResource("20_ydo2a"), ExtResource("21_htqcw"), ExtResource("22_0o110"), ExtResource("26_xitak")])
 
@@ -981,6 +1059,9 @@ edit_alpha = false
 [connection signal="color_changed" from="HUD/c/Panel/ColorG" to="HUD" method="ColorPickChanged" binds= [2]]
 [connection signal="color_changed" from="HUD/c/Panel/ColorB" to="HUD" method="ColorPickChanged" binds= [3]]
 [connection signal="toggled" from="HUD/c/Panel/OverrideDefault" to="HUD" method="SetOverride"]
+[connection signal="tab_changed" from="HUD/c/Panel/Categories" to="HUD" method="CategoryChanged"]
+[connection signal="focus_entered" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [true]]
+[connection signal="focus_exited" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [false]]
 [connection signal="pressed" from="FishPicker/c/LeftButton" to="FishPicker" method="SwapFish" binds= [-1]]
 [connection signal="pressed" from="FishPicker/c/RightButton" to="FishPicker" method="SwapFish" binds= [1]]
 [connection signal="pressed" from="FishPicker/c/Pick" to="FishPicker" method="Pick"]

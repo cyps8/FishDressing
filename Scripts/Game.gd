@@ -20,6 +20,8 @@ var cogMenu: CanvasLayer
 
 var toolbar: CanvasLayer
 
+var selectedFish: FishData
+
 func _init():
 	ins = self
 
@@ -80,6 +82,7 @@ func ShowMenu():
 
 func ShowHUD():
 	add_child(hud)
+	hud.EditorOpened()
 	hud.offset = Vector2(0, 900)
 	var showHUDTween: Tween = create_tween()
 	showHUDTween.tween_property(hud, "offset:y", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
