@@ -2,10 +2,6 @@ extends CanvasLayer
 
 var menuActive: bool = false
 
-func SecretTestSprites(value: bool):
-	Game.ins.hud.showTestParts = value
-	Game.ins.hud.UpdateTags()
-
 func _process(_delta):
 	if !menuActive:
 		return
@@ -20,4 +16,4 @@ func BackButton():
 	if !menuActive:
 		return
 	menuActive = false
-	Game.ins.HideSettings()
+	Game.ins.HideCredits()

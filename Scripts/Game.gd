@@ -20,6 +20,8 @@ var cogMenu: CanvasLayer
 
 var toolbar: CanvasLayer
 
+var credits: CanvasLayer
+
 var selectedFish: FishData
 
 var cameraFlash: ColorRect
@@ -57,6 +59,10 @@ func _ready():
 	cogMenu = $CogMenu
 	cogMenu.visible = true
 	remove_child(cogMenu)
+
+	credits = $Credits
+	credits.visible = true
+	remove_child(credits)
 
 	cameraFlash = $Camera/Flash
 
@@ -158,3 +164,15 @@ func HideCogMenu():
 	var hideCogMenuTween: Tween = create_tween()
 	hideCogMenuTween.tween_property(cogMenu, "offset:y", -900, 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	hideCogMenuTween.tween_callback(remove_child.bind(cogMenu))
+
+func ShowCredits():
+	add_child(credits)
+	credits.offset = Vector2(0, -900)
+	var showCreditsTween: Tween = create_tween()
+	showCreditsTween.tween_property(credits, "offset:y", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	showCreditsTween.tween_callback(credits.SetActive.bind(true))
+
+func HideCredits():
+	var hideCreditsTween: Tween = create_tween()
+	hideCreditsTween.tween_property(credits, "offset:y", -900, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	hideCreditsTween.tween_callback(remove_child.bind(credits))

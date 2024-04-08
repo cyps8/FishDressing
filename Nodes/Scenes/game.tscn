@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=141 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -121,6 +121,11 @@
 [ext_resource type="Texture2D" uid="uid://b8drrq3xg6rpd" path="res://Assets/Art/Sprites/UI/icon_rotateL.png" id="86_4ecbi"]
 [ext_resource type="Texture2D" uid="uid://ci0g20vv73bbf" path="res://Assets/Art/Sprites/UI/icon_rotateR.png" id="87_hpndk"]
 [ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
+[ext_resource type="Texture2D" uid="uid://dgihkj4xrgfgc" path="res://Assets/Art/Sprites/Credits/Sugarcyube.png" id="122_aio3a"]
+[ext_resource type="Script" path="res://Scripts/Credits.gd" id="122_hspmw"]
+[ext_resource type="Texture2D" uid="uid://bodonwsw3sap" path="res://Assets/Art/Sprites/Credits/Cypri.png" id="123_tq842"]
+[ext_resource type="Script" path="res://Scripts/Wobble.gd" id="124_1ylgy"]
+[ext_resource type="Texture2D" uid="uid://glx86khw5f8s" path="res://Assets/Art/Sprites/Credits/Calum.png" id="124_aec0k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
 shader = ExtResource("3_tpo2n")
@@ -183,7 +188,6 @@ texture = SubResource("GradientTexture2D_lasq8")
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
 layer = 10
-visible = false
 script = ExtResource("2_rrrc7")
 
 [node name="C" type="Control" parent="MainMenu"]
@@ -204,28 +208,37 @@ offset_bottom = 1080.0
 texture = ExtResource("6_libr3")
 
 [node name="StartButton" type="Button" parent="MainMenu/C/Group"]
-offset_left = 69.0
-offset_top = 422.0
-offset_right = 330.0
-offset_bottom = 500.0
+offset_left = 72.0
+offset_top = 406.0
+offset_right = 333.0
+offset_bottom = 484.0
 theme = ExtResource("4_8dgoj")
 text = "START"
 script = ExtResource("6_j1bsi")
 
+[node name="CreditsButton" type="Button" parent="MainMenu/C/Group"]
+offset_left = 101.0
+offset_top = 493.0
+offset_right = 362.0
+offset_bottom = 571.0
+theme = ExtResource("4_8dgoj")
+text = "CREDITS"
+script = ExtResource("6_j1bsi")
+
 [node name="OptionsButton" type="Button" parent="MainMenu/C/Group"]
-offset_left = 99.0
-offset_top = 540.0
-offset_right = 360.0
-offset_bottom = 618.0
+offset_left = 134.0
+offset_top = 583.0
+offset_right = 395.0
+offset_bottom = 661.0
 theme = ExtResource("4_8dgoj")
 text = "OPTIONS"
 script = ExtResource("6_j1bsi")
 
 [node name="QuitButton" type="Button" parent="MainMenu/C/Group"]
-offset_left = 117.0
-offset_top = 660.0
-offset_right = 378.0
-offset_bottom = 738.0
+offset_left = 167.0
+offset_top = 675.0
+offset_right = 428.0
+offset_bottom = 753.0
 theme = ExtResource("4_8dgoj")
 text = "FIN"
 script = ExtResource("6_j1bsi")
@@ -234,6 +247,7 @@ disableForWeb = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = -5
+visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
@@ -1224,7 +1238,167 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
+[node name="Credits" type="CanvasLayer" parent="."]
+layer = 15
+script = ExtResource("122_hspmw")
+
+[node name="c" type="Control" parent="Credits"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_8dgoj")
+
+[node name="Panel" type="Panel" parent="Credits/c"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -691.0
+offset_top = -471.0
+offset_right = 691.0
+offset_bottom = 471.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Credits" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 424.0
+offset_top = 44.0
+offset_right = 942.0
+offset_bottom = 117.0
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 40
+text = "CREDITS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits2" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 130.0
+offset_right = 546.0
+offset_bottom = 203.0
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 40
+text = "SUGARCYUBE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits5" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 611.0
+offset_right = 525.0
+offset_bottom = 777.0
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 25
+text = "ART
+GAME DESIGN
+UI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits6" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 651.0
+offset_right = 978.0
+offset_bottom = 817.0
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 25
+text = "MUSIC
+GAME DESIGN
+SOUND"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits7" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 844.0
+offset_top = 604.0
+offset_right = 1362.0
+offset_bottom = 770.0
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 25
+text = "PROGRAMMING
+GAME DESIGN
+SHADERS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits3" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 431.0
+offset_top = 135.0
+offset_right = 949.0
+offset_bottom = 208.0
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 40
+text = "CALUM"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Credits4" type="Label" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 835.0
+offset_top = 141.0
+offset_right = 1353.0
+offset_bottom = 214.0
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 40
+text = "CYPRI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sugar" type="TextureRect" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 172.0
+offset_right = 486.0
+offset_bottom = 564.0
+texture = ExtResource("122_aio3a")
+expand_mode = 1
+script = ExtResource("124_1ylgy")
+speed = 0.4
+
+[node name="Cypri" type="TextureRect" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 893.0
+offset_top = 198.0
+offset_right = 1318.0
+offset_bottom = 590.0
+texture = ExtResource("123_tq842")
+expand_mode = 1
+script = ExtResource("124_1ylgy")
+
+[node name="Calum" type="TextureRect" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 465.0
+offset_top = 244.0
+offset_right = 890.0
+offset_bottom = 636.0
+texture = ExtResource("124_aec0k")
+expand_mode = 1
+script = ExtResource("124_1ylgy")
+speed = 0.55
+
+[node name="Button" type="Button" parent="Credits/c/Panel"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 54.0
+offset_right = 236.0
+offset_bottom = 111.0
+text = "BACK"
+script = ExtResource("6_j1bsi")
+backButton = true
+
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
+[connection signal="pressed" from="MainMenu/C/Group/CreditsButton" to="MainMenu" method="CreditsButton"]
 [connection signal="pressed" from="MainMenu/C/Group/OptionsButton" to="MainMenu" method="SettingsButton"]
 [connection signal="pressed" from="MainMenu/C/Group/QuitButton" to="MainMenu" method="ExitButton"]
 [connection signal="button_down" from="HUD/c/ClickedOut" to="HUD" method="ClickedOut"]
@@ -1283,3 +1457,4 @@ color = Color(1, 1, 1, 0)
 [connection signal="color_changed" from="Toolbar/c/SelectedTools/ColorB" to="Toolbar" method="ColorPickChanged" binds= [2]]
 [connection signal="popup_closed" from="Toolbar/c/SelectedTools/ColorB" to="Toolbar" method="PickerState" binds= [false]]
 [connection signal="pressed" from="Toolbar/c/SelectedTools/ColorB" to="Toolbar" method="PickerState" binds= [true]]
+[connection signal="pressed" from="Credits/c/Panel/Button" to="Credits" method="BackButton"]
