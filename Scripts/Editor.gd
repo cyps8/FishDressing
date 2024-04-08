@@ -20,9 +20,9 @@ var fishRef: CanvasGroup
 
 @export var colorMaterial: Material
 
-var pickedColorR: Color = Color.WHITE
-var pickedColorG: Color = Color.WHITE
-var pickedColorB: Color = Color.WHITE
+var pickedColorR: Color = Color.CYAN
+var pickedColorG: Color = Color.YELLOW
+var pickedColorB: Color = Color.MAGENTA
 
 var rPickerRef: ColorPickerButton
 var gPickerRef: ColorPickerButton
@@ -44,6 +44,8 @@ var texting: bool = false
 
 var clickedOut: TextureButton
 
+var fileDialog: FileDialog
+
 func _init():
 	ins = self
 
@@ -58,9 +60,9 @@ func EditorOpened():
 	currentCategory = 0
 	categories.current_tab = 0
 
-	rPickerRef.color = Color.WHITE
-	gPickerRef.color = Color.WHITE
-	bPickerRef.color = Color.WHITE
+	rPickerRef.color = Color.CYAN
+	gPickerRef.color = Color.YELLOW
+	bPickerRef.color = Color.MAGENTA
 	pickedColorR = rPickerRef.color
 	pickedColorG = gPickerRef.color
 	pickedColorB = bPickerRef.color
@@ -79,6 +81,8 @@ func _ready():
 	nameType = %FishType
 
 	clickedOut = %ClickedOut
+
+	fileDialog = $FileDialog
 
 	ResetEditor()
 
@@ -406,5 +410,33 @@ func ChangeSelectedColourChannel(color: Color, channel: int):
 	for part in currentPartGroup:
 		part.SetColorChannel(color, channel)
 
+var img: Image
+
+var filePath: String
+
 func TakePicture():
-	pass
+	await RenderingServer.frame_post_draw
+	img = get_viewport().get_texture().get_image()
+	img = img.get_region(Rect2i(img.get_width() / 3.0 as int, 0 as int, img.get_width() / 3.0 as int, img.get_height() as int))
+	if OS.get_name() == "Web":
+		TakeWebPicture()
+		return
+	if nameEdit.text == "":
+		fileDialog.current_file = "PictureOfFriend"
+	else:
+		fileDialog.current_file = "PictureOf" + nameEdit.text
+	fileDialog.visible = true
+
+func GetFilePath(path: String):
+	filePath = path
+
+func SavePicture():
+	if !filePath.ends_with(".png"):
+		filePath += ".png"
+	img.save_png(filePath)
+
+func TakeWebPicture():
+	if nameEdit.text == "":
+		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "PictureOfFriend.png")
+	else:
+		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "PictureOf" + nameEdit.text + ".png")

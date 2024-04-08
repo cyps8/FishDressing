@@ -1,4 +1,4 @@
-[gd_scene load_steps=131 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=133 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -99,7 +99,9 @@
 [ext_resource type="Texture2D" uid="uid://d170snr27w4gj" path="res://Assets/Art/Sprites/UI/AccessoriesIcon.png" id="69_a3glx"]
 [ext_resource type="Resource" uid="uid://3d40btxn8mhh" path="res://Resources/TestParts/unusedfish.tres" id="69_su5xo"]
 [ext_resource type="Script" path="res://Scripts/Toolbar.gd" id="71_35idl"]
+[ext_resource type="Texture2D" uid="uid://br2llvqk6qtbq" path="res://Assets/Art/Sprites/UI/paint.png" id="72_bk7ok"]
 [ext_resource type="Texture2D" uid="uid://c0yersrykq50c" path="res://Assets/Art/Sprites/UI/icon_deleteall.png" id="72_lp31v"]
+[ext_resource type="Script" path="res://Scripts/Paint.gd" id="73_by8g6"]
 [ext_resource type="Texture2D" uid="uid://c0eftt5ch5wsv" path="res://Assets/Art/Sprites/UI/icon_selectall.png" id="73_fvuql"]
 [ext_resource type="Texture2D" uid="uid://dwm8gs7mh0enc" path="res://Assets/Art/Sprites/UI/icon_undo.png" id="74_efact"]
 [ext_resource type="Texture2D" uid="uid://cx5r3b38qfbem" path="res://Assets/Art/Sprites/UI/icon_redo.png" id="75_5lu0h"]
@@ -276,6 +278,7 @@ columns = 4
 
 [node name="ColorR" type="ColorPickerButton" parent="HUD/c/Panel"]
 unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 170.0
 offset_top = 746.0
@@ -290,8 +293,27 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
+[node name="Paint" type="TextureRect" parent="HUD/c/Panel/ColorR"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
 [node name="ColorG" type="ColorPickerButton" parent="HUD/c/Panel"]
 unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 264.0
 offset_top = 746.0
@@ -306,8 +328,27 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
+[node name="Paint" type="TextureRect" parent="HUD/c/Panel/ColorG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
 [node name="ColorB" type="ColorPickerButton" parent="HUD/c/Panel"]
 unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 353.0
 offset_top = 746.0
@@ -321,6 +362,24 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+
+[node name="Paint" type="TextureRect" parent="HUD/c/Panel/ColorB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
 
 [node name="OverrideDefault" type="CheckButton" parent="HUD/c/Panel"]
 unique_name_in_owner = true
@@ -416,6 +475,12 @@ expand_icon = true
 script = ExtResource("6_j1bsi")
 silentButton = true
 
+[node name="FileDialog" type="FileDialog" parent="HUD"]
+title = "Save picture of your friend!"
+initial_position = 2
+size = Vector2i(900, 600)
+access = 2
+
 [node name="Fish" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_djwkn")
@@ -442,6 +507,7 @@ grow_vertical = 2
 theme = ExtResource("4_8dgoj")
 
 [node name="LeftButton" type="TextureButton" parent="FishPicker/c"]
+self_modulate = Color(1, 1, 1, 0.698039)
 layout_mode = 0
 offset_left = 679.0
 offset_top = 850.0
@@ -452,6 +518,7 @@ flip_h = true
 script = ExtResource("24_3jm2q")
 
 [node name="RightButton" type="TextureButton" parent="FishPicker/c"]
+self_modulate = Color(1, 1, 1, 0.698039)
 layout_mode = 0
 offset_left = 1089.0
 offset_top = 850.0
@@ -1032,6 +1099,7 @@ offset_bottom = 402.0
 text = "Change Colours"
 
 [node name="ColorR" type="ColorPickerButton" parent="Toolbar/c/SelectedTools"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 81.0
 offset_top = 410.0
@@ -1046,7 +1114,26 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
+[node name="Paint" type="TextureRect" parent="Toolbar/c/SelectedTools/ColorR"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
 [node name="ColorG" type="ColorPickerButton" parent="Toolbar/c/SelectedTools"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 175.0
 offset_top = 410.0
@@ -1061,7 +1148,26 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
+[node name="Paint" type="TextureRect" parent="Toolbar/c/SelectedTools/ColorG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
 [node name="ColorB" type="ColorPickerButton" parent="Toolbar/c/SelectedTools"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 264.0
 offset_top = 410.0
@@ -1076,6 +1182,24 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 
+[node name="Paint" type="TextureRect" parent="Toolbar/c/SelectedTools/ColorB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/OptionsButton" to="MainMenu" method="SettingsButton"]
 [connection signal="pressed" from="MainMenu/C/Group/QuitButton" to="MainMenu" method="ExitButton"]
@@ -1087,6 +1211,9 @@ edit_alpha = false
 [connection signal="tab_changed" from="HUD/c/Panel/Categories" to="HUD" method="CategoryChanged"]
 [connection signal="focus_entered" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [true]]
 [connection signal="focus_exited" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [false]]
+[connection signal="pressed" from="HUD/c/Camera" to="HUD" method="TakePicture"]
+[connection signal="confirmed" from="HUD/FileDialog" to="HUD" method="SavePicture"]
+[connection signal="file_selected" from="HUD/FileDialog" to="HUD" method="GetFilePath"]
 [connection signal="pressed" from="FishPicker/c/LeftButton" to="FishPicker" method="SwapFish" binds= [-1]]
 [connection signal="pressed" from="FishPicker/c/RightButton" to="FishPicker" method="SwapFish" binds= [1]]
 [connection signal="pressed" from="FishPicker/c/Pick" to="FishPicker" method="Pick"]
