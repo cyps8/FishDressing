@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c2y05x53w3ea5"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_b6uu0"]
+[ext_resource type="Texture2D" uid="uid://6xkvv6lj6v6i" path="res://Assets/Art/Sprites/ActualParts/accessories_umbrella1.png" id="2_da1gd"]
+
+[resource]
+script = ExtResource("1_b6uu0")
+name = "Parasol"
+texture = ExtResource("2_da1gd")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0.960784, 0.709804, 1)
+greenChannel = true
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

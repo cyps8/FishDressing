@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://xsvl4pxknir7"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_xehnj"]
+[ext_resource type="Texture2D" uid="uid://c6xf3xmjg7k65" path="res://Assets/Art/Sprites/ActualParts/accessories_umbrella2.png" id="2_67a4l"]
+
+[resource]
+script = ExtResource("1_xehnj")
+name = "Rain Umbrella"
+texture = ExtResource("2_67a4l")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0.345098, 1, 1)
+greenChannel = true
+defaultGreen = Color(0.866667, 0.745098, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

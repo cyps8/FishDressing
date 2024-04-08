@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://lcn1lcqsoiu8"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_we8l5"]
+[ext_resource type="Texture2D" uid="uid://dm0g3wlcfg7ji" path="res://Assets/Art/Sprites/ActualParts/accessories_flower.png" id="2_x1jv1"]
+
+[resource]
+script = ExtResource("1_we8l5")
+name = "Flower"
+texture = ExtResource("2_x1jv1")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = true
+defaultGreen = Color(1, 1, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

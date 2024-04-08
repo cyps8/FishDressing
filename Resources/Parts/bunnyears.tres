@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bgwhx1qgpfrpi"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_614f8"]
+[ext_resource type="Texture2D" uid="uid://bm68rgtasj3tw" path="res://Assets/Art/Sprites/ActualParts/accessories_headband2.png" id="2_u3ylg"]
+
+[resource]
+script = ExtResource("1_614f8")
+name = "Bunny Ears"
+texture = ExtResource("2_u3ylg")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.654902, 0.996078, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

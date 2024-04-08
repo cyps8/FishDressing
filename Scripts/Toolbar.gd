@@ -20,6 +20,9 @@ var rotatingRight: bool = false
 
 var refPart: Part
 
+var sliderScaling: bool = false
+var sliderRotating: bool = false
+
 func _ready():
 	selectedTools = $c/SelectedTools
 	globalTools = $c/GlobalTools
@@ -135,11 +138,17 @@ func ScaleUp(val: bool):
 		Game.ins.hud.ResetSelectedMoveValues(true)
 	scalingUp = val
 
+func ScaleChangeStarted():
+	Game.ins.hud.SetFakeMouse()
+	Game.ins.hud.ResetSelectedMoveValues(true)
+	sliderScaling = true
+	
 func ScaleChanged(_val: float):
-	pass
+	if sliderScaling:
+		Game.ins.hud.SetScale(_val, true, true)
 
 func ScaleChangeEnded(_val: float):
-	pass
+	sliderScaling = false
 
 func RotateLeft(val: bool):
 	if val:
@@ -153,11 +162,17 @@ func RotateRight(val: bool):
 		Game.ins.hud.ResetSelectedMoveValues(true)
 	rotatingRight = val
 
+func RotationChangeStarted():
+	Game.ins.hud.SetFakeMouse()
+	Game.ins.hud.ResetSelectedMoveValues(true)
+	sliderRotating = true
+
 func RotationChanged(_val: float):
-	pass
+	if sliderRotating:
+		Game.ins.hud.SetRotation(deg_to_rad(_val), true, true)
 
 func RotationChangeEnded(_val: float):
-	pass
+	sliderRotating = false
 
 func ColorPickChanged(_newColor: Color, _val: int = 0):
-	pass
+	Game.ins.hud.ChangeSelectedColourChannel(_newColor, _val)

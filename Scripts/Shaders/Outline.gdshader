@@ -1,9 +1,11 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-const vec2 OFFSETS[8] = {
+const vec2 OFFSETS[16] = {
 	vec2(-0.71, -0.71), vec2(-1, 0), vec2(-0.71, 0.71), vec2(0, -1), vec2(0, 1), 
-	vec2(0.71, -0.71), vec2(1, 0), vec2(0.71, 0.71)
+	vec2(0.71, -0.71), vec2(1, 0), vec2(0.71, 0.71),
+	vec2(0.92, 0.38), vec2(0.38, 0.92), vec2(-0.92, 0.38), 
+	vec2(-0.38, 0.92), vec2(0.92, -0.38), vec2(0.38, -0.92), vec2(-0.92, -0.38), vec2(-0.38, -0.92)
 };
 
 uniform float line_thickness : hint_range(0.0, 10.0);

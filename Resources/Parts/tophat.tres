@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dynnm76qyqfdw"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_4xkq8"]
+[ext_resource type="Texture2D" uid="uid://bui7sx3veuek3" path="res://Assets/Art/Sprites/ActualParts/accessories_hat6.png" id="2_urbor"]
+
+[resource]
+script = ExtResource("1_4xkq8")
+name = "TopHat"
+texture = ExtResource("2_urbor")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0, 0, 1)
+greenChannel = true
+defaultGreen = Color(1, 0, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k06fbt6hqacu"
-path="res://.godot/imported/ColorPicker.png-ff6284b22c227cefb3a96f249262b54f.ctex"
+uid="uid://bir2dn8avd7lx"
+path="res://.godot/imported/accessories_wig1.png-437da44580f2f1bf92df80e2d387a7c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/Sprites/ColorPicker.png"
-dest_files=["res://.godot/imported/ColorPicker.png-ff6284b22c227cefb3a96f249262b54f.ctex"]
+source_file="res://Assets/Art/Sprites/ActualParts/accessories_wig1.png"
+dest_files=["res://.godot/imported/accessories_wig1.png-437da44580f2f1bf92df80e2d387a7c1.ctex"]
 
 [params]
 

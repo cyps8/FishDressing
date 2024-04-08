@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cmdbnexq8ldng"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_obl4a"]
+[ext_resource type="Texture2D" uid="uid://j3ujoles6is" path="res://Assets/Art/Sprites/ActualParts/accessories_skirt2.png" id="2_xvi0d"]
+
+[resource]
+script = ExtResource("1_obl4a")
+name = "Octopus Skirt"
+texture = ExtResource("2_xvi0d")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.917647, 0.278431, 0.447059, 1)
+greenChannel = true
+defaultGreen = Color(0.956863, 0.956863, 0.305882, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

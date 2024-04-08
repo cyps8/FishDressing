@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://b4eciv1ljhta1"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_sm5r6"]
+[ext_resource type="Texture2D" uid="uid://bir2dn8avd7lx" path="res://Assets/Art/Sprites/ActualParts/accessories_wig1.png" id="2_los2m"]
+
+[resource]
+script = ExtResource("1_sm5r6")
+name = "Stylish Wig"
+texture = ExtResource("2_los2m")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.968627, 0.596078, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

@@ -106,6 +106,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
 		SelectAll()
 	if currentPartGroup.size() > 0:
+		if Input.is_action_just_released("Interact"):
+			for part in currentPartGroup:
+				part.SetFakeMouse()
 		if Input.is_action_just_pressed("RotateRight") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
 			Duplicate()
 		if Input.is_action_just_pressed("Delete")  && !Input.is_action_pressed("Control"):
@@ -117,6 +120,36 @@ func _process(_delta):
 				FlipV()
 			else:
 				FlipH()
+		if Input.is_action_pressed("ScaleUp") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				ChangeScale(1.05, !currentlyManipulating)
+			else:
+				ChangeScale(1.01, !currentlyManipulating)
+		elif Input.is_action_pressed("ScaleDown") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				ChangeScale(0.95, !currentlyManipulating)
+			else:
+				ChangeScale(0.99, !currentlyManipulating)
+		if Input.is_action_pressed("RotateLeft") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				RotatePart(-0.05, !currentlyManipulating)
+			else:
+				RotatePart(-0.01, !currentlyManipulating)
+		elif Input.is_action_pressed("RotateRight") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				RotatePart(0.05, !currentlyManipulating)
+			else:
+				RotatePart(0.01, !currentlyManipulating)
+		if Input.is_action_just_pressed("MoveUp") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				MoveToTop()
+			else:
+				MoveUp()
+		elif Input.is_action_just_pressed("MoveDown") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				MoveToBottom()
+			else:
+				MoveDown()
 		if Input.is_action_pressed("Interact") && currentlyManipulating:
 			for part in currentPartGroup:
 				UpdateSafeColour(part)
@@ -130,36 +163,6 @@ func _process(_delta):
 					RotatePart(-0.05)
 				else:
 					ChangeScale(1.1)
-			if Input.is_action_pressed("ScaleUp"):
-				if Input.is_action_pressed("Shift"):
-					ChangeScale(1.05)
-				else:
-					ChangeScale(1.01)
-			elif Input.is_action_pressed("ScaleDown"):
-				if Input.is_action_pressed("Shift"):
-					ChangeScale(0.95)
-				else:
-					ChangeScale(0.99)
-			if Input.is_action_pressed("RotateLeft"):
-				if Input.is_action_pressed("Shift"):
-					RotatePart(-0.05)
-				else:
-					RotatePart(-0.01)
-			elif Input.is_action_pressed("RotateRight"):
-				if Input.is_action_pressed("Shift"):
-					RotatePart(0.05)
-				else:
-					RotatePart(0.01)
-			if Input.is_action_just_pressed("MoveUp"):
-				if Input.is_action_pressed("Shift"):
-					MoveToTop()
-				else:
-					MoveUp()
-			elif Input.is_action_just_pressed("MoveDown"):
-				if Input.is_action_pressed("Shift"):
-					MoveToBottom()
-				else:
-					MoveDown()
 			for part in currentPartGroup:
 				part.UpdateMovePosition()
 		elif Input.is_action_just_released("Interact") && !Input.is_action_pressed("Control"):
@@ -197,9 +200,13 @@ func RotatePart(amount: float, fake: bool = false):
 	for part in currentPartGroup:
 		part.RotateBy(amount, fake)
 
-func SetScale(value: float):
+func SetRotation(value: float, move: bool = false, fake: bool = false):
 	for part in currentPartGroup:
-		part.SetScale(value, false)
+		part.SetRotation(value, move, fake)
+
+func SetScale(value: float, move: bool = false, fake: bool = false):
+	for part in currentPartGroup:
+		part.SetScale(value, move, fake)
 
 func ChangeScale(value: float, fake: bool = false):
 	for part in currentPartGroup:
@@ -227,8 +234,10 @@ func SelectAll():
 	for part in GetAll():
 		if !part.controlGrouped:
 			part.SetControlGroup(true)
-			part.ResetMoveValues()
-			part.SpawnAnimation(false)
+			if !Input.is_action_pressed("Interact"):
+				part.SetFakeMouse()
+			part.ResetMoveValues(!Input.is_action_pressed("Interact"))
+			part.SpawnAnimation(!Input.is_action_pressed("Interact"), !Input.is_action_pressed("Interact"))
 			allInGroup = false
 	if allInGroup:
 		ClearControlGroup()
@@ -249,8 +258,10 @@ func Duplicate(selectedPart: Part = null):
 	ClearControlGroup()
 	for part in dupedParts:
 		part.SetControlGroup(true)
-		part.ResetMoveValues()
-		part.SpawnAnimation(false)
+		if !Input.is_action_pressed("Interact"):
+			part.SetFakeMouse()
+		part.ResetMoveValues(!Input.is_action_pressed("Interact"))
+		part.SpawnAnimation(!Input.is_action_pressed("Interact"), !Input.is_action_pressed("Interact"))
 	currentlyManipulating = true
 	AudioPlayer.ins.PlaySound(0)
 
@@ -332,3 +343,7 @@ func FlipV():
 		part.FlipV()
 		part.SpawnAnimation(currentlyManipulating)
 	AudioPlayer.ins.PlaySound(0)
+
+func ChangeSelectedColourChannel(color: Color, channel: int):
+	for part in currentPartGroup:
+		part.SetColorChannel(color, channel)
