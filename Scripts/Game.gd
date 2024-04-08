@@ -22,6 +22,8 @@ var toolbar: CanvasLayer
 
 var selectedFish: FishData
 
+var cameraFlash: ColorRect
+
 func _init():
 	ins = self
 
@@ -55,6 +57,8 @@ func _ready():
 	cogMenu = $CogMenu
 	cogMenu.visible = true
 	remove_child(cogMenu)
+
+	cameraFlash = $Camera/Flash
 
 func ReturnToMenu():
 	if fish.is_inside_tree():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=133 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=136 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -104,6 +104,7 @@
 [ext_resource type="Script" path="res://Scripts/Paint.gd" id="73_by8g6"]
 [ext_resource type="Texture2D" uid="uid://c0eftt5ch5wsv" path="res://Assets/Art/Sprites/UI/icon_selectall.png" id="73_fvuql"]
 [ext_resource type="Texture2D" uid="uid://dwm8gs7mh0enc" path="res://Assets/Art/Sprites/UI/icon_undo.png" id="74_efact"]
+[ext_resource type="Script" path="res://Scripts/HoverSound.gd" id="74_sltjo"]
 [ext_resource type="Texture2D" uid="uid://cx5r3b38qfbem" path="res://Assets/Art/Sprites/UI/icon_redo.png" id="75_5lu0h"]
 [ext_resource type="Texture2D" uid="uid://c7nvh0nkqy04m" path="res://Assets/Art/Sprites/UI/icon_delete.png" id="76_em32d"]
 [ext_resource type="Texture2D" uid="uid://ss6cae0rlaxk" path="res://Assets/Art/Sprites/UI/CamIcon.png" id="77_rvlwx"]
@@ -111,6 +112,7 @@
 [ext_resource type="Texture2D" uid="uid://di78e1ar5ac03" path="res://Assets/Art/Sprites/UI/icon_flipV.png" id="78_tlryf"]
 [ext_resource type="Texture2D" uid="uid://c7ipcryj167hb" path="res://Assets/Art/Sprites/UI/icon_flipH.png" id="79_3jqv7"]
 [ext_resource type="Texture2D" uid="uid://bwj71amrr3ve7" path="res://Assets/Art/Sprites/UI/icon_bottom.png" id="80_3m8p2"]
+[ext_resource type="Script" path="res://Scripts/Categories.gd" id="80_evdmd"]
 [ext_resource type="Texture2D" uid="uid://66w08w8wonmj" path="res://Assets/Art/Sprites/UI/icon_down.png" id="81_k4xka"]
 [ext_resource type="Texture2D" uid="uid://cfbxm24i42ajo" path="res://Assets/Art/Sprites/UI/icon_up.png" id="82_6sggo"]
 [ext_resource type="Texture2D" uid="uid://wjqj5v5vs25g" path="res://Assets/Art/Sprites/UI/icon_top.png" id="83_3jbw5"]
@@ -118,6 +120,7 @@
 [ext_resource type="Texture2D" uid="uid://34srjile4e4l" path="res://Assets/Art/Sprites/UI/icon_grow.png" id="85_a4f56"]
 [ext_resource type="Texture2D" uid="uid://b8drrq3xg6rpd" path="res://Assets/Art/Sprites/UI/icon_rotateL.png" id="86_4ecbi"]
 [ext_resource type="Texture2D" uid="uid://ci0g20vv73bbf" path="res://Assets/Art/Sprites/UI/icon_rotateR.png" id="87_hpndk"]
+[ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
 shader = ExtResource("3_tpo2n")
@@ -234,7 +237,7 @@ layer = -5
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
-partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("28_aps35"), ExtResource("29_56opn"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("46_362h0"), ExtResource("47_4svyo"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("50_3e21i"), ExtResource("51_w5ocs"), ExtResource("52_83r24"), ExtResource("53_60jmc"), ExtResource("54_x1n26"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("57_0egem"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
+partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
 colorMaterial = ExtResource("12_2sx1l")
 
 [node name="c" type="Control" parent="HUD"]
@@ -292,6 +295,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+script = ExtResource("74_sltjo")
 
 [node name="Paint" type="TextureRect" parent="HUD/c/Panel/ColorR"]
 layout_mode = 1
@@ -327,6 +331,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+script = ExtResource("74_sltjo")
 
 [node name="Paint" type="TextureRect" parent="HUD/c/Panel/ColorG"]
 layout_mode = 1
@@ -362,6 +367,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+script = ExtResource("74_sltjo")
 
 [node name="Paint" type="TextureRect" parent="HUD/c/Panel/ColorB"]
 layout_mode = 1
@@ -391,6 +397,7 @@ offset_bottom = 734.0
 button_pressed = true
 text = "Override default colours"
 alignment = 1
+script = ExtResource("74_sltjo")
 
 [node name="Categories" type="TabBar" parent="HUD/c/Panel"]
 unique_name_in_owner = true
@@ -411,6 +418,7 @@ tab_3/title = ""
 tab_3/icon = ExtResource("68_oc0b2")
 tab_4/title = ""
 tab_4/icon = ExtResource("69_a3glx")
+script = ExtResource("80_evdmd")
 
 [node name="Name" type="Label" parent="HUD/c"]
 layout_mode = 0
@@ -565,7 +573,7 @@ bus = &"Music"
 
 [node name="SFXPlayer" type="Node" parent="."]
 script = ExtResource("17_kobmh")
-sounds = Array[AudioStream]([ExtResource("18_3nh6t"), ExtResource("31_ioosj"), ExtResource("32_hwgip"), ExtResource("33_wmhci"), ExtResource("34_u86ka"), ExtResource("35_ynm1t")])
+sounds = Array[AudioStream]([ExtResource("18_3nh6t"), ExtResource("31_ioosj"), ExtResource("32_hwgip"), ExtResource("33_wmhci"), ExtResource("34_u86ka"), ExtResource("35_ynm1t"), ExtResource("98_bxyol")])
 
 [node name="SettingsButton" type="CanvasLayer" parent="."]
 layer = 8
@@ -1113,6 +1121,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+script = ExtResource("74_sltjo")
 
 [node name="Paint" type="TextureRect" parent="Toolbar/c/SelectedTools/ColorR"]
 layout_mode = 1
@@ -1147,6 +1156,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+script = ExtResource("74_sltjo")
 
 [node name="Paint" type="TextureRect" parent="Toolbar/c/SelectedTools/ColorG"]
 layout_mode = 1
@@ -1181,6 +1191,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
+script = ExtResource("74_sltjo")
 
 [node name="Paint" type="TextureRect" parent="Toolbar/c/SelectedTools/ColorB"]
 layout_mode = 1
@@ -1199,6 +1210,19 @@ mouse_filter = 2
 texture = ExtResource("72_bk7ok")
 expand_mode = 1
 script = ExtResource("73_by8g6")
+
+[node name="Camera" type="CanvasLayer" parent="."]
+layer = 20
+visible = false
+
+[node name="Flash" type="ColorRect" parent="Camera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/OptionsButton" to="MainMenu" method="SettingsButton"]

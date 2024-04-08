@@ -418,6 +418,11 @@ func TakePicture():
 	await RenderingServer.frame_post_draw
 	img = get_viewport().get_texture().get_image()
 	img = img.get_region(Rect2i(img.get_width() / 3.0 as int, 0 as int, img.get_width() / 3.0 as int, img.get_height() as int))
+	AudioPlayer.ins.PlaySound(6)
+	var flash: ColorRect = Game.ins.cameraFlash
+	flash.color = Color(1.0, 1.0, 1.0, 1.0)
+	var flashTween: Tween = flash.create_tween()
+	flashTween.tween_property(flash, "color", Color(1.0, 1.0, 1.0, 0.0), 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	if OS.get_name() == "Web":
 		TakeWebPicture()
 		return

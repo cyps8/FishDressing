@@ -6,6 +6,12 @@ var partData: PartData
 
 @export var localMat: Material
 
+func _ready():
+	mouse_entered.connect(Callable(_Focused))
+
+func _Focused():
+	AudioPlayer.ins.PlaySound(1)
+
 func Setup(data: PartData):
 	partData = data
 	tooltip_text = partData.name
