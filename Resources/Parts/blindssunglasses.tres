@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cqf3v3m1yxqew"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_g064n"]
+[ext_resource type="Texture2D" uid="uid://c053vhjjdxrym" path="res://Assets/Art/Sprites/ActualParts/accessories_glasses3.png" id="2_x61xg"]
+
+[resource]
+script = ExtResource("1_g064n")
+name = "Blinds Sunglasses"
+texture = ExtResource("2_x61xg")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 1, 0, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4

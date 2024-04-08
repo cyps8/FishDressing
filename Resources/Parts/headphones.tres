@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cs1pqduqrwv4f"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_gnn30"]
+[ext_resource type="Texture2D" uid="uid://by2rqnxnffbo4" path="res://Assets/Art/Sprites/ActualParts/accessories_headphones.png" id="2_rdpf4"]
+
+[resource]
+script = ExtResource("1_gnn30")
+name = "Headphones"
+texture = ExtResource("2_rdpf4")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0.168627, 0.85098, 1)
+greenChannel = true
+defaultGreen = Color(0.278431, 0.278431, 0.278431, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

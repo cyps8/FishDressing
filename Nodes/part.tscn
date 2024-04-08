@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Part.gd" id="1_bleap"]
 [ext_resource type="Material" uid="uid://cur4klb3sdnwb" path="res://Resources/Materials/ColorMat.tres" id="3_e8ncf"]
 [ext_resource type="Shader" path="res://Scripts/Shaders/Selected.gdshader" id="4_nk5id"]
-[ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/blocks.png" id="5_obuv5"]
+[ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/TestParts/blocks.png" id="5_obuv5"]
 [ext_resource type="Shader" path="res://Scripts/Shaders/Danger.gdshader" id="5_wva8l"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lrp4m"]
@@ -15,6 +15,7 @@ shader = ExtResource("5_wva8l")
 shader_parameter/color_hue = Color(1, 0.196078, 0.145098, 1)
 
 [node name="Part" type="TextureButton" node_paths=PackedStringArray("selectedRef", "dangerRef") groups=["Part"]]
+texture_filter = 1
 offset_right = 128.0
 offset_bottom = 128.0
 button_mask = 3
@@ -25,6 +26,7 @@ selectedRef = NodePath("Selected")
 dangerRef = NodePath("Danger")
 
 [node name="Selected" type="TextureRect" parent="."]
+texture_filter = 1
 material = SubResource("ShaderMaterial_lrp4m")
 layout_mode = 0
 offset_right = 40.0
@@ -33,6 +35,7 @@ mouse_filter = 2
 texture = ExtResource("5_obuv5")
 
 [node name="Danger" type="TextureRect" parent="."]
+texture_filter = 1
 material = SubResource("ShaderMaterial_mmmkw")
 layout_mode = 0
 offset_right = 40.0

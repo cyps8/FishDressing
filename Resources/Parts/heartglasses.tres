@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dshe6wen377fc"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_dnavf"]
+[ext_resource type="Texture2D" uid="uid://2uy2n4lu511l" path="res://Assets/Art/Sprites/ActualParts/accessories_glasses2.png" id="2_edj8h"]
+
+[resource]
+script = ExtResource("1_dnavf")
+name = "Heart Sunglasses"
+texture = ExtResource("2_edj8h")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.431373, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4

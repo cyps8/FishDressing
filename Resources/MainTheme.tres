@@ -1,4 +1,6 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://ns1ce5pc8bkk"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://ns1ce5pc8bkk"]
+
+[ext_resource type="Texture2D" uid="uid://k06fbt6hqacu" path="res://Assets/Art/Sprites/ColorPicker.png" id="1_vkc4q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shuq4"]
 bg_color = Color(0.152941, 0.403922, 0.52549, 1)
@@ -60,6 +62,33 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdlgd"]
+bg_color = Color(0.396078, 0.717647, 0.886275, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 1.0
+expand_margin_top = 5.0
+expand_margin_right = 1.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vbyj"]
+bg_color = Color(0.658824, 0.831373, 0.945098, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 1.0
+expand_margin_top = 5.0
+expand_margin_right = 1.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7txx"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kx2po"]
 bg_color = Color(0.709804, 0.486275, 0.345098, 1)
 border_width_left = 5
@@ -81,5 +110,12 @@ Button/styles/focus = SubResource("StyleBoxFlat_4cjiv")
 Button/styles/hover = SubResource("StyleBoxFlat_gfkw3")
 Button/styles/normal = SubResource("StyleBoxFlat_1in38")
 Button/styles/pressed = SubResource("StyleBoxFlat_llbpl")
+ColorPicker/icons/screen_picker = ExtResource("1_vkc4q")
 ColorPickerButton/font_sizes/font_size = 16
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_bdlgd")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_3vbyj")
+HSlider/styles/slider = SubResource("StyleBoxFlat_s7txx")
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 8
+Label/font_sizes/font_size = 20
 Panel/styles/panel = SubResource("StyleBoxFlat_kx2po")

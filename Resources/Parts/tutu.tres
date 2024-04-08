@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dvxll7rq7qco4"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_16m4w"]
+[ext_resource type="Texture2D" uid="uid://cv2u2cwayy14q" path="res://Assets/Art/Sprites/ActualParts/accessories_tutu.png" id="2_b4bbt"]
+
+[resource]
+script = ExtResource("1_16m4w")
+name = "Tutu"
+texture = ExtResource("2_b4bbt")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.827451, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

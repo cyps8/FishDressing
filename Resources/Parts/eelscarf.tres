@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://xa5py1yuturu"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_4m60r"]
+[ext_resource type="Texture2D" uid="uid://dlhlrahiitcwd" path="res://Assets/Art/Sprites/ActualParts/accessories_scarf.png" id="2_slogk"]
+
+[resource]
+script = ExtResource("1_4m60r")
+name = "Eel Scarf"
+texture = ExtResource("2_slogk")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.407843, 0.32549, 1, 1)
+greenChannel = true
+defaultGreen = Color(0.85098, 0.313726, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

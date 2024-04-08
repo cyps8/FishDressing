@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dyxnsbdt1qckn"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_8qv2u"]
+[ext_resource type="Texture2D" uid="uid://cpqs0wkvl7qw2" path="res://Assets/Art/Sprites/ActualParts/accessories_thug_life_glasses.png" id="2_4vwut"]
+
+[resource]
+script = ExtResource("1_8qv2u")
+name = "Cool Shades"
+texture = ExtResource("2_4vwut")
+colorShader = false
+redChannel = false
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4

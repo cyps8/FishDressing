@@ -24,18 +24,25 @@ var pickedColorR: Color = Color.WHITE
 var pickedColorG: Color = Color.WHITE
 var pickedColorB: Color = Color.WHITE
 
+var rPickerRef: ColorPickerButton
+var gPickerRef: ColorPickerButton
+var bPickerRef: ColorPickerButton
+
 var overrideColours: bool = false
+var overrideButton: CheckButton
+
+var showTestParts: bool = false
 
 func _init():
 	ins = self
 
 func _ready():
-	pickedColorR = %ColorR.color
-	pickedColorG = %ColorG.color
-	pickedColorB = %ColorB.color
-	colorMaterial.set_shader_parameter("red_color", pickedColorR)
-	colorMaterial.set_shader_parameter("green_color", pickedColorG)
-	colorMaterial.set_shader_parameter("blue_color", pickedColorB)
+	overrideButton = %OverrideDefault
+	rPickerRef = %ColorR
+	gPickerRef = %ColorG
+	bPickerRef = %ColorB
+
+	ResetEditor()
 	for i in partDataList.size():
 		var newButton: DecorButton = decorButtonIns.instantiate()
 		newButton.Setup(partDataList[i])
@@ -64,14 +71,52 @@ func CreateNewDecor(id: int = 0):
 	newDecor.SpawnAnimation()
 	AudioPlayer.ins.PlaySound(0)
 
+func _enter_tree():
+	UpdateTags()
+
+func UpdateTags():
+	for decor in decorButtons:
+		if decor.partData.tags & PartData.Tag.TEST != 0:
+			decor.visible = showTestParts
+		else:
+			decor.visible = true
+
+func ResetEditor():
+	currentlyManipulating = false
+
+	overrideButton.button_pressed = false
+	overrideColours = false
+
+	rPickerRef.color = Color.WHITE
+	gPickerRef.color = Color.WHITE
+	bPickerRef.color = Color.WHITE
+	pickedColorR = rPickerRef.color
+	pickedColorG = gPickerRef.color
+	pickedColorB = bPickerRef.color
+	colorMaterial.set_shader_parameter("red_color", pickedColorR)
+	colorMaterial.set_shader_parameter("green_color", pickedColorG)
+	colorMaterial.set_shader_parameter("blue_color", pickedColorB)
+
 func _process(_delta):
+	if Game.ins.cogMenu.is_inside_tree():
+		return
+	if Input.is_action_just_pressed("ui_cancel"):
+		Game.ins.ShowCogMenu()
+		return
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
 		SelectAll()
 	if currentPartGroup.size() > 0:
-		if Input.is_action_just_pressed("Delete"):
+		if Input.is_action_just_pressed("RotateRight") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
+			Duplicate()
+		if Input.is_action_just_pressed("Delete")  && !Input.is_action_pressed("Control"):
 			DeleteAllSelected()
 			currentlyManipulating = false
 			return
+		if Input.is_action_just_pressed("Flip") && !Input.is_action_pressed("Control"):
+			if Input.is_action_pressed("Shift"):
+				FlipV()
+			else:
+				FlipH()
 		if Input.is_action_pressed("Interact") && currentlyManipulating:
 			for part in currentPartGroup:
 				UpdateSafeColour(part)
@@ -122,10 +167,14 @@ func _process(_delta):
 			for part in currentPartGroup:
 				if !part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
 					partsToDelete.append(part)
+			if partsToDelete.size() > 0:
+				AudioPlayer.ins.PlaySound(5)
 			while partsToDelete.size() > 0:
 				partsToDelete[0].Delete()
 				partsToDelete.remove_at(0)
 			currentlyManipulating = false
+			if currentPartGroup.size() > 0:
+				AudioPlayer.ins.PlaySound(4)
 
 func ClickedOut():
 	ClearControlGroup()
@@ -140,18 +189,21 @@ func UpdateSafeColour(part: Part):
 	else:
 		part.SetDanger(true)
 
-func RotatePart(amount: float):
+func ResetSelectedMoveValues(fake: bool = false):
 	for part in currentPartGroup:
-		part.rotation += amount
-		part.currentRotation += amount
+		part.ResetMoveValues(fake)
+
+func RotatePart(amount: float, fake: bool = false):
+	for part in currentPartGroup:
+		part.RotateBy(amount, fake)
 
 func SetScale(value: float):
 	for part in currentPartGroup:
 		part.SetScale(value, false)
 
-func ChangeScale(value: float):
+func ChangeScale(value: float, fake: bool = false):
 	for part in currentPartGroup:
-		part.ScaleBy(value)
+		part.ScaleBy(value, fake)
 
 func SelectPart(selectedPart: Part):
 	if !currentPartGroup.has(selectedPart):
@@ -163,10 +215,17 @@ func SelectPart(selectedPart: Part):
 		part.SpawnAnimation()
 	AudioPlayer.ins.PlaySound(0)
 
+func GetAll() -> Array[Part]:
+	var allParts: Array[Part] = []
+	for part in fishRef.get_children():
+		if part.is_in_group("Part") && !part.deleted:
+			allParts.append(part)
+	return allParts
+
 func SelectAll():
 	var allInGroup = true
-	for part in fishRef.get_children():
-		if part.is_in_group("Part") && !part.controlGrouped:
+	for part in GetAll():
+		if !part.controlGrouped:
 			part.SetControlGroup(true)
 			part.ResetMoveValues()
 			part.SpawnAnimation(false)
@@ -176,23 +235,23 @@ func SelectAll():
 	else:
 		AudioPlayer.ins.PlaySound(0)
 
-func Duplicate(selectedPart: Part):
-	if !currentPartGroup.has(selectedPart):
+func Duplicate(selectedPart: Part = null):
+	if selectedPart && !currentPartGroup.has(selectedPart):
 		selectedPart.SetControlGroup(true)
 	var dupedParts: Array[Part] = []
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
 	for part in currentPartGroup:
 		var dupedPart: Part = part.duplicate()
-		dupedPart.UpdateDuplicateRefs()
+		dupedPart.partData = part.partData
+		dupedPart.UpdateDuplicateRefs(part)
 		fishRef.add_child(dupedPart)
-		dupedPart.SetControlGroup(true)
-		part.SetControlGroup(false)
 		dupedParts.append(dupedPart)
-	currentPartGroup = dupedParts
-	currentlyManipulating = true
-	for part in currentPartGroup:
+	ClearControlGroup()
+	for part in dupedParts:
+		part.SetControlGroup(true)
 		part.ResetMoveValues()
-		part.SpawnAnimation()
+		part.SpawnAnimation(false)
+	currentlyManipulating = true
 	AudioPlayer.ins.PlaySound(0)
 
 func MoveUp():
@@ -210,14 +269,18 @@ func MoveDown():
 			fishRef.move_child(currentPartGroup[i], index - 1)
 
 func MoveToTop():
+	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	for part in currentPartGroup:
+		fishRef.move_child(part, fishRef.get_child_count() - 1)
+
+func MoveToBottom():
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
 	for part in currentPartGroup:
 		fishRef.move_child(part, 1)
 
-func MoveToBottom():
-	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+func SetFakeMouse():
 	for part in currentPartGroup:
-		fishRef.move_child(part, fishRef.get_child_count() - 1)
+		part.SetFakeMouse()
 
 func ColorPickChanged(newColor: Color, val: int = 1):
 	match val:
@@ -234,6 +297,20 @@ func ColorPickChanged(newColor: Color, val: int = 1):
 func DeleteAllSelected():
 	while currentPartGroup.size() > 0:
 		currentPartGroup[0].Delete()
+	AudioPlayer.ins.PlaySound(5)
+
+func DeleteAll(insta: bool = true):
+	var toDelete: Array[Part] = []
+	for part in GetAll():
+		toDelete.append(part)
+	while toDelete.size() > 0:
+		if insta:
+			toDelete[0].queue_free()
+		else:
+			toDelete[0].Delete()
+		toDelete.remove_at(0)
+	if !insta:
+		AudioPlayer.ins.PlaySound(5)
 
 func SetOverride(value: bool):
 	overrideColours = value
@@ -243,3 +320,15 @@ func SetOverride(value: bool):
 	else:
 		for button in decorButtons:
 			button.SetMat()
+
+func FlipH():
+	for part in currentPartGroup:
+		part.FlipH()
+		part.SpawnAnimation(currentlyManipulating)
+	AudioPlayer.ins.PlaySound(0)
+
+func FlipV():
+	for part in currentPartGroup:
+		part.FlipV()
+		part.SpawnAnimation(currentlyManipulating)
+	AudioPlayer.ins.PlaySound(0)

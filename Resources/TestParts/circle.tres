@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cy3bbo3lssdso"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_gtqoi"]
+[ext_resource type="Texture2D" uid="uid://cjnme0xw1y0c1" path="res://Assets/Art/Sprites/TestParts/redball.png" id="2_17ldw"]
+
+[resource]
+script = ExtResource("1_gtqoi")
+name = "test_circle"
+texture = ExtResource("2_17ldw")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.2, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 1

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cit3hn12p37et"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_0tyli"]
+[ext_resource type="Texture2D" uid="uid://b4ngsud16t0i" path="res://Assets/Art/Sprites/ActualParts/accessories_hat1.png" id="2_rm54w"]
+
+[resource]
+script = ExtResource("1_0tyli")
+name = "\"I Fear Me\" cap"
+texture = ExtResource("2_rm54w")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.886275, 0.843137, 0.658824, 1)
+greenChannel = true
+defaultGreen = Color(1, 0, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2

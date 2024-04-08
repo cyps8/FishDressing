@@ -2,7 +2,7 @@ extends Button
 
 var scaleTween: Tween
 
-@export var isExitButton: bool = false
+@export var silentButton: bool = false
 @export var disableForWeb: bool = false
 @export var backButton: bool = false
 
@@ -20,21 +20,22 @@ func _ready():
 		pivot_offset = size/2
 
 func _Focused():
+	if disabled:
+		return
 	if scaleTween:
 		scaleTween.stop()
 	scaleTween = create_tween()
 	scaleTween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.2)
-	#AudioPlayer.instance.PlaySound(7, AudioPlayer.SoundType.SFX)
+	AudioPlayer.ins.PlaySound(1)
 	if !has_focus():
 		grab_focus()
 
 func _Pressed():
-	if !isExitButton:
+	if !silentButton:
 		if backButton:
-			pass
-			#AudioPlayer.instance.PlaySound(8, AudioPlayer.SoundType.SFX)
+			AudioPlayer.ins.PlaySound(3)
 		else:
-			AudioPlayer.ins.PlaySound(0)
+			AudioPlayer.ins.PlaySound(2)
 
 func _Unfocused():
 	if scaleTween:

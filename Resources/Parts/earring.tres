@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cod5qxhk3ogxk"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_dcmer"]
+[ext_resource type="Texture2D" uid="uid://cn8p6ss8okksu" path="res://Assets/Art/Sprites/ActualParts/accessories_earring3.png" id="2_moau2"]
+
+[resource]
+script = ExtResource("1_dcmer")
+name = "Earring"
+texture = ExtResource("2_moau2")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.905882, 0.764706, 0.45098, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

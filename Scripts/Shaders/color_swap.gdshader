@@ -9,7 +9,7 @@ void vertex() {
 }
 
 void fragment() {
-	if (COLOR.a > 0.1)
+	if (COLOR.a > 0.1 && !(COLOR.r == COLOR.g && COLOR.g == COLOR.b))
 	{
 		vec3 strength = vec3(.0, .0, .0);
 		if (COLOR.r > 0.0)

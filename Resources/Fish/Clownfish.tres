@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://b7ok7hm2at26x"]
 
 [ext_resource type="Script" path="res://Scripts/Fishdata.gd" id="1_kar3t"]
-[ext_resource type="Texture2D" uid="uid://48igagdlhxqr" path="res://Assets/Art/Sprites/clownfish.png" id="2_hkx0t"]
+[ext_resource type="Texture2D" uid="uid://48igagdlhxqr" path="res://Assets/Art/Sprites/Fish/clownfish.png" id="2_hkx0t"]
 
 [resource]
 script = ExtResource("1_kar3t")

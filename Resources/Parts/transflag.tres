@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://qjm57oa0aisq"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_510w4"]
+[ext_resource type="Texture2D" uid="uid://erhphw811uip" path="res://Assets/Art/Sprites/ActualParts/accessories_flag3.png" id="2_66u6u"]
+
+[resource]
+script = ExtResource("1_510w4")
+name = "Trans Flag"
+texture = ExtResource("2_66u6u")
+colorShader = false
+redChannel = false
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

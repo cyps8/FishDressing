@@ -24,6 +24,14 @@ var spawnTween: Tween
 
 var defaultScale: float = 1.0
 
+var beforePivotPos: Vector2
+
+var currentRedColor: Color = Color.WHITE
+var currentGreenColor: Color = Color.WHITE
+var currentBlueColor: Color = Color.WHITE
+
+var fakeMousePos: Vector2 = Vector2.ZERO
+
 func SetTexture(tex: Texture2D):
 	texture_normal = tex
 	selectedRef.texture = tex
@@ -37,14 +45,21 @@ func SetColors(red: Color, green: Color = Color.WHITE, blue: Color = Color.WHITE
 	if partData.colorShader:
 		if partData.redChannel:
 			material.set_shader_parameter("red_color", red)
+			currentRedColor = red
 		if partData.greenChannel:
 			material.set_shader_parameter("green_color", green)
+			currentGreenColor = green
 		if partData.blueChannel:
 			material.set_shader_parameter("blue_color", blue)
+			currentBlueColor = blue
 
-func UpdateDuplicateRefs():
+func UpdateDuplicateRefs(part: Part):
 	selectedRef = $Selected
 	dangerRef = $Danger
+
+	currentRedColor = part.currentRedColor
+	currentGreenColor = part.currentGreenColor
+	currentBlueColor = part.currentBlueColor
 
 func GenerateClickMask():
 	var data = texture_normal.get_image()
@@ -89,8 +104,11 @@ func SetControlGroup(value: bool):
 		if Editor.ins.currentPartGroup.has(self):
 			Editor.ins.currentPartGroup.erase(self)
 
-func UpdateMovePosition():
-	position = get_viewport().get_mouse_position() - (selectOffset * currentScale).rotated(currentRotation)
+func UpdateMovePosition(fake: bool = false):
+	if fake:
+		position = fakeMousePos - (selectOffset * currentScale).rotated(currentRotation)
+	else:
+		position = get_viewport().get_mouse_position() - (selectOffset * currentScale).rotated(currentRotation)
 
 func SetScale(value: float, move: bool):
 	currentScale *= value / scale.x
@@ -98,10 +116,23 @@ func SetScale(value: float, move: bool):
 	if move:
 		UpdateMovePosition()
 
-func ScaleBy(value: float):
-	if scale.x * value > 0.2 and scale.x * value < 5.0:
+func SetFakeMouse():
+	fakeMousePos = position + (size * scale * 0.5).rotated(rotation)
+
+func ScaleBy(value: float, fake: bool = false):
+	if scale.x * value > 0.2 and scale.x * value < 3.0:
 		scale *= value
 		currentScale *= value
+		UpdateMovePosition(fake)
+
+func RotateBy(value: float, fake: bool = false):
+	rotation += value
+	if rotation > deg_to_rad(360):
+		rotation -= deg_to_rad(360)
+	if rotation < 0:
+		rotation += deg_to_rad(360)
+	currentRotation += value
+	UpdateMovePosition(fake)
 
 func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 	var fBSize = fishSprite.texture.get_size() * fishSprite.scale
@@ -113,20 +144,45 @@ func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 func SpawnAnimation(move: bool = true):
 	if spawnTween && spawnTween.is_running():
 		spawnTween.kill()
+		if pivot_offset != Vector2.ZERO:
+			ResetPivot()
 	else:
 		defaultScale = scale.x
 	if move:
 		pivot_offset = Vector2.ZERO
 	else:
+		var ori: Vector2 = position - size * 0.5
+		beforePivotPos = position
 		pivot_offset = size * 0.5
+		position += (pivot_offset * (scale.x - 1.0))
+		position = ori + (position - ori).rotated(rotation)
 	SetScale(defaultScale * 1.2, move)
 	spawnTween = create_tween()
 	spawnTween.tween_method(SetScale.bind(move), defaultScale * 1.2, defaultScale, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if !move:
+		spawnTween.tween_callback(ResetPivot)
 
-func ResetMoveValues():
-	selectOffset = get_viewport().get_mouse_position() - position
+func ResetPivot():
+	pivot_offset = Vector2.ZERO
+	position = beforePivotPos
+
+func ResetMoveValues(fake: bool = false):
+	if fake:
+		selectOffset = fakeMousePos - position
+	else:
+		selectOffset = get_viewport().get_mouse_position() - position
 	currentScale = 1.0
 	currentRotation = 0.0
+
+func FlipH():
+	flip_h = !flip_h
+	selectedRef.flip_h = flip_h
+	dangerRef.flip_h = flip_h
+
+func FlipV():
+	flip_v = !flip_v
+	selectedRef.flip_v = flip_v
+	dangerRef.flip_v = flip_v
 
 func Delete():
 	if deleted:

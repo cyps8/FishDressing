@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dkl32775eo8kw"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_fpksp"]
+[ext_resource type="Texture2D" uid="uid://dp80rp7a3ms51" path="res://Assets/Art/Sprites/TestParts/TestShape.png" id="2_js54u"]
+
+[resource]
+script = ExtResource("1_fpksp")
+name = "test_shape"
+texture = ExtResource("2_js54u")
+colorShader = false
+redChannel = false
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 1

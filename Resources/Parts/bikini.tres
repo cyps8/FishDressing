@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dsgomd304hqoj"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_wmnp3"]
+[ext_resource type="Texture2D" uid="uid://k1l255h1xf3f" path="res://Assets/Art/Sprites/ActualParts/accessories_bikini1.png" id="2_j2i82"]
+
+[resource]
+script = ExtResource("1_wmnp3")
+name = "Bikini"
+texture = ExtResource("2_j2i82")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.176471, 0.360784, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.501961, 0.568627, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

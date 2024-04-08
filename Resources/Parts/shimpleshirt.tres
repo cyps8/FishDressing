@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://ca7wmcxrub1rc"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_r8bhb"]
+[ext_resource type="Texture2D" uid="uid://ccpv6ykenk74l" path="res://Assets/Art/Sprites/ActualParts/accessories_tshirt1.png" id="2_assqx"]
+
+[resource]
+script = ExtResource("1_r8bhb")
+name = "\"Shimple\" Shirt"
+texture = ExtResource("2_assqx")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 0.682353, 1)
+greenChannel = true
+defaultGreen = Color(0.890196, 0.411765, 0.384314, 1)
+blueChannel = true
+defaultBlue = Color(0.305882, 0.647059, 0.741176, 1)
+tags = 0

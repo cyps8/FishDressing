@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cepr7w03fh5o6"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_xuyab"]
+[ext_resource type="Texture2D" uid="uid://cl4nb3o1kdaj7" path="res://Assets/Art/Sprites/ActualParts/accessories_hat3.png" id="2_5wekl"]
+
+[resource]
+script = ExtResource("1_xuyab")
+name = "Sunhat"
+texture = ExtResource("2_5wekl")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.827451, 0.207843, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.627451, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2

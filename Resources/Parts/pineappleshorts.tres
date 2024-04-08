@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bb1iauylfj4bl"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_eqw0f"]
+[ext_resource type="Texture2D" uid="uid://cwlmqqc6ji6bg" path="res://Assets/Art/Sprites/ActualParts/accessories_shorts2.png" id="2_ot6y0"]
+
+[resource]
+script = ExtResource("1_eqw0f")
+name = "Pineapple Shorts"
+texture = ExtResource("2_ot6y0")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.462745, 1, 0.886275, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.898039, 0, 1)
+blueChannel = true
+defaultBlue = Color(0.254902, 0.909804, 0, 1)
+tags = 0

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://dg1jctr1atbyk"]
+
+[ext_resource type="Script" path="res://Scripts/Fishdata.gd" id="1_63f1l"]
+[ext_resource type="Texture2D" uid="uid://b3bkmt2nsp0t5" path="res://Assets/Art/Sprites/Fish/seahorse.png" id="2_5aydg"]
+
+[resource]
+script = ExtResource("1_63f1l")
+name = "Seahorse"
+texture = ExtResource("2_5aydg")

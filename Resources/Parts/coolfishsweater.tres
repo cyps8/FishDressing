@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bjrx0uxkobvqp"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_2scw1"]
+[ext_resource type="Texture2D" uid="uid://cm5gbcfbml3pu" path="res://Assets/Art/Sprites/ActualParts/accessories_sweater2.png" id="2_mmjp4"]
+
+[resource]
+script = ExtResource("1_2scw1")
+name = "Cool Fish Sweater"
+texture = ExtResource("2_mmjp4")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.345098, 0.631373, 1, 1)
+greenChannel = true
+defaultGreen = Color(1, 1, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

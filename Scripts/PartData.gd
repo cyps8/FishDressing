@@ -2,6 +2,8 @@ extends Resource
 
 class_name PartData
 
+enum Tag{ TEST = 1, HAT = 2, GLASSES = 4 }
+
 @export var name: String = "default"
 
 @export var texture: Texture2D
@@ -16,3 +18,5 @@ class_name PartData
 
 @export var blueChannel: bool = false
 @export var defaultBlue: Color = Color.WHITE
+
+@export_flags("Test:1", "Hat:2", "Glasses:4") var tags: int = 0

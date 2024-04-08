@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://csb6bowbwiovv"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_cw8sd"]
+[ext_resource type="Texture2D" uid="uid://8ik3bjkfuacp" path="res://Assets/Art/Sprites/ActualParts/accessories_moustache.png" id="2_u2vua"]
+
+[resource]
+script = ExtResource("1_cw8sd")
+name = "Fake? Moustache"
+texture = ExtResource("2_u2vua")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.247059, 0.129412, 0.054902, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

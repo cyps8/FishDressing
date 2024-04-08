@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://78mensq3a40b"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_mpsh3"]
+[ext_resource type="Texture2D" uid="uid://bj82n6gd4vcvl" path="res://Assets/Art/Sprites/ActualParts/accessories_hat4.png" id="2_upta2"]
+
+[resource]
+script = ExtResource("1_mpsh3")
+name = "Propeller Hat"
+texture = ExtResource("2_upta2")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.027451, 0.0627451, 1)
+greenChannel = true
+defaultGreen = Color(0.921569, 0.945098, 0.0235294, 1)
+blueChannel = true
+defaultBlue = Color(0, 0.258824, 1, 1)
+tags = 0

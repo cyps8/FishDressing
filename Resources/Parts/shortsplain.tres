@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dy3x76olr4f3c"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_qrq3e"]
+[ext_resource type="Texture2D" uid="uid://bagpee1pfu5ji" path="res://Assets/Art/Sprites/ActualParts/accessories_shorts1.png" id="2_ggf6e"]
+
+[resource]
+script = ExtResource("1_qrq3e")
+name = "Shorts"
+texture = ExtResource("2_ggf6e")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.235294, 0.278431, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0

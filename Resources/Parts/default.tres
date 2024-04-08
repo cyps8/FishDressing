@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dxnprb17srg6g"]
-
-[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_60wq2"]
-[ext_resource type="Texture2D" uid="uid://d11xw0j231ik8" path="res://Assets/Art/Sprites/icon.svg" id="2_e6y20"]
-
-[resource]
-script = ExtResource("1_60wq2")
-name = "Godot"
-texture = ExtResource("2_e6y20")

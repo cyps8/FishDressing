@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cqlp1d03j6uvl"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_dmkcg"]
+[ext_resource type="Texture2D" uid="uid://cf8ybihxk6x6f" path="res://Assets/Art/Sprites/ActualParts/accessories_bowtie.png" id="2_kckj8"]
+
+[resource]
+script = ExtResource("1_dmkcg")
+name = "Bowtie"
+texture = ExtResource("2_kckj8")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0, 0, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
