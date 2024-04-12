@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_u2nma")
-name = "Bunny Slippers"
+name = "Sea Bunny Slug Slippers"
 texture = ExtResource("2_pq1tu")
 colorShader = true
 redChannel = true

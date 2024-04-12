@@ -30,6 +30,9 @@ var currentBlueColor: Color = Color.WHITE
 
 var fakeMousePos: Vector2 = Vector2.ZERO
 
+var isGrabbed: bool = true
+var animPos: Vector2 = Vector2.ZERO
+
 func SetTexture(tex: Texture2D):
 	texture_normal = tex
 	selectedRef.texture = tex
@@ -71,26 +74,35 @@ func UpdateDuplicateRefs(part: Part):
 	currentGreenColor = part.currentGreenColor
 	currentBlueColor = part.currentBlueColor
 
+	selectOffset = part.selectOffset
+	currentScale = part.currentScale
+	currentRotation = part.currentRotation
+
+	material = part.material.duplicate(true)
+
 func GenerateClickMask():
-	var data = texture_normal.get_image()
+	var img = texture_normal.get_image()
+	if flip_h:
+		img.flip_x()
+	if flip_v:
+		img.flip_y()
+	var data = img
 	var bitmap = BitMap.new()
 	bitmap.create_from_image_alpha(data)
 	texture_click_mask = bitmap
 
 func Pressed():
-	if Input.is_action_just_pressed("Interact") && !Input.is_action_pressed("Control"):
+	if Input.is_action_just_pressed("Interact"):
 		if !Input.is_action_just_pressed("Interact2"):
-			Editor.ins.SelectPart(self)
+			if !controlGrouped:
+				Editor.ins.SelectPart(self, !Input.is_action_pressed("Control"))
+			else:
+				if Input.is_action_pressed("Control"):
+					SetControlGroup(false)
+				else:
+					Editor.ins.SelectPart(self)
 		else:
 			Editor.ins.Duplicate(self)
-
-func Clicked():
-	if Input.is_action_pressed("Control") && !Input.is_action_just_released("Interact2"):
-		SetControlGroup(!controlGrouped)
-		if controlGrouped: 
-			ResetMoveValues()
-			SpawnAnimation(false)
-			AudioPlayer.ins.PlaySound(0)
 
 func SetDanger(value: bool):
 	if inDanger == value:
@@ -114,41 +126,39 @@ func SetControlGroup(value: bool):
 		if Editor.ins.currentPartGroup.has(self):
 			Editor.ins.currentPartGroup.erase(self)
 
-func UpdateMovePosition(fake: bool = false):
-	if fake:
+func UpdateMovePosition():
+	if !isGrabbed:
 		position = fakeMousePos - (selectOffset * currentScale).rotated(currentRotation)
 	else:
 		position = get_viewport().get_mouse_position() - (selectOffset * currentScale).rotated(currentRotation)
 
-func SetScale(value: float, move: bool, fake: bool = false):
+func SetScale(value: float):
 	currentScale *= value / scale.x
 	scale = Vector2(value, value)
-	if move:
-		UpdateMovePosition(fake)
+	UpdateMovePosition()
 
-func SetRotation(value: float, move: bool, fake: bool = false):
+func SetRotation(value: float):
 	currentRotation += value - rotation
 	rotation = value
-	if move:
-		UpdateMovePosition(fake)
+	UpdateMovePosition()
 
 func SetFakeMouse():
 	fakeMousePos = position + (size * scale * 0.5).rotated(rotation)
 
-func ScaleBy(value: float, fake: bool = false):
+func ScaleBy(value: float):
 	if scale.x * value > 0.2 and scale.x * value < 3.0:
 		scale *= value
 		currentScale *= value
-		UpdateMovePosition(fake)
+		UpdateMovePosition()
 
-func RotateBy(value: float, fake: bool = false):
+func RotateBy(value: float):
 	rotation += value
 	if rotation > deg_to_rad(360):
 		rotation -= deg_to_rad(360)
 	if rotation < 0:
 		rotation += deg_to_rad(360)
 	currentRotation += value
-	UpdateMovePosition(fake)
+	UpdateMovePosition()
 
 func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 	var fBSize = fishSprite.texture.get_size() * fishSprite.scale
@@ -157,19 +167,25 @@ func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 		return true
 	return false
 
-func SpawnAnimation(move: bool = true, fake: bool = false):
+func SpawnAnimation():
+	animPos = position
 	if spawnTween && spawnTween.is_running():
 		spawnTween.kill()
 	else:
 		defaultScale = scale.x
-	if fake:
+	if !isGrabbed:
 		SetFakeMouse()
-	SetScale(defaultScale * 1.2, move, fake)
+	SetScale(defaultScale * 1.2)
 	spawnTween = create_tween()
-	spawnTween.tween_method(SetScale.bind(move, fake), defaultScale * 1.2, defaultScale, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	spawnTween.tween_method(SetScale.bind(), defaultScale * 1.2, defaultScale, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func ResetMoveValues(fake: bool = false):
+	if spawnTween && spawnTween.is_running():
+		scale = Vector2(defaultScale, defaultScale)
+		position = animPos
+		spawnTween.kill()
 	if fake:
+		SetFakeMouse()
 		selectOffset = fakeMousePos - position
 	else:
 		selectOffset = get_viewport().get_mouse_position() - position
@@ -180,11 +196,22 @@ func FlipH():
 	flip_h = !flip_h
 	selectedRef.flip_h = flip_h
 	dangerRef.flip_h = flip_h
+	GenerateClickMask()
 
 func FlipV():
 	flip_v = !flip_v
 	selectedRef.flip_v = flip_v
 	dangerRef.flip_v = flip_v
+	GenerateClickMask()
+
+func MouseGrabbed(val: bool):
+	if isGrabbed == val:
+		return
+	isGrabbed = val
+	if !controlGrouped:
+		ResetMoveValues(true)
+	else:
+		ResetMoveValues(!val)
 
 func Delete():
 	if deleted:

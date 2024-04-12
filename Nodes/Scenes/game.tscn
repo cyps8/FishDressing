@@ -1,4 +1,4 @@
-[gd_scene load_steps=141 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=145 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -6,11 +6,14 @@
 [ext_resource type="Shader" path="res://Scripts/Shaders/background.gdshader" id="3_tpo2n"]
 [ext_resource type="Theme" uid="uid://ns1ce5pc8bkk" path="res://Resources/MainTheme.tres" id="4_8dgoj"]
 [ext_resource type="Script" path="res://Scripts/Editor.gd" id="5_ah6qd"]
+[ext_resource type="Texture2D" uid="uid://sdr5di2yxwdq" path="res://Assets/Art/Sprites/Background/cover6.png" id="6_40xbh"]
 [ext_resource type="Script" path="res://Scripts/MenuButton.gd" id="6_j1bsi"]
-[ext_resource type="Texture2D" uid="uid://dgdm4cqrgccc6" path="res://Assets/Art/Sprites/Background/cover3.png" id="6_libr3"]
+[ext_resource type="Script" path="res://Scripts/AnimatedMenu.gd" id="7_3dlxi"]
 [ext_resource type="PackedScene" uid="uid://dcwy18q1sia7h" path="res://Nodes/part.tscn" id="7_awn31"]
+[ext_resource type="Texture2D" uid="uid://deklfxjfy1rfv" path="res://Assets/Art/Sprites/Background/cover7.png" id="8_3wdft"]
 [ext_resource type="PackedScene" uid="uid://yq0o6gp3gjjs" path="res://Nodes/decor_button.tscn" id="8_eernm"]
 [ext_resource type="Resource" uid="uid://dxnprb17srg6g" path="res://Resources/TestParts/default.tres" id="9_7h8tb"]
+[ext_resource type="Texture2D" uid="uid://b1wo233qe0y7s" path="res://Assets/Art/Sprites/Background/cover8.png" id="9_mbsia"]
 [ext_resource type="Resource" uid="uid://dkl32775eo8kw" path="res://Resources/TestParts/testShape.tres" id="10_o1q3g"]
 [ext_resource type="Resource" uid="uid://cy3bbo3lssdso" path="res://Resources/TestParts/circle.tres" id="11_cruwb"]
 [ext_resource type="Material" uid="uid://cur4klb3sdnwb" path="res://Resources/Materials/ColorMat.tres" id="12_2sx1l"]
@@ -18,7 +21,6 @@
 [ext_resource type="Resource" uid="uid://b7bhbo1cgo1ue" path="res://Resources/TestParts/pill.tres" id="13_6qgkw"]
 [ext_resource type="Resource" uid="uid://ca7wmcxrub1rc" path="res://Resources/Parts/shimpleshirt.tres" id="15_7r0db"]
 [ext_resource type="Resource" uid="uid://583ucg3aily4" path="res://Resources/Parts/bikinitop.tres" id="15_s1cx2"]
-[ext_resource type="AudioStream" uid="uid://cncrtsinm2rnj" path="res://Assets/Audio/Music/fish2.ogg" id="16_00gwg"]
 [ext_resource type="Resource" uid="uid://cqlp1d03j6uvl" path="res://Resources/Parts/bowtie.tres" id="16_1tedx"]
 [ext_resource type="Resource" uid="uid://dy3x76olr4f3c" path="res://Resources/Parts/shortsplain.tres" id="16_5d0bq"]
 [ext_resource type="Resource" uid="uid://4oi2bqt2juvg" path="res://Resources/Parts/dresspattern.tres" id="16_jtmys"]
@@ -99,6 +101,7 @@
 [ext_resource type="Texture2D" uid="uid://d170snr27w4gj" path="res://Assets/Art/Sprites/UI/AccessoriesIcon.png" id="69_a3glx"]
 [ext_resource type="Resource" uid="uid://3d40btxn8mhh" path="res://Resources/TestParts/unusedfish.tres" id="69_su5xo"]
 [ext_resource type="Script" path="res://Scripts/Toolbar.gd" id="71_35idl"]
+[ext_resource type="Script" path="res://Scripts/Scroll.gd" id="72_24of8"]
 [ext_resource type="Texture2D" uid="uid://br2llvqk6qtbq" path="res://Assets/Art/Sprites/UI/paint.png" id="72_bk7ok"]
 [ext_resource type="Texture2D" uid="uid://c0yersrykq50c" path="res://Assets/Art/Sprites/UI/icon_deleteall.png" id="72_lp31v"]
 [ext_resource type="Script" path="res://Scripts/Paint.gd" id="73_by8g6"]
@@ -120,6 +123,7 @@
 [ext_resource type="Texture2D" uid="uid://34srjile4e4l" path="res://Assets/Art/Sprites/UI/icon_grow.png" id="85_a4f56"]
 [ext_resource type="Texture2D" uid="uid://b8drrq3xg6rpd" path="res://Assets/Art/Sprites/UI/icon_rotateL.png" id="86_4ecbi"]
 [ext_resource type="Texture2D" uid="uid://ci0g20vv73bbf" path="res://Assets/Art/Sprites/UI/icon_rotateR.png" id="87_hpndk"]
+[ext_resource type="AudioStream" uid="uid://dsqn574x8pygu" path="res://Assets/Audio/Music/fish_slightly_quieter_snare_edition.ogg" id="92_q27mk"]
 [ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
 [ext_resource type="Texture2D" uid="uid://dgihkj4xrgfgc" path="res://Assets/Art/Sprites/Credits/Sugarcyube.png" id="122_aio3a"]
 [ext_resource type="Script" path="res://Scripts/Credits.gd" id="122_hspmw"]
@@ -188,6 +192,7 @@ texture = SubResource("GradientTexture2D_lasq8")
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
 layer = 10
+visible = false
 script = ExtResource("2_rrrc7")
 
 [node name="C" type="Control" parent="MainMenu"]
@@ -205,7 +210,9 @@ material = SubResource("ShaderMaterial_djwkn")
 [node name="Back" type="TextureRect" parent="MainMenu/C/Group"]
 offset_right = 2319.0
 offset_bottom = 1080.0
-texture = ExtResource("6_libr3")
+texture = ExtResource("6_40xbh")
+script = ExtResource("7_3dlxi")
+frames = Array[Texture2D]([ExtResource("6_40xbh"), ExtResource("8_3wdft"), ExtResource("9_mbsia")])
 
 [node name="StartButton" type="Button" parent="MainMenu/C/Group"]
 offset_left = 72.0
@@ -251,7 +258,8 @@ visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
-partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
+partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50")])
+testPartDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
 colorMaterial = ExtResource("12_2sx1l")
 
 [node name="c" type="Control" parent="HUD"]
@@ -287,6 +295,7 @@ offset_top = 137.0
 offset_right = 508.0
 offset_bottom = 656.0
 horizontal_scroll_mode = 0
+script = ExtResource("72_24of8")
 
 [node name="Decors" type="GridContainer" parent="HUD/c/Panel/Scroll"]
 unique_name_in_owner = true
@@ -581,7 +590,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("16_00gwg")
+stream = ExtResource("92_q27mk")
 autoplay = true
 bus = &"Music"
 
@@ -1227,7 +1236,6 @@ script = ExtResource("73_by8g6")
 
 [node name="Camera" type="CanvasLayer" parent="."]
 layer = 20
-visible = false
 
 [node name="Flash" type="ColorRect" parent="Camera"]
 anchors_preset = 15
@@ -1240,6 +1248,7 @@ color = Color(1, 1, 1, 0)
 
 [node name="Credits" type="CanvasLayer" parent="."]
 layer = 15
+visible = false
 script = ExtResource("122_hspmw")
 
 [node name="c" type="Control" parent="Credits"]

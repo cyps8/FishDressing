@@ -1,6 +1,7 @@
 extends Button
 
 var scaleTween: Tween
+var wobbleTween: Tween
 
 @export var silentButton: bool = false
 @export var disableForWeb: bool = false
@@ -24,8 +25,15 @@ func _Focused():
 		return
 	if scaleTween:
 		scaleTween.stop()
+	if wobbleTween:
+		wobbleTween.stop()
 	scaleTween = create_tween()
 	scaleTween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.2)
+	wobbleTween = create_tween().set_loops(-1)
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(3), 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(0), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(-3), 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(0), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	AudioPlayer.ins.PlaySound(1)
 	if !has_focus():
 		grab_focus()
@@ -40,5 +48,9 @@ func _Pressed():
 func _Unfocused():
 	if scaleTween:
 		scaleTween.stop()
+	if wobbleTween:
+		wobbleTween.stop()
 	scaleTween = create_tween()
 	scaleTween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.2)
+	wobbleTween = create_tween()
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(0), 0.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)

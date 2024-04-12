@@ -51,13 +51,13 @@ func _process(_delta):
 		globalTools.get_node("SelectAll").disabled = false
 
 	if scalingDown:
-		Game.ins.hud.ChangeScale(0.98, true)
+		Game.ins.hud.ChangeScale(0.98)
 	if scalingUp:
-		Game.ins.hud.ChangeScale(1.02, true)
+		Game.ins.hud.ChangeScale(1.02)
 	if rotatingLeft:
-		Game.ins.hud.RotatePart(-0.05, true)
+		Game.ins.hud.RotatePart(-0.05)
 	if rotatingRight:
-		Game.ins.hud.RotatePart(0.05, true)
+		Game.ins.hud.RotatePart(0.05)
 
 func UpdateValues():
 	refPart = Game.ins.hud.currentPartGroup[Game.ins.hud.currentPartGroup.size() - 1]
@@ -127,49 +127,33 @@ func MoveToTop():
 	Game.ins.hud.MoveToTop()
 
 func ScaleDown(val: bool):
-	if val:
-		Game.ins.hud.SetFakeMouse()
-		Game.ins.hud.ResetSelectedMoveValues(true)
 	scalingDown = val
 
 func ScaleUp(val: bool):
-	if val:
-		Game.ins.hud.SetFakeMouse()
-		Game.ins.hud.ResetSelectedMoveValues(true)
 	scalingUp = val
 
 func ScaleChangeStarted():
-	Game.ins.hud.SetFakeMouse()
-	Game.ins.hud.ResetSelectedMoveValues(true)
 	sliderScaling = true
 	
 func ScaleChanged(_val: float):
 	if sliderScaling:
-		Game.ins.hud.SetScale(_val, true, true)
+		Game.ins.hud.SetScale(_val)
 
 func ScaleChangeEnded(_val: float):
 	sliderScaling = false
 
 func RotateLeft(val: bool):
-	if val:
-		Game.ins.hud.SetFakeMouse()
-		Game.ins.hud.ResetSelectedMoveValues(true)
 	rotatingLeft = val
 
 func RotateRight(val: bool):
-	if val:
-		Game.ins.hud.SetFakeMouse()
-		Game.ins.hud.ResetSelectedMoveValues(true)
 	rotatingRight = val
 
 func RotationChangeStarted():
-	Game.ins.hud.SetFakeMouse()
-	Game.ins.hud.ResetSelectedMoveValues(true)
 	sliderRotating = true
 
 func RotationChanged(_val: float):
 	if sliderRotating:
-		Game.ins.hud.SetRotation(deg_to_rad(_val), true, true)
+		Game.ins.hud.SetRotation(deg_to_rad(_val))
 
 func RotationChangeEnded(_val: float):
 	sliderRotating = false

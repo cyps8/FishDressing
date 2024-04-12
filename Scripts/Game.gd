@@ -65,6 +65,7 @@ func _ready():
 	remove_child(credits)
 
 	cameraFlash = $Camera/Flash
+	cameraFlash.visible = true
 
 func ReturnToMenu():
 	if fish.is_inside_tree():

@@ -44,4 +44,3 @@ mouse_filter = 2
 texture = ExtResource("5_obuv5")
 
 [connection signal="button_down" from="." to="." method="Pressed"]
-[connection signal="pressed" from="." to="." method="Clicked"]

@@ -10,11 +10,13 @@ static var ins: Editor
 
 @export var partDataList: Array[PartData]
 
+@export var testPartDataList: Array[PartData]
+
 var decorButtons: Array[DecorButton] = []
 
 var currentPartGroup: Array[Part] = []
 
-var currentlyManipulating: bool = false
+var mouseGrabbed: bool = false
 
 var fishRef: CanvasGroup
 
@@ -45,6 +47,8 @@ var texting: bool = false
 var clickedOut: TextureButton
 
 var fileDialog: FileDialog
+
+signal MouseGrabbed(val: bool)
 
 func _init():
 	ins = self
@@ -93,7 +97,14 @@ func _ready():
 		decorButtons.append(newButton)
 		%Decors.add_child(newButton)
 
-		fishRef = get_parent().get_node("Fish")
+	for i in testPartDataList.size():
+		var newButton: DecorButton = decorButtonIns.instantiate()
+		newButton.Setup(testPartDataList[i])
+		newButton.connect("button_down", Callable(self, "CreateNewDecor").bind(i))
+		decorButtons.append(newButton)
+		%Decors.add_child(newButton)
+
+	fishRef = get_parent().get_node("Fish")
 
 func InText(value: bool):
 	texting = value
@@ -101,6 +112,7 @@ func InText(value: bool):
 func CreateNewDecor(id: int = 0):
 	var newDecor = partIns.instantiate() as Part
 	newDecor.partData = partDataList[id]
+	MouseGrabbed.connect(newDecor.MouseGrabbed)
 	newDecor.SetTexture(partDataList[id].texture)
 	newDecor.GenerateClickMask()
 	if overrideColours:
@@ -113,7 +125,7 @@ func CreateNewDecor(id: int = 0):
 	newDecor.selectOffset = newDecor.size / 2
 	ClearControlGroup()
 	newDecor.SetControlGroup(true)
-	currentlyManipulating = true
+	SetMouseGrabbed(true)
 	newDecor.SpawnAnimation()
 	AudioPlayer.ins.PlaySound(0)
 
@@ -155,9 +167,15 @@ func UpdateTags():
 				decor.visible = false
 
 func ResetEditor():
-	currentlyManipulating = false
+	SetMouseGrabbed(false)
+
+func SetMouseGrabbed(value: bool):
+	if mouseGrabbed != value:
+		MouseGrabbed.emit(value)
+	mouseGrabbed = value
 
 func _process(_delta):
+	print(mouseGrabbed)
 	if Game.ins.cogMenu.is_inside_tree():
 		return
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -165,6 +183,8 @@ func _process(_delta):
 		return
 	if texting:
 		return
+	if !Input.is_action_pressed("Interact"):
+		SetMouseGrabbed(false)
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
 		SelectAll()
 	if currentPartGroup.size() > 0:
@@ -175,7 +195,7 @@ func _process(_delta):
 			Duplicate()
 		if Input.is_action_just_pressed("Delete")  && !Input.is_action_pressed("Control"):
 			DeleteAllSelected()
-			currentlyManipulating = false
+			SetMouseGrabbed(false)
 			return
 		if Input.is_action_just_pressed("Flip") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
@@ -184,24 +204,24 @@ func _process(_delta):
 				FlipH()
 		if Input.is_action_pressed("ScaleUp") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
-				ChangeScale(1.05, !currentlyManipulating)
+				ChangeScale(1.05)
 			else:
-				ChangeScale(1.01, !currentlyManipulating)
+				ChangeScale(1.01)
 		elif Input.is_action_pressed("ScaleDown") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
-				ChangeScale(0.95, !currentlyManipulating)
+				ChangeScale(0.95)
 			else:
-				ChangeScale(0.99, !currentlyManipulating)
+				ChangeScale(0.99)
 		if Input.is_action_pressed("RotateLeft") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
-				RotatePart(-0.05, !currentlyManipulating)
+				RotatePart(-0.05)
 			else:
-				RotatePart(-0.01, !currentlyManipulating)
+				RotatePart(-0.01)
 		elif Input.is_action_pressed("RotateRight") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
-				RotatePart(0.05, !currentlyManipulating)
+				RotatePart(0.05)
 			else:
-				RotatePart(0.01, !currentlyManipulating)
+				RotatePart(0.01)
 		if Input.is_action_just_pressed("MoveUp") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
 				MoveToTop()
@@ -212,7 +232,7 @@ func _process(_delta):
 				MoveToBottom()
 			else:
 				MoveDown()
-		if Input.is_action_pressed("Interact") && currentlyManipulating:
+		if Input.is_action_pressed("Interact") && mouseGrabbed:
 			for part in currentPartGroup:
 				UpdateSafeColour(part)
 			if Input.is_action_just_released("ScrollDown"):
@@ -237,7 +257,7 @@ func _process(_delta):
 			while partsToDelete.size() > 0:
 				partsToDelete[0].Delete()
 				partsToDelete.remove_at(0)
-			currentlyManipulating = false
+			SetMouseGrabbed(false)
 			if currentPartGroup.size() > 0:
 				AudioPlayer.ins.PlaySound(4)
 
@@ -254,35 +274,37 @@ func UpdateSafeColour(part: Part):
 	else:
 		part.SetDanger(true)
 
-func ResetSelectedMoveValues(fake: bool = false):
-	for part in currentPartGroup:
-		part.ResetMoveValues(fake)
-
-func RotatePart(amount: float, fake: bool = false):
-	for part in currentPartGroup:
-		part.RotateBy(amount, fake)
-
-func SetRotation(value: float, move: bool = false, fake: bool = false):
-	for part in currentPartGroup:
-		part.SetRotation(value, move, fake)
-
-func SetScale(value: float, move: bool = false, fake: bool = false):
-	for part in currentPartGroup:
-		part.SetScale(value, move, fake)
-
-func ChangeScale(value: float, fake: bool = false):
-	for part in currentPartGroup:
-		part.ScaleBy(value, fake)
-
-func SelectPart(selectedPart: Part):
-	if !currentPartGroup.has(selectedPart):
-		ClearControlGroup()
-		selectedPart.SetControlGroup(true)
-	currentlyManipulating = true
+func ResetSelectedMoveValues():
 	for part in currentPartGroup:
 		part.ResetMoveValues()
-		part.SpawnAnimation()
-	AudioPlayer.ins.PlaySound(0)
+
+func RotatePart(amount: float):
+	for part in currentPartGroup:
+		part.RotateBy(amount)
+
+func SetRotation(value: float):
+	for part in currentPartGroup:
+		part.SetRotation(value)
+
+func SetScale(value: float):
+	for part in currentPartGroup:
+		part.SetScale(value)
+
+func ChangeScale(value: float):
+	for part in currentPartGroup:
+		part.ScaleBy(value)
+
+func SelectPart(selectedPart: Part, clearGroup: bool = true, anim = true):
+	if !currentPartGroup.has(selectedPart):
+		if clearGroup:
+			ClearControlGroup()
+		selectedPart.SetControlGroup(true)
+	SetMouseGrabbed(true)
+	if anim:
+		for part in currentPartGroup:
+			#part.ResetMoveValues()
+			part.SpawnAnimation()
+		AudioPlayer.ins.PlaySound(0)
 
 func GetAll() -> Array[Part]:
 	var allParts: Array[Part] = []
@@ -296,10 +318,7 @@ func SelectAll():
 	for part in GetAll():
 		if !part.controlGrouped:
 			part.SetControlGroup(true)
-			if !Input.is_action_pressed("Interact"):
-				part.SetFakeMouse()
-			part.ResetMoveValues(!Input.is_action_pressed("Interact"))
-			part.SpawnAnimation(!Input.is_action_pressed("Interact"), !Input.is_action_pressed("Interact"))
+			part.SpawnAnimation()
 			allInGroup = false
 	if allInGroup:
 		ClearControlGroup()
@@ -307,8 +326,8 @@ func SelectAll():
 		AudioPlayer.ins.PlaySound(0)
 
 func Duplicate(selectedPart: Part = null):
-	if selectedPart && !currentPartGroup.has(selectedPart):
-		selectedPart.SetControlGroup(true)
+	if selectedPart:
+		SelectPart(selectedPart, true, false)
 	var dupedParts: Array[Part] = []
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
 	for part in currentPartGroup:
@@ -320,11 +339,11 @@ func Duplicate(selectedPart: Part = null):
 	ClearControlGroup()
 	for part in dupedParts:
 		part.SetControlGroup(true)
-		if !Input.is_action_pressed("Interact"):
-			part.SetFakeMouse()
-		part.ResetMoveValues(!Input.is_action_pressed("Interact"))
-		part.SpawnAnimation(!Input.is_action_pressed("Interact"), !Input.is_action_pressed("Interact"))
-	currentlyManipulating = true
+		MouseGrabbed.connect(part.MouseGrabbed)
+		part.MouseGrabbed(mouseGrabbed)
+		part.SpawnAnimation()
+	if selectedPart != null:
+		SetMouseGrabbed(true)
 	AudioPlayer.ins.PlaySound(0)
 
 func MoveUp():
@@ -350,10 +369,6 @@ func MoveToBottom():
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
 	for part in currentPartGroup:
 		fishRef.move_child(part, 1)
-
-func SetFakeMouse():
-	for part in currentPartGroup:
-		part.SetFakeMouse()
 
 func ColorPickChanged(newColor: Color, val: int = 1):
 	match val:
@@ -384,6 +399,8 @@ func DeleteAll(insta: bool = true):
 		toDelete.remove_at(0)
 	if !insta:
 		AudioPlayer.ins.PlaySound(5)
+	else:
+		currentPartGroup.clear()
 
 func SetOverride(value: bool):
 	overrideColours = value
@@ -397,13 +414,13 @@ func SetOverride(value: bool):
 func FlipH():
 	for part in currentPartGroup:
 		part.FlipH()
-		part.SpawnAnimation(currentlyManipulating)
+		part.SpawnAnimation()
 	AudioPlayer.ins.PlaySound(0)
 
 func FlipV():
 	for part in currentPartGroup:
 		part.FlipV()
-		part.SpawnAnimation(currentlyManipulating)
+		part.SpawnAnimation()
 	AudioPlayer.ins.PlaySound(0)
 
 func ChangeSelectedColourChannel(color: Color, channel: int):
