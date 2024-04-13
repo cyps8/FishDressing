@@ -5,26 +5,20 @@ class_name Game
 static var ins: Game
 
 var mainMenu: CanvasLayer
-
 var hud: CanvasLayer
-
 var fish: CanvasGroup
-
 var fishPicker: CanvasLayer
-
 var settingsButton: CanvasLayer
-
 var settings: CanvasLayer
-
 var cogMenu: CanvasLayer
-
 var toolbar: CanvasLayer
-
 var credits: CanvasLayer
 
 var selectedFish: FishData
 
 var cameraFlash: ColorRect
+
+var particles: CPUParticles2D
 
 func _init():
 	ins = self
@@ -65,7 +59,9 @@ func _ready():
 	remove_child(credits)
 
 	cameraFlash = $Camera/Flash
-	cameraFlash.visible = true
+	$Camera.visible = true
+
+	particles = $BubbleEffect/Particles
 
 func ReturnToMenu():
 	if fish.is_inside_tree():
@@ -88,12 +84,14 @@ func HideMenu():
 	hideMenuTween.tween_callback(remove_child.bind(mainMenu))
 
 func ShowMenu():
+	particles.emitting = true
 	add_child(mainMenu)
 	var showMenuTween: Tween = create_tween()
 	showMenuTween.tween_property(mainMenu, "offset:x", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	showMenuTween.tween_callback(mainMenu.SetActive.bind(true))
 
 func ShowHUD():
+	particles.emitting = true
 	add_child(hud)
 	hud.EditorOpened()
 	hud.offset = Vector2(0, 900)
@@ -128,6 +126,7 @@ func HideFish():
 	hideFishTween.tween_callback(remove_child.bind(fish))
 
 func ShowFishPicker():
+	particles.emitting = true
 	add_child(fishPicker)
 	fishPicker.picked = false
 	fishPicker.SetFish(-1)

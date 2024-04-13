@@ -1,0 +1,41 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://ybtux6020m2s"]
+
+[ext_resource type="FontFile" uid="uid://7sacokjpsp7k" path="res://Assets/Art/Fonts/TT0756M_.TTF" id="1_imgs0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p4cwb"]
+bg_color = Color(0.0431373, 0.388235, 0.494118, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgaiq"]
+bg_color = Color(0.219608, 0.756863, 0.941176, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 10.0
+expand_margin_top = 35.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[resource]
+default_font = ExtResource("1_imgs0")
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_p4cwb")
+FileDialog/colors/folder_icon_color = Color(0.498039, 1, 1, 1)
+Window/colors/title_color = Color(1, 1, 1, 1)
+Window/colors/title_outline_modulate = Color(0, 0, 0, 1)
+Window/constants/title_outline_size = 5
+Window/styles/embedded_border = SubResource("StyleBoxFlat_mgaiq")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_mgaiq")

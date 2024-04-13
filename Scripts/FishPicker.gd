@@ -11,6 +11,11 @@ var swapFishTween: Tween
 
 var picked = false
 
+var leftShadow: TextureButton
+var rightShadow: TextureButton
+
+var moveShadowsTween: Tween
+
 func _ready():
 	fishRef = get_parent().get_node("Fish/FishBody")
 	fishName = $c/FishName
@@ -20,6 +25,9 @@ func _ready():
 	animateTween.tween_property(fishName, "rotation", deg_to_rad(0), 0.25).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	animateTween.tween_property(fishName, "rotation", deg_to_rad(-15), 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	animateTween.tween_property(fishName, "rotation", deg_to_rad(0), 0.25).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+
+	leftShadow = $c/LeftShadow
+	rightShadow = $c/RightShadow
 
 func Pick():
 	if picked:
@@ -32,11 +40,16 @@ func SwapFish(direction: int):
 	if picked:
 		return
 	currentFish += direction
-	if currentFish < 0:
-		currentFish = fishDataList.size() - 1
-	if currentFish >= fishDataList.size():
-		currentFish = 0
+	currentFish = OverflowInt(currentFish)
+	MoveShadows(direction as float)
 	Fish()
+
+func OverflowInt(num: int) -> int:
+	if num < 0:
+		num = fishDataList.size() - 1
+	if num >= fishDataList.size():
+		num = 0
+	return num
 
 func SetFish(value: int):
 	if picked:
@@ -58,6 +71,20 @@ func Fish():
 	swapFishTween.tween_property(fishRef, "scale", Vector2(.75, .75), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	swapFishTween.parallel()
 	swapFishTween.tween_property(fishName, "scale", Vector2(1, 1), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+
+	leftShadow.texture_normal = fishDataList[OverflowInt(currentFish - 1)].texture
+	rightShadow.texture_normal = fishDataList[OverflowInt(currentFish + 1)].texture
+
+func MoveShadows(dir: float = 1):
+	leftShadow.position.x += dir * 50
+	rightShadow.position.x += dir * 50
+
+	if moveShadowsTween && moveShadowsTween.is_running():
+		moveShadowsTween.kill()
+	moveShadowsTween = create_tween()
+	moveShadowsTween.tween_property(leftShadow, "position", leftShadow.position - Vector2(dir * 50.0, 0), 0.8).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	moveShadowsTween.parallel()
+	moveShadowsTween.tween_property(rightShadow, "position", rightShadow.position - Vector2(dir * 50.0, 0), 0.8).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 
 func _process(_delta):
 	if picked:

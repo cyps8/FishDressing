@@ -2,9 +2,15 @@ extends CanvasLayer
 
 var menuActive: bool = false
 
-func SecretTestSprites(value: bool):
-	Game.ins.hud.showTestParts = value
+@export var selectMaterial: Material
+@export var dangerMaterial: Material
+
+func SecretTestSprites(val: bool):
+	Game.ins.hud.showTestParts = val
 	Game.ins.hud.UpdateTags()
+
+func CanGoBehind(val: bool):
+	Game.ins.hud.SetCanGoBehind(val)
 
 func _process(_delta):
 	if !menuActive:
@@ -15,6 +21,12 @@ func _process(_delta):
 
 func SetActive(value: bool):
 	menuActive = value
+
+func ChangeSelectColour(colour: Color):
+	selectMaterial.set_shader_parameter("color_hue", colour)
+
+func ChangeDangerColour(colour: Color):
+	dangerMaterial.set_shader_parameter("color_hue", colour)
 
 func BackButton():
 	if !menuActive:

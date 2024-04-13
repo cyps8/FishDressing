@@ -34,6 +34,7 @@ var overrideColours: bool = false
 var overrideButton: CheckButton
 
 var showTestParts: bool = false
+var layerLimit: int = 1
 
 var currentCategory: int = 0
 
@@ -48,6 +49,7 @@ var clickedOut: TextureButton
 
 var fileDialog: FileDialog
 var stickerCap: SubViewport
+var confCancel: ConfirmationDialog
 
 signal MouseGrabbed(val: bool)
 
@@ -89,19 +91,15 @@ func _ready():
 
 	fileDialog = $FileDialog
 	stickerCap = $StickerCapture
+	confCancel = $ConfCancel
 
 	ResetEditor()
+
+	partDataList.append_array(testPartDataList)
 
 	for i in partDataList.size():
 		var newButton: DecorButton = decorButtonIns.instantiate()
 		newButton.Setup(partDataList[i])
-		newButton.connect("button_down", Callable(self, "CreateNewDecor").bind(i))
-		decorButtons.append(newButton)
-		%Decors.add_child(newButton)
-
-	for i in testPartDataList.size():
-		var newButton: DecorButton = decorButtonIns.instantiate()
-		newButton.Setup(testPartDataList[i])
 		newButton.connect("button_down", Callable(self, "CreateNewDecor").bind(i))
 		decorButtons.append(newButton)
 		%Decors.add_child(newButton)
@@ -179,6 +177,8 @@ func SetMouseGrabbed(value: bool):
 
 func _process(_delta):
 	if fileDialog.visible:
+		return
+	if confCancel.visible:
 		return
 	if Game.ins.cogMenu.is_inside_tree():
 		return
@@ -361,7 +361,7 @@ func MoveDown():
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
 	for i in currentPartGroup.size():
 		var index = currentPartGroup[i].get_index()
-		if index > 1 && (i - currentPartGroup.size()) != (index - fishRef.get_child_count() - 1):
+		if index > layerLimit && (i - currentPartGroup.size()) != (index - fishRef.get_child_count() - 1):
 			fishRef.move_child(currentPartGroup[i], index - 1)
 
 func MoveToTop():
@@ -372,7 +372,14 @@ func MoveToTop():
 func MoveToBottom():
 	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
 	for part in currentPartGroup:
-		fishRef.move_child(part, 1)
+		fishRef.move_child(part, layerLimit)
+
+func SetCanGoBehind(val: bool):
+	if val:
+		layerLimit = 0
+	else:
+		layerLimit = 1
+		fishRef.move_child(fishRef.get_node("FishBody"), 0)
 
 func ColorPickChanged(newColor: Color, val: int = 1):
 	match val:
@@ -450,11 +457,15 @@ func MakeSticker():
 
 func TakePicture():
 	ClearControlGroup()
-	CameraEffects()
+	Game.ins.hud.visible = false
+	Game.ins.toolbar.visible = false
 	await RenderingServer.frame_post_draw
 	img = get_viewport().get_texture().get_image()
-	img = img.get_region(Rect2i(img.get_width() / 3.0 as int, 0 as int, img.get_width() / 3.0 as int, img.get_height() as int))
+	img = img.get_region(Rect2i((img.get_width() / 10.0) * 3 as int, 0 as int, (img.get_width() / 10.0) * 4 as int, img.get_height() as int))
 	SaveImg()
+	CameraEffects()
+	Game.ins.hud.visible = true
+	Game.ins.toolbar.visible = true
 
 func SaveImg():
 	if OS.get_name() == "Web":
@@ -493,3 +504,8 @@ func TakeWebPicture():
 		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "Picture Of Friend.png")
 	else:
 		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "Picture Of " + nameEdit.text + ".png")
+
+signal Canceled(val: bool)
+
+func DeleteAllConfirmation(val: bool):
+	Canceled.emit(val)

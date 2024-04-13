@@ -100,6 +100,10 @@ func SelectDisable(value: bool):
 			button.visible = !value
 
 func DeleteAll():
+	Game.ins.hud.confCancel.visible = true
+	var cancel: bool = await Game.ins.hud.Canceled
+	if !cancel:
+		return
 	Game.ins.hud.DeleteAll(false)
 
 func SelectAll():

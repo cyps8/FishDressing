@@ -1,4 +1,4 @@
-[gd_scene load_steps=149 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=156 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -122,9 +122,14 @@
 [ext_resource type="Texture2D" uid="uid://j8eejhb2xabn" path="res://Assets/Art/Sprites/UI/icon_shrink.png" id="84_8rgqi"]
 [ext_resource type="Texture2D" uid="uid://34srjile4e4l" path="res://Assets/Art/Sprites/UI/icon_grow.png" id="85_a4f56"]
 [ext_resource type="Texture2D" uid="uid://b8drrq3xg6rpd" path="res://Assets/Art/Sprites/UI/icon_rotateL.png" id="86_4ecbi"]
+[ext_resource type="Theme" uid="uid://ybtux6020m2s" path="res://Resources/FileTheme.tres" id="86_8slkc"]
 [ext_resource type="Texture2D" uid="uid://ci0g20vv73bbf" path="res://Assets/Art/Sprites/UI/icon_rotateR.png" id="87_hpndk"]
 [ext_resource type="AudioStream" uid="uid://dsqn574x8pygu" path="res://Assets/Audio/Music/fish_slightly_quieter_snare_edition.ogg" id="92_q27mk"]
+[ext_resource type="Texture2D" uid="uid://ck7ri0462uu1m" path="res://Assets/Art/Sprites/Fish/whaleshark.png" id="97_cxjm4"]
 [ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
+[ext_resource type="Script" path="res://Scripts/Shadow.gd" id="98_rr7oq"]
+[ext_resource type="Texture2D" uid="uid://u0ptqfyasitf" path="res://Assets/Art/Sprites/ActualParts/accessories_fish.png" id="109_hbsd4"]
+[ext_resource type="Shader" path="res://Scripts/Shaders/color_swap.gdshader" id="109_ovqsd"]
 [ext_resource type="PackedScene" uid="uid://dujmhb7bq5o7q" path="res://Nodes/action_label.tscn" id="110_qpdf8"]
 [ext_resource type="Texture2D" uid="uid://dgihkj4xrgfgc" path="res://Assets/Art/Sprites/Credits/Sugarcyube.png" id="122_aio3a"]
 [ext_resource type="Script" path="res://Scripts/Credits.gd" id="122_hspmw"]
@@ -134,6 +139,7 @@
 [ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/TestParts/blocks.png" id="131_xivuq"]
 [ext_resource type="Material" uid="uid://b30s0wisbxkh8" path="res://Resources/Materials/SelectedMat.tres" id="132_e54j8"]
 [ext_resource type="Material" uid="uid://bl3hbvd3y4dbs" path="res://Resources/Materials/DangerMat.tres" id="133_udj7u"]
+[ext_resource type="Texture2D" uid="uid://cjnme0xw1y0c1" path="res://Assets/Art/Sprites/TestParts/redball.png" id="140_8xtsf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
 shader = ExtResource("3_tpo2n")
@@ -162,6 +168,14 @@ shader_parameter/line_color = Color(0.129412, 0.129412, 0.129412, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lgp1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jp7pg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7iium"]
+resource_local_to_scene = true
+shader = ExtResource("109_ovqsd")
+shader_parameter/red_color = Color(0.627451, 0.862745, 1, 1)
+shader_parameter/green_color = Color(1, 1, 1, 1)
+shader_parameter/blue_color = Color(1, 1, 1, 1)
+shader_parameter/colder_shadows = true
 
 [sub_resource type="Gradient" id="Gradient_0mdcr"]
 offsets = PackedFloat32Array(0, 0.445977, 0.708046)
@@ -258,6 +272,7 @@ disableForWeb = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = -5
+visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
@@ -523,9 +538,11 @@ script = ExtResource("6_j1bsi")
 silentButton = true
 
 [node name="FileDialog" type="FileDialog" parent="HUD"]
+disable_3d = true
 title = "Save picture of your friend!"
 initial_position = 2
 size = Vector2i(900, 600)
+theme = ExtResource("86_8slkc")
 access = 2
 
 [node name="StickerCapture" type="SubViewport" parent="HUD"]
@@ -535,6 +552,15 @@ size = Vector2i(640, 1080)
 render_target_update_mode = 3
 
 [node name="cam" type="Camera2D" parent="HUD/StickerCapture"]
+
+[node name="ConfCancel" type="ConfirmationDialog" parent="HUD"]
+initial_position = 2
+size = Vector2i(268, 100)
+theme = ExtResource("86_8slkc")
+ok_button_text = "YES!!"
+dialog_text = "Do you want to delete everything??
+                        :o"
+cancel_button_text = "Oops..."
 
 [node name="Fish" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
@@ -548,7 +574,6 @@ texture = ExtResource("50_vwc7o")
 
 [node name="FishPicker" type="CanvasLayer" parent="."]
 layer = 2
-visible = false
 script = ExtResource("17_ab2uv")
 fishDataList = Array[Resource("res://Scripts/Fishdata.gd")]([ExtResource("18_bd57s"), ExtResource("19_e6o20"), ExtResource("20_ydo2a"), ExtResource("21_htqcw"), ExtResource("22_0o110"), ExtResource("26_xitak")])
 
@@ -562,7 +587,7 @@ grow_vertical = 2
 theme = ExtResource("4_8dgoj")
 
 [node name="LeftButton" type="TextureButton" parent="FishPicker/c"]
-self_modulate = Color(1, 1, 1, 0.698039)
+self_modulate = Color(1, 1, 1, 0.627451)
 layout_mode = 0
 offset_left = 679.0
 offset_top = 850.0
@@ -573,7 +598,7 @@ flip_h = true
 script = ExtResource("24_3jm2q")
 
 [node name="RightButton" type="TextureButton" parent="FishPicker/c"]
-self_modulate = Color(1, 1, 1, 0.698039)
+self_modulate = Color(1, 1, 1, 0.627451)
 layout_mode = 0
 offset_left = 1089.0
 offset_top = 850.0
@@ -581,6 +606,36 @@ offset_right = 1217.0
 offset_bottom = 978.0
 texture_normal = ExtResource("23_ws3dy")
 script = ExtResource("24_3jm2q")
+
+[node name="LeftShadow" type="TextureButton" parent="FishPicker/c"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -17.0
+offset_top = -337.0
+offset_right = 983.0
+offset_bottom = 1313.0
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(500, 825)
+texture_normal = ExtResource("97_cxjm4")
+stretch_mode = 3
+script = ExtResource("98_rr7oq")
+speed = 0.8
+rotationLimit = 5.0
+
+[node name="RightShadow" type="TextureButton" parent="FishPicker/c"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 927.0
+offset_top = -351.0
+offset_right = 1927.0
+offset_bottom = 1299.0
+scale = Vector2(0.4, 0.4)
+pivot_offset = Vector2(500, 825)
+texture_normal = ExtResource("97_cxjm4")
+stretch_mode = 3
+script = ExtResource("98_rr7oq")
+speed = 0.8
+rotationLimit = 5.0
 
 [node name="Pick" type="Button" parent="FishPicker/c"]
 layout_mode = 0
@@ -651,6 +706,8 @@ script = ExtResource("6_j1bsi")
 layer = 14
 visible = false
 script = ExtResource("31_y0nog")
+selectMaterial = ExtResource("132_e54j8")
+dangerMaterial = ExtResource("133_udj7u")
 
 [node name="c" type="Control" parent="Settings"]
 layout_mode = 3
@@ -669,7 +726,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -282.0
-offset_top = -342.0
+offset_top = -470.0
 offset_right = 282.0
 offset_bottom = 394.0
 grow_horizontal = 2
@@ -677,9 +734,9 @@ grow_vertical = 2
 
 [node name="AudioSettings" type="Label" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 168.0
+offset_left = 177.0
 offset_top = 43.0
-offset_right = 377.0
+offset_right = 386.0
 offset_bottom = 85.0
 theme_override_font_sizes/font_size = 30
 text = "Audio Settings"
@@ -687,10 +744,10 @@ horizontal_alignment = 1
 
 [node name="MasterVolume" type="HSlider" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 238.0
-offset_top = 93.0
-offset_right = 506.0
-offset_bottom = 166.0
+offset_left = 239.0
+offset_top = 81.0
+offset_right = 507.0
+offset_bottom = 154.0
 max_value = 1.0
 step = 0.1
 script = ExtResource("32_2853m")
@@ -706,10 +763,10 @@ horizontal_alignment = 2
 
 [node name="MusicVolume" type="HSlider" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 238.0
-offset_top = 165.0
-offset_right = 506.0
-offset_bottom = 238.0
+offset_left = 239.0
+offset_top = 153.0
+offset_right = 507.0
+offset_bottom = 226.0
 max_value = 1.0
 step = 0.1
 script = ExtResource("32_2853m")
@@ -726,10 +783,10 @@ horizontal_alignment = 2
 
 [node name="SFXVolume" type="HSlider" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 239.0
-offset_top = 238.0
-offset_right = 507.0
-offset_bottom = 311.0
+offset_left = 240.0
+offset_top = 226.0
+offset_right = 508.0
+offset_bottom = 299.0
 max_value = 1.0
 step = 0.1
 script = ExtResource("32_2853m")
@@ -746,29 +803,162 @@ horizontal_alignment = 2
 
 [node name="GameSettings" type="Label" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 173.0
-offset_top = 358.0
-offset_right = 383.0
-offset_bottom = 400.0
+offset_left = 178.0
+offset_top = 304.0
+offset_right = 388.0
+offset_bottom = 346.0
 theme_override_font_sizes/font_size = 30
 text = "Game Settings"
 horizontal_alignment = 1
 
 [node name="SecretSprites" type="CheckButton" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 71.0
-offset_top = 430.0
-offset_right = 492.0
-offset_bottom = 476.0
+offset_left = 70.0
+offset_top = 362.0
+offset_right = 491.0
+offset_bottom = 408.0
 text = "Secret Test Sprites"
 alignment = 1
 
+[node name="CanGoBehind" type="CheckButton" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 418.0
+offset_right = 491.0
+offset_bottom = 464.0
+text = "Allow layer behind fish"
+alignment = 1
+
+[node name="AccessibilitySettings" type="Label" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 505.0
+offset_right = 430.0
+offset_bottom = 547.0
+theme_override_font_sizes/font_size = 30
+text = "Accessibility Settings"
+horizontal_alignment = 1
+
+[node name="Example" type="TextureRect" parent="Settings/c/Panel"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_7iium")
+offset_left = 349.0
+offset_top = 536.0
+offset_right = 528.0
+offset_bottom = 715.0
+mouse_filter = 2
+texture = ExtResource("109_hbsd4")
+
+[node name="Selected" type="TextureRect" parent="Settings/c/Panel/Example"]
+texture_filter = 1
+material = ExtResource("132_e54j8")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("109_hbsd4")
+
+[node name="Danger" type="TextureRect" parent="Settings/c/Panel/Example"]
+texture_filter = 1
+material = ExtResource("133_udj7u")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("109_hbsd4")
+
+[node name="SelectColour" type="ColorPickerButton" parent="Settings/c/Panel"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 289.0
+offset_top = 556.0
+offset_right = 353.0
+offset_bottom = 620.0
+tooltip_text = "Change colour"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+color = Color(1, 1, 0, 1)
+edit_alpha = false
+script = ExtResource("74_sltjo")
+
+[node name="Paint" type="TextureRect" parent="Settings/c/Panel/SelectColour"]
+modulate = Color(1, 1, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
+[node name="Label" type="Label" parent="Settings/c/Panel/SelectColour"]
+offset_left = -186.0
+offset_top = 15.0
+offset_right = -19.0
+offset_bottom = 43.0
+text = "SELECT COLOUR"
+horizontal_alignment = 2
+
+[node name="DangerColour" type="ColorPickerButton" parent="Settings/c/Panel"]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 289.0
+offset_top = 627.0
+offset_right = 353.0
+offset_bottom = 691.0
+tooltip_text = "Change colour"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+color = Color(1, 0, 0, 1)
+edit_alpha = false
+script = ExtResource("74_sltjo")
+
+[node name="Paint" type="TextureRect" parent="Settings/c/Panel/DangerColour"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_bk7ok")
+expand_mode = 1
+script = ExtResource("73_by8g6")
+
+[node name="Label" type="Label" parent="Settings/c/Panel/DangerColour"]
+offset_left = -186.0
+offset_top = 15.0
+offset_right = -19.0
+offset_bottom = 43.0
+text = "DANGER COLOUR"
+horizontal_alignment = 2
+
 [node name="BackButton" type="Button" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 149.0
-offset_top = 612.0
-offset_right = 398.0
-offset_bottom = 689.0
+offset_left = 161.0
+offset_top = 734.0
+offset_right = 410.0
+offset_bottom = 811.0
 text = "Back"
 script = ExtResource("6_j1bsi")
 backButton = true
@@ -858,6 +1048,7 @@ script = ExtResource("6_j1bsi")
 
 [node name="Toolbar" type="CanvasLayer" parent="."]
 layer = 5
+visible = false
 script = ExtResource("71_35idl")
 actionLabelIns = ExtResource("110_qpdf8")
 
@@ -1268,6 +1459,7 @@ alignment = 2
 
 [node name="Camera" type="CanvasLayer" parent="."]
 layer = 20
+visible = false
 
 [node name="Flash" type="ColorRect" parent="Camera"]
 anchors_preset = 15
@@ -1465,6 +1657,29 @@ offset_bottom = 40.0
 mouse_filter = 2
 texture = ExtResource("131_xivuq")
 
+[node name="BubbleEffect" type="CanvasLayer" parent="."]
+layer = 18
+
+[node name="Particles" type="CPUParticles2D" parent="BubbleEffect"]
+position = Vector2(945, 1161)
+emitting = false
+amount = 50
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+texture = ExtResource("140_8xtsf")
+emission_shape = 3
+emission_rect_extents = Vector2(1000, 60)
+direction = Vector2(0, -1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 700.0
+linear_accel_min = -400.0
+linear_accel_max = -300.0
+scale_amount_min = 0.75
+
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/CreditsButton" to="MainMenu" method="CreditsButton"]
 [connection signal="pressed" from="MainMenu/C/Group/OptionsButton" to="MainMenu" method="SettingsButton"]
@@ -1482,12 +1697,19 @@ texture = ExtResource("131_xivuq")
 [connection signal="confirmed" from="HUD/FileDialog" to="HUD" method="SavePicture"]
 [connection signal="dir_selected" from="HUD/FileDialog" to="HUD" method="SwitchDirectory"]
 [connection signal="file_selected" from="HUD/FileDialog" to="HUD" method="GetFilePath"]
+[connection signal="canceled" from="HUD/ConfCancel" to="HUD" method="DeleteAllConfirmation" binds= [false]]
+[connection signal="confirmed" from="HUD/ConfCancel" to="HUD" method="DeleteAllConfirmation" binds= [true]]
 [connection signal="pressed" from="FishPicker/c/LeftButton" to="FishPicker" method="SwapFish" binds= [-1]]
 [connection signal="pressed" from="FishPicker/c/RightButton" to="FishPicker" method="SwapFish" binds= [1]]
+[connection signal="pressed" from="FishPicker/c/LeftShadow" to="FishPicker" method="SwapFish" binds= [-1]]
+[connection signal="pressed" from="FishPicker/c/RightShadow" to="FishPicker" method="SwapFish" binds= [1]]
 [connection signal="pressed" from="FishPicker/c/Pick" to="FishPicker" method="Pick"]
 [connection signal="pressed" from="FishPicker/c/BackButton" to="FishPicker" method="BackButton"]
 [connection signal="pressed" from="SettingsButton/c/CogButton" to="." method="ShowCogMenu"]
 [connection signal="toggled" from="Settings/c/Panel/SecretSprites" to="Settings" method="SecretTestSprites"]
+[connection signal="toggled" from="Settings/c/Panel/CanGoBehind" to="Settings" method="CanGoBehind"]
+[connection signal="color_changed" from="Settings/c/Panel/SelectColour" to="Settings" method="ChangeSelectColour"]
+[connection signal="color_changed" from="Settings/c/Panel/DangerColour" to="Settings" method="ChangeDangerColour"]
 [connection signal="pressed" from="Settings/c/Panel/BackButton" to="Settings" method="BackButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/ResumeButton" to="CogMenu" method="ResumeButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/SettingsButton" to="CogMenu" method="SettingsButton"]
