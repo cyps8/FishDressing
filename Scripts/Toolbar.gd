@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-var selectDisabled: bool = true
+var selectDisabled: bool = false
 
 var selectedTools: Panel
 
@@ -23,9 +23,14 @@ var refPart: Part
 var sliderScaling: bool = false
 var sliderRotating: bool = false
 
+@export var actionLabelIns: PackedScene
+
+var actions: VBoxContainer
+
 func _ready():
 	selectedTools = $c/SelectedTools
 	globalTools = $c/GlobalTools
+	actions = $c/Actions
 
 	scaleSlider = selectedTools.get_node("ScaleSlider")
 	rotationSlider = selectedTools.get_node("RotationSlider")
@@ -36,11 +41,13 @@ func _ready():
 
 	SelectDisable(true)
 
+func AddActionLabel(text: String):
+	var newLabel: Label = actionLabelIns.instantiate()
+	newLabel.text = text
+	actions.add_child(newLabel)
+
 func _process(_delta):
-	if Game.ins.hud.currentPartGroup.size() > 0 && selectDisabled:
-		SelectDisable(false)
-	if Game.ins.hud.currentPartGroup.size() == 0 && !selectDisabled:
-		SelectDisable(true)
+	SelectDisable(!Game.ins.hud.currentPartGroup.size() > 0)
 	if !selectDisabled:
 		UpdateValues()
 	if Game.ins.hud.GetAll().size() == 0:
@@ -81,6 +88,8 @@ func UpdateValues():
 		colorPickerB.visible = false
 
 func SelectDisable(value: bool):
+	if selectDisabled == value:
+		return
 	selectDisabled = value
 	for button in selectedTools.get_children():
 		if button is Button || button is CheckButton:

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dujmhb7bq5o7q"]
+
+[ext_resource type="Script" path="res://Scripts/ActionLabel.gd" id="1_skthg"]
+
+[node name="ActionLabel" type="Label"]
+text = "Action: Action Description"
+script = ExtResource("1_skthg")

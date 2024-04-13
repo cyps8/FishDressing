@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=149 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -125,11 +125,15 @@
 [ext_resource type="Texture2D" uid="uid://ci0g20vv73bbf" path="res://Assets/Art/Sprites/UI/icon_rotateR.png" id="87_hpndk"]
 [ext_resource type="AudioStream" uid="uid://dsqn574x8pygu" path="res://Assets/Audio/Music/fish_slightly_quieter_snare_edition.ogg" id="92_q27mk"]
 [ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
+[ext_resource type="PackedScene" uid="uid://dujmhb7bq5o7q" path="res://Nodes/action_label.tscn" id="110_qpdf8"]
 [ext_resource type="Texture2D" uid="uid://dgihkj4xrgfgc" path="res://Assets/Art/Sprites/Credits/Sugarcyube.png" id="122_aio3a"]
 [ext_resource type="Script" path="res://Scripts/Credits.gd" id="122_hspmw"]
 [ext_resource type="Texture2D" uid="uid://bodonwsw3sap" path="res://Assets/Art/Sprites/Credits/Cypri.png" id="123_tq842"]
 [ext_resource type="Script" path="res://Scripts/Wobble.gd" id="124_1ylgy"]
 [ext_resource type="Texture2D" uid="uid://glx86khw5f8s" path="res://Assets/Art/Sprites/Credits/Calum.png" id="124_aec0k"]
+[ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/TestParts/blocks.png" id="131_xivuq"]
+[ext_resource type="Material" uid="uid://b30s0wisbxkh8" path="res://Resources/Materials/SelectedMat.tres" id="132_e54j8"]
+[ext_resource type="Material" uid="uid://bl3hbvd3y4dbs" path="res://Resources/Materials/DangerMat.tres" id="133_udj7u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
 shader = ExtResource("3_tpo2n")
@@ -834,8 +838,8 @@ script = ExtResource("6_j1bsi")
 
 [node name="Toolbar" type="CanvasLayer" parent="."]
 layer = 5
-visible = false
 script = ExtResource("71_35idl")
+actionLabelIns = ExtResource("110_qpdf8")
 
 [node name="c" type="Control" parent="Toolbar"]
 layout_mode = 3
@@ -1234,6 +1238,14 @@ texture = ExtResource("72_bk7ok")
 expand_mode = 1
 script = ExtResource("73_by8g6")
 
+[node name="Actions" type="VBoxContainer" parent="Toolbar/c"]
+layout_mode = 2
+offset_left = 167.0
+offset_top = -5053.0
+offset_right = 544.0
+offset_bottom = 436.0
+alignment = 2
+
 [node name="Camera" type="CanvasLayer" parent="."]
 layer = 20
 
@@ -1406,6 +1418,33 @@ text = "BACK"
 script = ExtResource("6_j1bsi")
 backButton = true
 
+[node name="LoadShaders" type="TextureRect" parent="."]
+texture_filter = 1
+material = ExtResource("12_2sx1l")
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 6.0
+offset_bottom = 6.0
+texture = ExtResource("131_xivuq")
+
+[node name="Selected" type="TextureRect" parent="LoadShaders"]
+texture_filter = 1
+material = ExtResource("132_e54j8")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("131_xivuq")
+
+[node name="Danger" type="TextureRect" parent="LoadShaders"]
+texture_filter = 1
+material = ExtResource("133_udj7u")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("131_xivuq")
+
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/CreditsButton" to="MainMenu" method="CreditsButton"]
 [connection signal="pressed" from="MainMenu/C/Group/OptionsButton" to="MainMenu" method="SettingsButton"]
@@ -1420,6 +1459,7 @@ backButton = true
 [connection signal="focus_exited" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [false]]
 [connection signal="pressed" from="HUD/c/Camera" to="HUD" method="TakePicture"]
 [connection signal="confirmed" from="HUD/FileDialog" to="HUD" method="SavePicture"]
+[connection signal="dir_selected" from="HUD/FileDialog" to="HUD" method="SwitchDirectory"]
 [connection signal="file_selected" from="HUD/FileDialog" to="HUD" method="GetFilePath"]
 [connection signal="pressed" from="FishPicker/c/LeftButton" to="FishPicker" method="SwapFish" binds= [-1]]
 [connection signal="pressed" from="FishPicker/c/RightButton" to="FishPicker" method="SwapFish" binds= [1]]

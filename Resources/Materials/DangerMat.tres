@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bl3hbvd3y4dbs"]
+
+[ext_resource type="Shader" path="res://Scripts/Shaders/Danger.gdshader" id="1_ry8x4"]
+
+[resource]
+shader = ExtResource("1_ry8x4")
+shader_parameter/color_hue = Color(1, 0, 0, 1)

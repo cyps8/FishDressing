@@ -1,18 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcwy18q1sia7h"]
+[gd_scene load_steps=6 format=3 uid="uid://dcwy18q1sia7h"]
 
 [ext_resource type="Script" path="res://Scripts/Part.gd" id="1_bleap"]
 [ext_resource type="Material" uid="uid://cur4klb3sdnwb" path="res://Resources/Materials/ColorMat.tres" id="3_e8ncf"]
-[ext_resource type="Shader" path="res://Scripts/Shaders/Selected.gdshader" id="4_nk5id"]
+[ext_resource type="Material" uid="uid://b30s0wisbxkh8" path="res://Resources/Materials/SelectedMat.tres" id="4_xddqb"]
+[ext_resource type="Material" uid="uid://bl3hbvd3y4dbs" path="res://Resources/Materials/DangerMat.tres" id="5_8n8cg"]
 [ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/TestParts/blocks.png" id="5_obuv5"]
-[ext_resource type="Shader" path="res://Scripts/Shaders/Danger.gdshader" id="5_wva8l"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lrp4m"]
-shader = ExtResource("4_nk5id")
-shader_parameter/color_hue = Color(0.996078, 1, 0.278431, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mmmkw"]
-shader = ExtResource("5_wva8l")
-shader_parameter/color_hue = Color(1, 0.196078, 0.145098, 1)
 
 [node name="Part" type="TextureButton" node_paths=PackedStringArray("selectedRef", "dangerRef") groups=["Part"]]
 texture_filter = 1
@@ -27,7 +19,7 @@ dangerRef = NodePath("Danger")
 
 [node name="Selected" type="TextureRect" parent="."]
 texture_filter = 1
-material = SubResource("ShaderMaterial_lrp4m")
+material = ExtResource("4_xddqb")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -36,7 +28,7 @@ texture = ExtResource("5_obuv5")
 
 [node name="Danger" type="TextureRect" parent="."]
 texture_filter = 1
-material = SubResource("ShaderMaterial_mmmkw")
+material = ExtResource("5_8n8cg")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

@@ -172,26 +172,26 @@ func ResetEditor():
 func SetMouseGrabbed(value: bool):
 	if mouseGrabbed != value:
 		MouseGrabbed.emit(value)
+		Game.ins.toolbar.AddActionLabel("Action: Mouse action")
 	mouseGrabbed = value
 
 func _process(_delta):
-	print(mouseGrabbed)
 	if Game.ins.cogMenu.is_inside_tree():
 		return
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") && !mouseGrabbed:
 		Game.ins.ShowCogMenu()
 		return
 	if texting:
 		return
 	if !Input.is_action_pressed("Interact"):
 		SetMouseGrabbed(false)
-	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
+	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !mouseGrabbed:
 		SelectAll()
 	if currentPartGroup.size() > 0:
 		if Input.is_action_just_released("Interact"):
 			for part in currentPartGroup:
 				part.SetFakeMouse()
-		if Input.is_action_just_pressed("RotateRight") && Input.is_action_pressed("Control") && !Input.is_action_pressed("Interact"):
+		if Input.is_action_just_pressed("RotateRight") && Input.is_action_pressed("Control") && !mouseGrabbed:
 			Duplicate()
 		if Input.is_action_just_pressed("Delete")  && !Input.is_action_pressed("Control"):
 			DeleteAllSelected()
@@ -444,13 +444,20 @@ func TakePicture():
 		TakeWebPicture()
 		return
 	if nameEdit.text == "":
-		fileDialog.current_file = "PictureOfFriend"
+		fileDialog.current_file = "Picture Of Friend"
 	else:
-		fileDialog.current_file = "PictureOf" + nameEdit.text
+		fileDialog.current_file = "Picture Of " + nameEdit.text
 	fileDialog.visible = true
 
 func GetFilePath(path: String):
 	filePath = path
+
+func SwitchDirectory(_path: String):
+	print("Switching Directory")
+	if nameEdit.text == "":
+		fileDialog.current_file = "Picture Of Friend"
+	else:
+		fileDialog.current_file = "Picture Of " + nameEdit.text
 
 func SavePicture():
 	if !filePath.ends_with(".png"):
@@ -459,6 +466,6 @@ func SavePicture():
 
 func TakeWebPicture():
 	if nameEdit.text == "":
-		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "PictureOfFriend.png")
+		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "Picture Of Friend.png")
 	else:
-		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "PictureOf" + nameEdit.text + ".png")
+		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "Picture Of " + nameEdit.text + ".png")

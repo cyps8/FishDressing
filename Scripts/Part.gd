@@ -1,3 +1,4 @@
+@icon("res://Assets/Art/Sprites/TestParts/blocks.png")
 extends TextureButton
 
 class_name Part
