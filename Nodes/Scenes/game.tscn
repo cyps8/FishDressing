@@ -258,7 +258,6 @@ disableForWeb = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = -5
-visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
@@ -510,11 +509,32 @@ expand_icon = true
 script = ExtResource("6_j1bsi")
 silentButton = true
 
+[node name="Sticker" type="Button" parent="HUD/c"]
+layout_mode = 0
+offset_left = 1471.0
+offset_top = 23.32
+offset_right = 1752.0
+offset_bottom = 81.32
+text = "MAKE A STICKER!"
+icon = ExtResource("77_rvlwx")
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("6_j1bsi")
+silentButton = true
+
 [node name="FileDialog" type="FileDialog" parent="HUD"]
 title = "Save picture of your friend!"
 initial_position = 2
 size = Vector2i(900, 600)
 access = 2
+
+[node name="StickerCapture" type="SubViewport" parent="HUD"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(640, 1080)
+render_target_update_mode = 3
+
+[node name="cam" type="Camera2D" parent="HUD/StickerCapture"]
 
 [node name="Fish" type="CanvasGroup" parent="."]
 unique_name_in_owner = true
@@ -1458,6 +1478,7 @@ texture = ExtResource("131_xivuq")
 [connection signal="focus_entered" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [true]]
 [connection signal="focus_exited" from="HUD/c/Name/EnterName" to="HUD" method="InText" binds= [false]]
 [connection signal="pressed" from="HUD/c/Camera" to="HUD" method="TakePicture"]
+[connection signal="pressed" from="HUD/c/Sticker" to="HUD" method="MakeSticker"]
 [connection signal="confirmed" from="HUD/FileDialog" to="HUD" method="SavePicture"]
 [connection signal="dir_selected" from="HUD/FileDialog" to="HUD" method="SwitchDirectory"]
 [connection signal="file_selected" from="HUD/FileDialog" to="HUD" method="GetFilePath"]

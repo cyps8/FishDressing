@@ -47,6 +47,7 @@ var texting: bool = false
 var clickedOut: TextureButton
 
 var fileDialog: FileDialog
+var stickerCap: SubViewport
 
 signal MouseGrabbed(val: bool)
 
@@ -87,6 +88,7 @@ func _ready():
 	clickedOut = %ClickedOut
 
 	fileDialog = $FileDialog
+	stickerCap = $StickerCapture
 
 	ResetEditor()
 
@@ -176,6 +178,8 @@ func SetMouseGrabbed(value: bool):
 	mouseGrabbed = value
 
 func _process(_delta):
+	if fileDialog.visible:
+		return
 	if Game.ins.cogMenu.is_inside_tree():
 		return
 	if Input.is_action_just_pressed("ui_cancel") && !mouseGrabbed:
@@ -431,15 +435,28 @@ var img: Image
 
 var filePath: String
 
+func MakeSticker():
+	ClearControlGroup()
+	CameraEffects()
+	stickerCap.get_node("cam").position = get_viewport().get_visible_rect().size / 2
+	Game.ins.remove_child(fishRef)
+	stickerCap.add_child(fishRef)
+	await RenderingServer.frame_post_draw
+	img = stickerCap.get_texture().get_image()
+	SaveImg()
+	stickerCap.remove_child(fishRef)
+	Game.ins.add_child(fishRef)
+	
+
 func TakePicture():
+	ClearControlGroup()
+	CameraEffects()
 	await RenderingServer.frame_post_draw
 	img = get_viewport().get_texture().get_image()
 	img = img.get_region(Rect2i(img.get_width() / 3.0 as int, 0 as int, img.get_width() / 3.0 as int, img.get_height() as int))
-	AudioPlayer.ins.PlaySound(6)
-	var flash: ColorRect = Game.ins.cameraFlash
-	flash.color = Color(1.0, 1.0, 1.0, 1.0)
-	var flashTween: Tween = flash.create_tween()
-	flashTween.tween_property(flash, "color", Color(1.0, 1.0, 1.0, 0.0), 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	SaveImg()
+
+func SaveImg():
 	if OS.get_name() == "Web":
 		TakeWebPicture()
 		return
@@ -448,6 +465,13 @@ func TakePicture():
 	else:
 		fileDialog.current_file = "Picture Of " + nameEdit.text
 	fileDialog.visible = true
+
+func CameraEffects():
+	AudioPlayer.ins.PlaySound(6)
+	var flash: ColorRect = Game.ins.cameraFlash
+	flash.color = Color(1.0, 1.0, 1.0, 1.0)
+	var flashTween: Tween = flash.create_tween()
+	flashTween.tween_property(flash, "color", Color(1.0, 1.0, 1.0, 0.0), 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 func GetFilePath(path: String):
 	filePath = path
