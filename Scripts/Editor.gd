@@ -172,7 +172,7 @@ func ResetEditor():
 func SetMouseGrabbed(value: bool):
 	if mouseGrabbed != value:
 		MouseGrabbed.emit(value)
-		Game.ins.toolbar.AddActionLabel("Action: Mouse action")
+		#Game.ins.toolbar.AddActionLabel("Action: Mouse action")
 	mouseGrabbed = value
 
 func _process(_delta):
@@ -263,7 +263,12 @@ func _process(_delta):
 				partsToDelete.remove_at(0)
 			SetMouseGrabbed(false)
 			if currentPartGroup.size() > 0:
-				AudioPlayer.ins.PlaySound(4)
+				var soundsPlayed: Array[int] = []
+				for part in currentPartGroup:
+					var soundId: int = part.partData.materialSound
+					if !soundsPlayed.has(soundId):
+						AudioPlayer.ins.PlayMatSound(soundId)
+						soundsPlayed.append(soundId)
 
 func ClickedOut():
 	ClearControlGroup()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=157 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=174 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -58,7 +58,7 @@
 [ext_resource type="AudioStream" uid="uid://doanugi3y1r52" path="res://Assets/Audio/SFX/menu2.ogg" id="33_wmhci"]
 [ext_resource type="Resource" uid="uid://cqf3v3m1yxqew" path="res://Resources/Parts/blindssunglasses.tres" id="34_6ri8v"]
 [ext_resource type="Resource" uid="uid://basxgfe2pb5cq" path="res://Resources/Parts/spongebob.tres" id="34_hcst8"]
-[ext_resource type="AudioStream" uid="uid://ccjdhratyhqhk" path="res://Assets/Audio/SFX/place.ogg" id="34_u86ka"]
+[ext_resource type="AudioStream" uid="uid://ccjdhratyhqhk" path="res://Assets/Audio/SFX/Materials/default.ogg" id="34_u86ka"]
 [ext_resource type="Resource" uid="uid://dyxnsbdt1qckn" path="res://Resources/Parts/thuglifeglasses.tres" id="35_4jym6"]
 [ext_resource type="Resource" uid="uid://brkggw34h3o28" path="res://Resources/Parts/crocs.tres" id="35_usv1q"]
 [ext_resource type="AudioStream" uid="uid://bdw0ogfd500bm" path="res://Assets/Audio/SFX/delete.ogg" id="35_ynm1t"]
@@ -128,13 +128,30 @@
 [ext_resource type="Texture2D" uid="uid://ck7ri0462uu1m" path="res://Assets/Art/Sprites/Fish/whaleshark.png" id="97_cxjm4"]
 [ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
 [ext_resource type="Script" path="res://Scripts/Shadow.gd" id="98_rr7oq"]
+[ext_resource type="AudioStream" uid="uid://bllm1ddftbob4" path="res://Assets/Audio/SFX/bubbles.ogg" id="108_2754v"]
+[ext_resource type="AudioStream" uid="uid://dpq0x6yh146r8" path="res://Assets/Audio/SFX/Fish/clownfish.ogg" id="109_a6i5v"]
 [ext_resource type="Texture2D" uid="uid://u0ptqfyasitf" path="res://Assets/Art/Sprites/ActualParts/accessories_fish.png" id="109_hbsd4"]
 [ext_resource type="Shader" path="res://Scripts/Shaders/color_swap.gdshader" id="109_ovqsd"]
+[ext_resource type="AudioStream" uid="uid://cfwm1uo4e1gtd" path="res://Assets/Audio/SFX/Fish/salmon.ogg" id="110_ej0w6"]
 [ext_resource type="PackedScene" uid="uid://dujmhb7bq5o7q" path="res://Nodes/action_label.tscn" id="110_qpdf8"]
+[ext_resource type="AudioStream" uid="uid://c6f3hjjnbxur2" path="res://Assets/Audio/SFX/Fish/whaleshark.ogg" id="111_nxe4c"]
+[ext_resource type="AudioStream" uid="uid://ycrip0ebgqjj" path="res://Assets/Audio/SFX/Fish/shark.ogg" id="112_ac5uv"]
+[ext_resource type="AudioStream" uid="uid://dlhqw72rc8ls2" path="res://Assets/Audio/SFX/Fish/catfish.ogg" id="113_dpxc5"]
+[ext_resource type="AudioStream" uid="uid://buj6s1m7xqlr4" path="res://Assets/Audio/SFX/Fish/seahorse.ogg" id="114_ve6nv"]
+[ext_resource type="AudioStream" uid="uid://bkrrsrg4xqxpj" path="res://Assets/Audio/SFX/Materials/fabric_material.ogg" id="115_i1lry"]
+[ext_resource type="AudioStream" uid="uid://wrx4sivbg2l8" path="res://Assets/Audio/SFX/Materials/glitch_material.ogg" id="116_yl8oa"]
+[ext_resource type="AudioStream" uid="uid://bfy1wc0ffoshe" path="res://Assets/Audio/SFX/Materials/hair_material.ogg" id="117_wvah0"]
+[ext_resource type="AudioStream" uid="uid://dussyy4hmrjhw" path="res://Assets/Audio/SFX/Materials/metal_material.ogg" id="118_apyn2"]
+[ext_resource type="AudioStream" uid="uid://c2k6288qjo2j5" path="res://Assets/Audio/SFX/Materials/plastic_material.ogg" id="119_d7u8p"]
+[ext_resource type="AudioStream" uid="uid://bjrumujyx33t2" path="res://Assets/Audio/SFX/Materials/rubber_material.ogg" id="120_a3j6v"]
+[ext_resource type="AudioStream" uid="uid://bgmso1bemdmkm" path="res://Assets/Audio/SFX/Materials/shell_material.ogg" id="121_7hc3e"]
+[ext_resource type="AudioStream" uid="uid://cw2qqqcj0q4fu" path="res://Assets/Audio/SFX/Materials/soup_material.ogg" id="122_1aefp"]
 [ext_resource type="Texture2D" uid="uid://dgihkj4xrgfgc" path="res://Assets/Art/Sprites/Credits/Sugarcyube.png" id="122_aio3a"]
 [ext_resource type="Script" path="res://Scripts/Credits.gd" id="122_hspmw"]
+[ext_resource type="AudioStream" uid="uid://bixe7ws3vesnf" path="res://Assets/Audio/SFX/Materials/squishy_material.ogg" id="123_etanm"]
 [ext_resource type="Texture2D" uid="uid://bodonwsw3sap" path="res://Assets/Art/Sprites/Credits/Cypri.png" id="123_tq842"]
 [ext_resource type="Script" path="res://Scripts/Wobble.gd" id="124_1ylgy"]
+[ext_resource type="AudioStream" uid="uid://b65lyrst41am5" path="res://Assets/Audio/SFX/Materials/sticker_material.ogg" id="124_4qytn"]
 [ext_resource type="Texture2D" uid="uid://glx86khw5f8s" path="res://Assets/Art/Sprites/Credits/Calum.png" id="124_aec0k"]
 [ext_resource type="Texture2D" uid="uid://d3walvoin01rc" path="res://Assets/Art/Sprites/TestParts/blocks.png" id="131_xivuq"]
 [ext_resource type="Material" uid="uid://b30s0wisbxkh8" path="res://Resources/Materials/SelectedMat.tres" id="132_e54j8"]
@@ -702,7 +719,9 @@ bus = &"Music"
 
 [node name="SFXPlayer" type="Node" parent="."]
 script = ExtResource("17_kobmh")
-sounds = Array[AudioStream]([ExtResource("18_3nh6t"), ExtResource("31_ioosj"), ExtResource("32_hwgip"), ExtResource("33_wmhci"), ExtResource("34_u86ka"), ExtResource("35_ynm1t"), ExtResource("98_bxyol")])
+sounds = Array[AudioStream]([ExtResource("18_3nh6t"), ExtResource("31_ioosj"), ExtResource("32_hwgip"), ExtResource("33_wmhci"), ExtResource("34_u86ka"), ExtResource("35_ynm1t"), ExtResource("98_bxyol"), ExtResource("108_2754v")])
+fishSounds = Array[AudioStream]([ExtResource("109_a6i5v"), ExtResource("110_ej0w6"), ExtResource("111_nxe4c"), ExtResource("112_ac5uv"), ExtResource("113_dpxc5"), ExtResource("114_ve6nv")])
+materialSounds = Array[AudioStream]([ExtResource("34_u86ka"), ExtResource("115_i1lry"), ExtResource("116_yl8oa"), ExtResource("117_wvah0"), ExtResource("118_apyn2"), ExtResource("119_d7u8p"), ExtResource("120_a3j6v"), ExtResource("121_7hc3e"), ExtResource("122_1aefp"), ExtResource("123_etanm"), ExtResource("124_4qytn")])
 
 [node name="SettingsButton" type="CanvasLayer" parent="."]
 layer = 8

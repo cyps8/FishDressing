@@ -39,6 +39,7 @@ func Pick():
 	if picked:
 		return
 	AudioPlayer.ins.PlaySound(2)
+	AudioPlayer.ins.PlayFishSound(currentFish)
 	picked = true
 	Game.ins.HideFishPicker()
 	Game.ins.ShowHUD()
@@ -51,6 +52,7 @@ func SwapFish(direction: int):
 	MoveShadows(direction as float)
 	Fish()
 	AudioPlayer.ins.PlaySound(0)
+	AudioPlayer.ins.PlayFishSound(currentFish)
 
 func OverflowInt(num: int) -> int:
 	if num < 0:

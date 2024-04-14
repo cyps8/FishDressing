@@ -15,3 +15,4 @@ defaultGreen = Color(1, 1, 1, 1)
 blueChannel = true
 defaultBlue = Color(0, 1, 1, 1)
 tags = 1
+materialSound = 2

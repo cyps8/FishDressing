@@ -84,14 +84,14 @@ func HideMenu():
 	hideMenuTween.tween_callback(remove_child.bind(mainMenu))
 
 func ShowMenu():
-	particles.emitting = true
+	Bubbles()
 	add_child(mainMenu)
 	var showMenuTween: Tween = create_tween()
 	showMenuTween.tween_property(mainMenu, "offset:x", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	showMenuTween.tween_callback(mainMenu.SetActive.bind(true))
 
 func ShowHUD():
-	particles.emitting = true
+	Bubbles()
 	add_child(hud)
 	hud.EditorOpened()
 	hud.offset = Vector2(0, 900)
@@ -126,13 +126,16 @@ func HideFish():
 	hideFishTween.tween_callback(remove_child.bind(fish))
 
 func ShowFishPicker():
-	particles.emitting = true
+	Bubbles()
 	add_child(fishPicker)
 	fishPicker.picked = false
 	fishPicker.SetFish(-1)
 	fishPicker.offset = Vector2(0, 900)
 	var showFishPickerTween: Tween = create_tween()
 	showFishPickerTween.tween_property(fishPicker, "offset:y", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	var fishSoundTween: Tween = create_tween()
+	fishSoundTween.tween_interval(0.3)
+	fishSoundTween.tween_callback(AudioPlayer.ins.PlayFishSound.bind(fishPicker.currentFish))
 
 func HideFishPicker():
 	var hideFishPickerTween: Tween = create_tween()
@@ -176,3 +179,13 @@ func HideCredits():
 	var hideCreditsTween: Tween = create_tween()
 	hideCreditsTween.tween_property(credits, "offset:y", -900, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	hideCreditsTween.tween_callback(remove_child.bind(credits))
+
+func Bubbles():
+	if particles.emitting:
+		var newParticles = particles.duplicate()
+		add_child(newParticles)
+		newParticles.emitting = true
+		newParticles.finished.connect(newParticles.queue_free)
+	else:
+		particles.emitting = true
+	AudioPlayer.ins.PlaySound(7)
