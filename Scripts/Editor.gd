@@ -187,7 +187,24 @@ func _process(_delta):
 		return
 	if texting:
 		return
-	if !Input.is_action_pressed("Interact"):
+	if Input.is_action_just_released("Interact"):
+		if currentPartGroup.size() > 0:
+			var partsToDelete: Array[Part] = []
+			for part in currentPartGroup:
+				if !part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
+					partsToDelete.append(part)
+			if partsToDelete.size() > 0:
+				AudioPlayer.ins.PlaySound(5)
+			while partsToDelete.size() > 0:
+				partsToDelete[0].Delete()
+				partsToDelete.remove_at(0)
+			if mouseGrabbed:
+				var soundsPlayed: Array[int] = []
+				for part in currentPartGroup:
+					var soundId: int = part.partData.materialSound
+					if !soundsPlayed.has(soundId):
+						AudioPlayer.ins.PlayMatSound(soundId, AudioPlayer.SoundType.SFX, 1.3, randf() * 0.4 + 0.8)
+						soundsPlayed.append(soundId)
 		SetMouseGrabbed(false)
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !mouseGrabbed:
 		SelectAll()
@@ -251,24 +268,6 @@ func _process(_delta):
 					ChangeScale(1.1)
 			for part in currentPartGroup:
 				part.UpdateMovePosition()
-		elif Input.is_action_just_released("Interact") && !Input.is_action_pressed("Control"):
-			var partsToDelete: Array[Part] = []
-			for part in currentPartGroup:
-				if !part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
-					partsToDelete.append(part)
-			if partsToDelete.size() > 0:
-				AudioPlayer.ins.PlaySound(5)
-			while partsToDelete.size() > 0:
-				partsToDelete[0].Delete()
-				partsToDelete.remove_at(0)
-			SetMouseGrabbed(false)
-			if currentPartGroup.size() > 0:
-				var soundsPlayed: Array[int] = []
-				for part in currentPartGroup:
-					var soundId: int = part.partData.materialSound
-					if !soundsPlayed.has(soundId):
-						AudioPlayer.ins.PlayMatSound(soundId)
-						soundsPlayed.append(soundId)
 
 func ClickedOut():
 	ClearControlGroup()

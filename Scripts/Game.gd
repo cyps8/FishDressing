@@ -188,4 +188,4 @@ func Bubbles():
 		newParticles.finished.connect(newParticles.queue_free)
 	else:
 		particles.emitting = true
-	AudioPlayer.ins.PlaySound(7)
+	AudioPlayer.ins.PlaySound(7, AudioPlayer.SoundType.SFX, 1.2)

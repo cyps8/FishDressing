@@ -52,7 +52,7 @@ func SwapFish(direction: int):
 	MoveShadows(direction as float)
 	Fish()
 	AudioPlayer.ins.PlaySound(0)
-	AudioPlayer.ins.PlayFishSound(currentFish)
+	AudioPlayer.ins.PlayFishSound(currentFish, AudioPlayer.SoundType.SFX, 1.0, randf() * 0.3 + 0.85)
 
 func OverflowInt(num: int) -> int:
 	if num < 0:
