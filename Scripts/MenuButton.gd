@@ -7,6 +7,8 @@ var wobbleTween: Tween
 @export var disableForWeb: bool = false
 @export var backButton: bool = false
 
+@export var wobbleDegrees: float = 3.0
+
 func _ready():
 	if OS.get_name() == "Web" && disableForWeb:
 		disabled = true
@@ -20,6 +22,8 @@ func _ready():
 	if pivot_offset == Vector2(0, 0):
 		pivot_offset = size/2
 
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
 func _Focused():
 	if disabled:
 		return
@@ -30,12 +34,12 @@ func _Focused():
 	scaleTween = create_tween()
 	scaleTween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.2)
 	wobbleTween = create_tween().set_loops(-1)
-	wobbleTween.tween_property(self, "rotation", deg_to_rad(3), 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(wobbleDegrees), 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	wobbleTween.tween_property(self, "rotation", deg_to_rad(0), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
-	wobbleTween.tween_property(self, "rotation", deg_to_rad(-3), 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	wobbleTween.tween_property(self, "rotation", deg_to_rad(-wobbleDegrees), 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	wobbleTween.tween_property(self, "rotation", deg_to_rad(0), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 	AudioPlayer.ins.PlaySound(1)
-	if !has_focus():
+	if !focus_mode == FOCUS_NONE && !has_focus():
 		grab_focus()
 
 func _Pressed():

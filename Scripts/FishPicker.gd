@@ -14,6 +14,9 @@ var picked = false
 var leftShadow: TextureButton
 var rightShadow: TextureButton
 
+var leftDefPos: Vector2
+var rightDefPos: Vector2
+
 var moveShadowsTween: Tween
 
 func _ready():
@@ -29,9 +32,13 @@ func _ready():
 	leftShadow = $c/LeftShadow
 	rightShadow = $c/RightShadow
 
+	leftDefPos = leftShadow.position
+	rightDefPos = rightShadow.position
+
 func Pick():
 	if picked:
 		return
+	AudioPlayer.ins.PlaySound(2)
 	picked = true
 	Game.ins.HideFishPicker()
 	Game.ins.ShowHUD()
@@ -43,6 +50,7 @@ func SwapFish(direction: int):
 	currentFish = OverflowInt(currentFish)
 	MoveShadows(direction as float)
 	Fish()
+	AudioPlayer.ins.PlaySound(0)
 
 func OverflowInt(num: int) -> int:
 	if num < 0:
@@ -76,6 +84,9 @@ func Fish():
 	rightShadow.texture_normal = fishDataList[OverflowInt(currentFish + 1)].texture
 
 func MoveShadows(dir: float = 1):
+	leftShadow.position = leftDefPos
+	rightShadow.position = rightDefPos
+
 	leftShadow.position.x += dir * 50
 	rightShadow.position.x += dir * 50
 

@@ -450,6 +450,7 @@ func MakeSticker():
 	stickerCap.add_child(fishRef)
 	await RenderingServer.frame_post_draw
 	img = stickerCap.get_texture().get_image()
+	CropSticker()
 	SaveImg()
 	stickerCap.remove_child(fishRef)
 	Game.ins.add_child(fishRef)
@@ -504,6 +505,30 @@ func TakeWebPicture():
 		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "Picture Of Friend.png")
 	else:
 		JavaScriptBridge.download_buffer(img.save_png_to_buffer(), "Picture Of " + nameEdit.text + ".png")
+
+func CropSticker():
+	for i in range(4):
+		img.rotate_90(CLOCKWISE)
+		var data = img.get_data()
+		var amountToCrop: int = 0
+		while !FindPixels(data, amountToCrop + 500):
+			amountToCrop += 500
+		while !FindPixels(data, amountToCrop + 125):
+			amountToCrop += 125
+		while !FindPixels(data, amountToCrop + 25):
+			amountToCrop += 25
+		while !FindPixels(data, amountToCrop + 5):
+			amountToCrop += 5
+		img.rotate_180()
+		img.crop((img.get_width()) as int, img.get_height() - amountToCrop as int)
+		img.rotate_180()
+
+func FindPixels(data, amount: int = 0) -> bool:
+	var skipTo: int = img.get_width() * 4 * amount
+	for i in img.get_width():
+		if data[(4 * i) + 3 + skipTo] > 0:
+			return true
+	return false
 
 signal Canceled(val: bool)
 

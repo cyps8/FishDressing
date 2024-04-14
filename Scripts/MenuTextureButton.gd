@@ -25,7 +25,7 @@ func _Focused():
 	scaleTween = create_tween()
 	scaleTween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.2)
 	AudioPlayer.ins.PlaySound(1)
-	if !has_focus():
+	if !focus_mode == FOCUS_NONE && !has_focus():
 		grab_focus()
 
 func _Pressed():
