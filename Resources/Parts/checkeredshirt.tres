@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bpd8wmvcp3mvf"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_euq6o"]
+[ext_resource type="Texture2D" uid="uid://cgc0tthtmj26c" path="res://Assets/Art/Sprites/ActualParts/accessories_shirt2.png" id="2_2gn8i"]
+
+[resource]
+script = ExtResource("1_euq6o")
+name = "Checkered Shirt"
+texture = ExtResource("2_2gn8i")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.862745, 0.0705882, 0.172549, 1)
+greenChannel = true
+defaultGreen = Color(0.0666667, 0, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4
+materialSound = 1

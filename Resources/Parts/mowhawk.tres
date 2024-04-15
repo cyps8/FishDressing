@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://fbu78k5b1le"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_564f1"]
+[ext_resource type="Texture2D" uid="uid://dxurscdrkg7gw" path="res://Assets/Art/Sprites/ActualParts/accessories_wig3.png" id="2_eedlq"]
+
+[resource]
+script = ExtResource("1_564f1")
+name = "Mowhawk"
+texture = ExtResource("2_eedlq")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0.921569, 0, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

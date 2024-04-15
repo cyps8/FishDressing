@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://b05dsckalhp1s"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_bawwm"]
+[ext_resource type="Texture2D" uid="uid://bvc61ir33p5q6" path="res://Assets/Art/Sprites/ActualParts/accessories_shirt.png" id="2_fk5e7"]
+
+[resource]
+script = ExtResource("1_bawwm")
+name = "Shirt"
+texture = ExtResource("2_fk5e7")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4
+materialSound = 1

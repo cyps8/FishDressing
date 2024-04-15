@@ -57,6 +57,13 @@ func _process(_delta):
 		globalTools.get_node("DeleteAll").disabled = false
 		globalTools.get_node("SelectAll").disabled = false
 
+	if Game.ins.hud.undoRedoActive:
+		globalTools.get_node("Undo").disabled = !Game.ins.hud.actions.size() > 0
+		globalTools.get_node("Redo").disabled = !Game.ins.hud.redoActions.size() > 0
+	else:
+		globalTools.get_node("Undo").disabled = true
+		globalTools.get_node("Redo").disabled = true
+
 	if scalingDown:
 		Game.ins.hud.ChangeScale(0.98)
 	if scalingUp:
@@ -110,10 +117,10 @@ func SelectAll():
 	Game.ins.hud.SelectAll()
 
 func Undo():
-	pass
+	Game.ins.hud.Undo()
 
 func Redo():
-	pass
+	Game.ins.hud.Redo()
 
 func DeleteSelected():
 	Game.ins.hud.DeleteAllSelected()
@@ -140,13 +147,22 @@ func MoveToTop():
 	Game.ins.hud.MoveToTop()
 
 func ScaleDown(val: bool):
+	if scalingDown == false && val == true:
+		Game.ins.hud.ResetScale()
+	if scalingDown == true && val == false:
+		Game.ins.hud.ScaleAction()
 	scalingDown = val
 
 func ScaleUp(val: bool):
+	if scalingUp == false && val == true:
+		Game.ins.hud.ResetScale()
+	if scalingUp == true && val == false:
+		Game.ins.hud.ScaleAction()
 	scalingUp = val
 
 func ScaleChangeStarted():
 	sliderScaling = true
+	Game.ins.hud.ResetScale()
 	
 func ScaleChanged(_val: float):
 	if sliderScaling:
@@ -154,15 +170,25 @@ func ScaleChanged(_val: float):
 
 func ScaleChangeEnded(_val: float):
 	sliderScaling = false
+	Game.ins.hud.ScaleAction()
 
 func RotateLeft(val: bool):
+	if rotatingLeft == false && val == true:
+		Game.ins.hud.ResetRotation()
+	if rotatingLeft == true && val == false:
+		Game.ins.hud.RotateAction()
 	rotatingLeft = val
 
 func RotateRight(val: bool):
+	if rotatingRight == false && val == true:
+		Game.ins.hud.ResetRotation()
+	if rotatingRight == true && val == false:
+		Game.ins.hud.RotateAction()
 	rotatingRight = val
 
 func RotationChangeStarted():
 	sliderRotating = true
+	Game.ins.hud.ResetRotation()
 
 func RotationChanged(_val: float):
 	if sliderRotating:
@@ -170,6 +196,7 @@ func RotationChanged(_val: float):
 
 func RotationChangeEnded(_val: float):
 	sliderRotating = false
+	Game.ins.hud.RotateAction()
 
 var picking: bool = false
 

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dl7bo20126skd"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_lpsyn"]
+[ext_resource type="Texture2D" uid="uid://c6taj2rd5rrrm" path="res://Assets/Art/Sprites/ActualParts/accessories_jeans.png" id="2_gweew"]
+
+[resource]
+script = ExtResource("1_lpsyn")
+name = "Jeans"
+texture = ExtResource("2_gweew")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.14902, 0.396078, 0.713726, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 8
+materialSound = 1

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://buylt12ta8pc3"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_1khyk"]
+[ext_resource type="Texture2D" uid="uid://dy24b6lsn7l2v" path="res://Assets/Art/Sprites/ActualParts/accessories_eyepatch.png" id="2_bp6jp"]
+
+[resource]
+script = ExtResource("1_1khyk")
+name = "Eyepatch"
+texture = ExtResource("2_bp6jp")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.0745098, 0.188235, 0.376471, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 1

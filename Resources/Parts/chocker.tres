@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bxacnvksf5j7h"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_tyn06"]
+[ext_resource type="Texture2D" uid="uid://drndbx3370a6l" path="res://Assets/Art/Sprites/ActualParts/accessories_collar3.png" id="2_4uaue"]
+
+[resource]
+script = ExtResource("1_tyn06")
+name = "Choker"
+texture = ExtResource("2_4uaue")
+colorShader = false
+redChannel = false
+defaultRed = Color(1, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 1

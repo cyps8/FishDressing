@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://yqe6ornmkucy"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_i1kvv"]
+[ext_resource type="Texture2D" uid="uid://djp8grlreicis" path="res://Assets/Art/Sprites/ActualParts/accessories_hoodie.png" id="2_t1u17"]
+
+[resource]
+script = ExtResource("1_i1kvv")
+name = "Hoodie"
+texture = ExtResource("2_t1u17")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.211765, 0.560784, 0.913725, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4
+materialSound = 1

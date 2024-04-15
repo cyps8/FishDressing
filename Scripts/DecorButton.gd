@@ -15,6 +15,14 @@ func _ready():
 	mouse_exited.connect(Callable(_Unfocused))
 	focus_entered.connect(Callable(_Focused))
 	focus_exited.connect(Callable(_Unfocused))
+	button_down.connect(Callable(Grabbed.bind(true)))
+	button_up.connect(Callable(Grabbed.bind(false)))
+
+func Grabbed(val: bool):
+	if val:
+		mouse_default_cursor_shape = Control.CURSOR_DRAG
+	else:
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 func Setup(data: PartData):
 	textureRef = $Texture
@@ -49,6 +57,8 @@ func _Focused():
 		grab_focus()
 
 func _Unfocused():
+	if has_focus():
+		release_focus()
 	if hoverTween:
 		hoverTween.stop()
 	hoverTween = create_tween()

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://ch655nsuivhjv"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_a3u1j"]
+[ext_resource type="Texture2D" uid="uid://b7vptqb38uudw" path="res://Assets/Art/Sprites/ActualParts/accessories_collar1.png" id="2_3krks"]
+
+[resource]
+script = ExtResource("1_a3u1j")
+name = "Spiked Collar"
+texture = ExtResource("2_3krks")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.152941, 0.239216, 0.352941, 1)
+greenChannel = true
+defaultGreen = Color(0.745098, 0.745098, 0.745098, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 4

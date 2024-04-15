@@ -13,6 +13,7 @@ var settings: CanvasLayer
 var cogMenu: CanvasLayer
 var toolbar: CanvasLayer
 var credits: CanvasLayer
+var musicPlayer: AudioStreamPlayer
 
 var selectedFish: FishData
 
@@ -20,10 +21,36 @@ var cameraFlash: ColorRect
 
 var particles: CPUParticles2D
 
+var cursorTeeth: bool = false
+
+@export var cursors: Array[Texture2D]
+
+@export var music: Array[AudioStream]
+
 func _init():
 	ins = self
 
+func CalmerMusic(val: bool):
+	var pos: float = musicPlayer.get_playback_position()
+	if val:
+		musicPlayer.stream = music[1]
+	else:
+		musicPlayer.stream = music[0]
+	musicPlayer.play(pos)
+
+func CursorTeeth(val: bool):
+	cursorTeeth = val
+	if cursorTeeth:
+		Input.set_custom_mouse_cursor(cursors[3], Input.CURSOR_DRAG, Vector2(5, 5))
+	else:
+		Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_DRAG, Vector2(5, 5))
+
 func _ready():
+	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW,Vector2(5, 5))
+	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_POINTING_HAND, Vector2(5, 5))
+	Input.set_custom_mouse_cursor(cursors[2], Input.CURSOR_IBEAM, Vector2(15, 55))
+	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_DRAG, Vector2(5, 5))
+
 	mainMenu = $MainMenu
 	mainMenu.visible = true
 
@@ -62,6 +89,8 @@ func _ready():
 	$Camera.visible = true
 
 	particles = $BubbleEffect/Particles
+
+	musicPlayer = $MusicPlayer
 
 func ReturnToMenu():
 	if fish.is_inside_tree():

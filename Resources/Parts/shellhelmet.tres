@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dj15uptl1ni1f"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_tnrye"]
+[ext_resource type="Texture2D" uid="uid://ykv7r3n810bk" path="res://Assets/Art/Sprites/ActualParts/accessories_hat8.png" id="2_cn8ki"]
+
+[resource]
+script = ExtResource("1_tnrye")
+name = "Shell Helmet"
+texture = ExtResource("2_cn8ki")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.282353, 0.607843, 1, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.937255, 0.811765, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 7

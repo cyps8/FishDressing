@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dsnfrg2c0gdrx"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_74k57"]
+[ext_resource type="Texture2D" uid="uid://cn46psmnu3rel" path="res://Assets/Art/Sprites/ActualParts/accessories_shirt3.png" id="2_yp45c"]
+
+[resource]
+script = ExtResource("1_74k57")
+name = "Pirate Shirt"
+texture = ExtResource("2_yp45c")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.894118, 0.694118, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4
+materialSound = 1

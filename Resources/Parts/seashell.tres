@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://evgj7pw3fxn8"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_l7q47"]
+[ext_resource type="Texture2D" uid="uid://c687no8bk5te2" path="res://Assets/Art/Sprites/ActualParts/accessories_shell.png" id="2_6f27d"]
+
+[resource]
+script = ExtResource("1_l7q47")
+name = "Seashell"
+texture = ExtResource("2_6f27d")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.988235, 0.8, 0.615686, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 7

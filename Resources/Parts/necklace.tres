@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://6yw7mo2ch4da"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_wyafw"]
+[ext_resource type="Texture2D" uid="uid://dejrox3iu8s0m" path="res://Assets/Art/Sprites/ActualParts/accessories_collar2.png" id="2_o8u0m"]
+
+[resource]
+script = ExtResource("1_wyafw")
+name = "Necklace"
+texture = ExtResource("2_o8u0m")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.52549, 0.945098, 0.745098, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 7

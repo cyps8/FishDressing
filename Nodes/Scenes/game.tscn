@@ -1,11 +1,16 @@
-[gd_scene load_steps=174 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=202 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
+[ext_resource type="Texture2D" uid="uid://chsmvc3mf14sw" path="res://Assets/Art/Sprites/UI/cursor.png" id="2_bgw34"]
 [ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="2_rrrc7"]
+[ext_resource type="Texture2D" uid="uid://dtor233rjcb70" path="res://Assets/Art/Sprites/UI/cursorpoint.png" id="3_5s4b2"]
 [ext_resource type="Shader" path="res://Scripts/Shaders/background.gdshader" id="3_tpo2n"]
-[ext_resource type="Theme" uid="uid://ns1ce5pc8bkk" path="res://Resources/MainTheme.tres" id="4_8dgoj"]
+[ext_resource type="Theme" uid="uid://ns1ce5pc8bkk" path="res://Resources/Themes/MainTheme.tres" id="4_8dgoj"]
+[ext_resource type="Texture2D" uid="uid://c0wls8n6km315" path="res://Assets/Art/Sprites/UI/cursorbeam.png" id="4_silel"]
 [ext_resource type="Script" path="res://Scripts/Editor.gd" id="5_ah6qd"]
+[ext_resource type="Texture2D" uid="uid://bm26k2iictmiu" path="res://Assets/Art/Sprites/UI/cursorgrab.png" id="5_ri2v4"]
+[ext_resource type="AudioStream" uid="uid://cncrtsinm2rnj" path="res://Assets/Audio/Music/fish2.ogg" id="6_8wsab"]
 [ext_resource type="Texture2D" uid="uid://sdr5di2yxwdq" path="res://Assets/Art/Sprites/Background/cover6.png" id="6_40xbh"]
 [ext_resource type="Script" path="res://Scripts/MenuButton.gd" id="6_j1bsi"]
 [ext_resource type="Script" path="res://Scripts/AnimatedMenu.gd" id="7_3dlxi"]
@@ -106,25 +111,48 @@
 [ext_resource type="Texture2D" uid="uid://c0yersrykq50c" path="res://Assets/Art/Sprites/UI/icon_deleteall.png" id="72_lp31v"]
 [ext_resource type="Script" path="res://Scripts/Paint.gd" id="73_by8g6"]
 [ext_resource type="Texture2D" uid="uid://c0eftt5ch5wsv" path="res://Assets/Art/Sprites/UI/icon_selectall.png" id="73_fvuql"]
+[ext_resource type="Resource" uid="uid://d3lu04e2xumsg" path="res://Resources/Parts/anemone.tres" id="74_7fe4i"]
 [ext_resource type="Texture2D" uid="uid://dwm8gs7mh0enc" path="res://Assets/Art/Sprites/UI/icon_undo.png" id="74_efact"]
 [ext_resource type="Script" path="res://Scripts/HoverSound.gd" id="74_sltjo"]
 [ext_resource type="Texture2D" uid="uid://cx5r3b38qfbem" path="res://Assets/Art/Sprites/UI/icon_redo.png" id="75_5lu0h"]
+[ext_resource type="Resource" uid="uid://ch655nsuivhjv" path="res://Resources/Parts/spikedcollar.tres" id="75_kgk2d"]
 [ext_resource type="Texture2D" uid="uid://c7nvh0nkqy04m" path="res://Assets/Art/Sprites/UI/icon_delete.png" id="76_em32d"]
+[ext_resource type="Resource" uid="uid://6yw7mo2ch4da" path="res://Resources/Parts/necklace.tres" id="76_kjmyi"]
+[ext_resource type="Resource" uid="uid://bxacnvksf5j7h" path="res://Resources/Parts/chocker.tres" id="77_p1qnt"]
 [ext_resource type="Texture2D" uid="uid://ss6cae0rlaxk" path="res://Assets/Art/Sprites/UI/CamIcon.png" id="77_rvlwx"]
 [ext_resource type="Texture2D" uid="uid://c0adu6qa1lq0j" path="res://Assets/Art/Sprites/UI/icon_duplicate.png" id="77_ywrid"]
+[ext_resource type="Resource" uid="uid://yd6dj0lc5o1m" path="res://Resources/Parts/shrimpearring.tres" id="78_81h6d"]
 [ext_resource type="Texture2D" uid="uid://di78e1ar5ac03" path="res://Assets/Art/Sprites/UI/icon_flipV.png" id="78_tlryf"]
 [ext_resource type="Texture2D" uid="uid://c7ipcryj167hb" path="res://Assets/Art/Sprites/UI/icon_flipH.png" id="79_3jqv7"]
+[ext_resource type="Resource" uid="uid://buylt12ta8pc3" path="res://Resources/Parts/eyepatch.tres" id="79_lmgo0"]
 [ext_resource type="Texture2D" uid="uid://bwj71amrr3ve7" path="res://Assets/Art/Sprites/UI/icon_bottom.png" id="80_3m8p2"]
+[ext_resource type="Resource" uid="uid://bk4rq516uut73" path="res://Resources/Parts/piratehat.tres" id="80_dk6br"]
 [ext_resource type="Script" path="res://Scripts/Categories.gd" id="80_evdmd"]
 [ext_resource type="Texture2D" uid="uid://66w08w8wonmj" path="res://Assets/Art/Sprites/UI/icon_down.png" id="81_k4xka"]
+[ext_resource type="Resource" uid="uid://c2hrqkshytlgh" path="res://Resources/Parts/piratehook.tres" id="81_ow2jj"]
 [ext_resource type="Texture2D" uid="uid://cfbxm24i42ajo" path="res://Assets/Art/Sprites/UI/icon_up.png" id="82_6sggo"]
+[ext_resource type="Resource" uid="uid://dsnfrg2c0gdrx" path="res://Resources/Parts/pirateshirt.tres" id="82_tu2li"]
+[ext_resource type="Resource" uid="uid://dj15uptl1ni1f" path="res://Resources/Parts/shellhelmet.tres" id="82_ytppc"]
 [ext_resource type="Texture2D" uid="uid://wjqj5v5vs25g" path="res://Assets/Art/Sprites/UI/icon_top.png" id="83_3jbw5"]
+[ext_resource type="Resource" uid="uid://yqe6ornmkucy" path="res://Resources/Parts/hoodieplain.tres" id="83_mqi3q"]
+[ext_resource type="Resource" uid="uid://dwmlqtw6rd0n8" path="res://Resources/Parts/jacketplain.tres" id="84_4lvtx"]
 [ext_resource type="Texture2D" uid="uid://j8eejhb2xabn" path="res://Assets/Art/Sprites/UI/icon_shrink.png" id="84_8rgqi"]
 [ext_resource type="Texture2D" uid="uid://34srjile4e4l" path="res://Assets/Art/Sprites/UI/icon_grow.png" id="85_a4f56"]
+[ext_resource type="Resource" uid="uid://bi2op2d0ftva3" path="res://Resources/Parts/varsityjacket.tres" id="85_myrft"]
 [ext_resource type="Texture2D" uid="uid://b8drrq3xg6rpd" path="res://Assets/Art/Sprites/UI/icon_rotateL.png" id="86_4ecbi"]
-[ext_resource type="Theme" uid="uid://ybtux6020m2s" path="res://Resources/FileTheme.tres" id="86_8slkc"]
+[ext_resource type="Theme" uid="uid://ybtux6020m2s" path="res://Resources/Themes/FileTheme.tres" id="86_8slkc"]
+[ext_resource type="Resource" uid="uid://d3xs1iutlhbxn" path="res://Resources/Parts/trenchcoat.tres" id="86_nkv62"]
 [ext_resource type="Texture2D" uid="uid://ci0g20vv73bbf" path="res://Assets/Art/Sprites/UI/icon_rotateR.png" id="87_hpndk"]
+[ext_resource type="Resource" uid="uid://dl7bo20126skd" path="res://Resources/Parts/jeans.tres" id="87_u5g4a"]
+[ext_resource type="Resource" uid="uid://c036apvvtv05m" path="res://Resources/Parts/lollipop.tres" id="88_qjj60"]
+[ext_resource type="Resource" uid="uid://pnvyn4yb0t8a" path="res://Resources/Parts/seaweedmoustache.tres" id="89_o4mx3"]
+[ext_resource type="Resource" uid="uid://evgj7pw3fxn8" path="res://Resources/Parts/seashell.tres" id="91_4ihta"]
+[ext_resource type="Resource" uid="uid://b05dsckalhp1s" path="res://Resources/Parts/shirt.tres" id="92_fyi83"]
 [ext_resource type="AudioStream" uid="uid://dsqn574x8pygu" path="res://Assets/Audio/Music/fish_slightly_quieter_snare_edition.ogg" id="92_q27mk"]
+[ext_resource type="Resource" uid="uid://bpd8wmvcp3mvf" path="res://Resources/Parts/checkeredshirt.tres" id="93_8d670"]
+[ext_resource type="Resource" uid="uid://dncndj7m7indu" path="res://Resources/Parts/tshirt.tres" id="94_sy50j"]
+[ext_resource type="Resource" uid="uid://dkbyecnusknhp" path="res://Resources/Parts/tshirtrocknrollfish.tres" id="95_jydkl"]
+[ext_resource type="Resource" uid="uid://fbu78k5b1le" path="res://Resources/Parts/mowhawk.tres" id="96_dd1mu"]
 [ext_resource type="Texture2D" uid="uid://ck7ri0462uu1m" path="res://Assets/Art/Sprites/Fish/whaleshark.png" id="97_cxjm4"]
 [ext_resource type="AudioStream" uid="uid://bomwt3f400xrf" path="res://Assets/Audio/SFX/camera_sound.ogg" id="98_bxyol"]
 [ext_resource type="Script" path="res://Scripts/Shadow.gd" id="98_rr7oq"]
@@ -216,6 +244,8 @@ point_count = 2
 
 [node name="Root" type="Node2D"]
 script = ExtResource("1_e3qh4")
+cursors = Array[Texture2D]([ExtResource("2_bgw34"), ExtResource("3_5s4b2"), ExtResource("4_silel"), ExtResource("5_ri2v4")])
+music = Array[AudioStream]([ExtResource("6_8wsab"), ExtResource("92_q27mk")])
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -10
@@ -297,7 +327,7 @@ visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
-partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50")])
+partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("95_jydkl"), ExtResource("94_sy50j"), ExtResource("92_fyi83"), ExtResource("93_8d670"), ExtResource("87_u5g4a"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("83_mqi3q"), ExtResource("85_myrft"), ExtResource("84_4lvtx"), ExtResource("86_nkv62"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("76_kjmyi"), ExtResource("75_kgk2d"), ExtResource("77_p1qnt"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("78_81h6d"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("74_7fe4i"), ExtResource("82_ytppc"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("89_o4mx3"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("88_qjj60"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("96_dd1mu"), ExtResource("91_4ihta"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("79_lmgo0"), ExtResource("80_dk6br"), ExtResource("81_ow2jj"), ExtResource("82_tu2li")])
 testPartDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
 colorMaterial = ExtResource("12_2sx1l")
 
@@ -713,7 +743,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("92_q27mk")
+stream = ExtResource("6_8wsab")
 autoplay = true
 bus = &"Music"
 
@@ -771,10 +801,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -282.0
-offset_top = -470.0
-offset_right = 282.0
-offset_bottom = 394.0
+offset_left = -536.0
+offset_top = -432.0
+offset_right = 536.0
+offset_bottom = 432.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -852,20 +882,20 @@ horizontal_alignment = 2
 
 [node name="GameSettings" type="Label" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 178.0
-offset_top = 304.0
-offset_right = 388.0
-offset_bottom = 346.0
+offset_left = 179.0
+offset_top = 388.0
+offset_right = 389.0
+offset_bottom = 430.0
 theme_override_font_sizes/font_size = 30
 text = "Game Settings"
 horizontal_alignment = 1
 
 [node name="SecretSprites" type="CheckButton" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 362.0
-offset_right = 491.0
-offset_bottom = 408.0
+offset_left = 71.0
+offset_top = 446.0
+offset_right = 492.0
+offset_bottom = 492.0
 mouse_default_cursor_shape = 2
 text = "Secret Test Sprites"
 alignment = 1
@@ -874,22 +904,58 @@ wobbleDegrees = 1.5
 
 [node name="CanGoBehind" type="CheckButton" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 418.0
-offset_right = 491.0
-offset_bottom = 464.0
+offset_left = 71.0
+offset_top = 502.0
+offset_right = 492.0
+offset_bottom = 548.0
 mouse_default_cursor_shape = 2
 text = "Allow layer behind fish"
 alignment = 1
 script = ExtResource("6_j1bsi")
 wobbleDegrees = 1.5
 
+[node name="UndoRedo" type="CheckButton" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 71.0
+offset_top = 556.0
+offset_right = 492.0
+offset_bottom = 602.0
+mouse_default_cursor_shape = 2
+text = "(Experimental) Undo / Redo"
+alignment = 1
+script = ExtResource("6_j1bsi")
+wobbleDegrees = 1.5
+
+[node name="CursorTeeth" type="CheckButton" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 608.0
+offset_right = 493.0
+offset_bottom = 654.0
+mouse_default_cursor_shape = 2
+text = "Cursor Teeth"
+alignment = 1
+script = ExtResource("6_j1bsi")
+wobbleDegrees = 1.5
+
+[node name="CalmerMusic" type="CheckButton" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 312.0
+offset_right = 489.0
+offset_bottom = 358.0
+mouse_default_cursor_shape = 2
+text = "Calmer Music"
+alignment = 1
+script = ExtResource("6_j1bsi")
+wobbleDegrees = 1.5
+
 [node name="AccessibilitySettings" type="Label" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 145.0
-offset_top = 505.0
-offset_right = 430.0
-offset_bottom = 547.0
+offset_left = 598.0
+offset_top = 49.0
+offset_right = 883.0
+offset_bottom = 91.0
 theme_override_font_sizes/font_size = 30
 text = "Accessibility Settings"
 horizontal_alignment = 1
@@ -898,10 +964,10 @@ horizontal_alignment = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_7iium")
 layout_mode = 0
-offset_left = 349.0
-offset_top = 536.0
-offset_right = 528.0
-offset_bottom = 715.0
+offset_left = 819.0
+offset_top = 70.0
+offset_right = 998.0
+offset_bottom = 249.0
 mouse_filter = 2
 texture = ExtResource("109_hbsd4")
 
@@ -926,10 +992,10 @@ texture = ExtResource("109_hbsd4")
 [node name="SelectColour" type="ColorPickerButton" parent="Settings/c/Panel"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 289.0
-offset_top = 556.0
-offset_right = 353.0
-offset_bottom = 620.0
+offset_left = 742.0
+offset_top = 100.0
+offset_right = 806.0
+offset_bottom = 164.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
@@ -972,10 +1038,10 @@ horizontal_alignment = 2
 [node name="DangerColour" type="ColorPickerButton" parent="Settings/c/Panel"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 289.0
-offset_top = 627.0
-offset_right = 353.0
-offset_bottom = 691.0
+offset_left = 742.0
+offset_top = 171.0
+offset_right = 806.0
+offset_bottom = 235.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
@@ -1017,10 +1083,10 @@ horizontal_alignment = 2
 
 [node name="BackButton" type="Button" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 161.0
-offset_top = 734.0
-offset_right = 410.0
-offset_bottom = 811.0
+offset_left = 414.0
+offset_top = 727.0
+offset_right = 663.0
+offset_bottom = 804.0
 text = "Back"
 script = ExtResource("6_j1bsi")
 backButton = true
@@ -1107,6 +1173,15 @@ offset_right = 315.0
 offset_bottom = 546.5
 text = "Return to menu"
 script = ExtResource("6_j1bsi")
+
+[node name="ConfExit" type="ConfirmationDialog" parent="CogMenu"]
+initial_position = 2
+size = Vector2i(268, 100)
+theme = ExtResource("86_8slkc")
+ok_button_text = "YES!!"
+dialog_text = "     Want to exit to main menu?
+   This fish will be flushed away..."
+cancel_button_text = "Oops..."
 
 [node name="Toolbar" type="CanvasLayer" parent="."]
 layer = 5
@@ -1776,12 +1851,17 @@ scale_amount_curve = SubResource("Curve_oben7")
 [connection signal="pressed" from="SettingsButton/c/CogButton" to="." method="ShowCogMenu"]
 [connection signal="toggled" from="Settings/c/Panel/SecretSprites" to="Settings" method="SecretTestSprites"]
 [connection signal="toggled" from="Settings/c/Panel/CanGoBehind" to="Settings" method="CanGoBehind"]
+[connection signal="toggled" from="Settings/c/Panel/UndoRedo" to="HUD" method="ActivateUndoRedo"]
+[connection signal="toggled" from="Settings/c/Panel/CursorTeeth" to="." method="CursorTeeth"]
+[connection signal="toggled" from="Settings/c/Panel/CalmerMusic" to="." method="CalmerMusic"]
 [connection signal="color_changed" from="Settings/c/Panel/SelectColour" to="Settings" method="ChangeSelectColour"]
 [connection signal="color_changed" from="Settings/c/Panel/DangerColour" to="Settings" method="ChangeDangerColour"]
 [connection signal="pressed" from="Settings/c/Panel/BackButton" to="Settings" method="BackButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/ResumeButton" to="CogMenu" method="ResumeButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/SettingsButton" to="CogMenu" method="SettingsButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/MenuButton" to="CogMenu" method="MenuButton"]
+[connection signal="canceled" from="CogMenu/ConfExit" to="CogMenu" method="MenuConfirmation" binds= [false]]
+[connection signal="confirmed" from="CogMenu/ConfExit" to="CogMenu" method="MenuConfirmation" binds= [true]]
 [connection signal="pressed" from="Toolbar/c/GlobalTools/DeleteAll" to="Toolbar" method="DeleteAll"]
 [connection signal="pressed" from="Toolbar/c/GlobalTools/SelectAll" to="Toolbar" method="SelectAll"]
 [connection signal="pressed" from="Toolbar/c/GlobalTools/Undo" to="Toolbar" method="Undo"]

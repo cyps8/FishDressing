@@ -77,6 +77,14 @@ func EditorOpened():
 	colorMaterial.set_shader_parameter("green_color", pickedColorG)
 	colorMaterial.set_shader_parameter("blue_color", pickedColorB)
 
+	actions.clear()
+	redoActions.clear()
+
+	for part in partsGraveyard:
+		if part:
+			part.queue_free()
+	partsGraveyard.clear()
+
 func _ready():
 	overrideButton = %OverrideDefault
 	rPickerRef = %ColorR
@@ -109,7 +117,10 @@ func _ready():
 func InText(value: bool):
 	texting = value
 
+var creatingNew: bool = false
+
 func CreateNewDecor(id: int = 0):
+	creatingNew = true
 	var newDecor = partIns.instantiate() as Part
 	newDecor.partData = partDataList[id]
 	MouseGrabbed.connect(newDecor.MouseGrabbed)
@@ -169,12 +180,270 @@ func UpdateTags():
 func ResetEditor():
 	SetMouseGrabbed(false)
 
-func SetMouseGrabbed(value: bool):
-	if mouseGrabbed != value:
-		MouseGrabbed.emit(value)
-		#Game.ins.toolbar.AddActionLabel("Action: Mouse action")
-	mouseGrabbed = value
+var prevPositions: Array[Vector2] = []
+var prevRotations: Array[float] = []
+var prevScales: Array[float] = []
+var prevIndexes: Array[int] = []
+var prevFlipHs: Array[bool] = []
+var prevFlipVs: Array[bool] = []
 
+var prevDelPositions: Array[Vector2] = []
+var prevDelRotations: Array[float] = []
+var prevDelScales: Array[float] = []
+var prevDelIndexes: Array[int] = []
+var prevDelFlipHs: Array[bool] = []
+var prevDelFlipVs: Array[bool] = []
+
+var actions: Array[Array] = []
+
+var redoActions: Array[Array] = []
+
+var partsGraveyard: Array[Part] = []
+
+var deletingParts: Array[Part] = []
+
+func SetMouseGrabbed(value: bool):
+	if mouseGrabbed == value:
+		return
+	MouseGrabbed.emit(value)
+	mouseGrabbed = value
+	if mouseGrabbed:
+		if creatingNew:
+			return
+		prevPositions.clear()
+		prevRotations.clear()
+		prevScales.clear()
+		prevIndexes.clear()
+		prevFlipHs.clear()
+		prevFlipVs.clear()
+		for part in currentPartGroup:
+			prevPositions.append(part.position)
+			prevRotations.append(part.rotation)
+			prevScales.append(part.scale.x)
+			prevIndexes.append(part.get_index())
+			prevFlipHs.append(part.flip_h)
+			prevFlipVs.append(part.flip_v)
+	if !mouseGrabbed:
+		if creatingNew:
+			if currentPartGroup.size() > 0:
+				CreateAction("Create")
+			creatingNew = false
+		elif duplicatingNew:
+			if currentPartGroup.size() > 0:
+				CreateAction("Duplicate")
+			duplicatingNew = false
+		else:
+			MouseAction()
+
+var undoRedoActive: bool = false
+
+func ActivateUndoRedo(val: bool):
+	undoRedoActive = val
+
+func Undo():
+	if !undoRedoActive:
+		return
+	var undoAction: Array[Action] = actions.pop_front()
+	redoActions.insert(0, undoAction)
+	for action in undoAction:
+		action.Undo()
+	ClearControlGroup()
+	LogAction("Undo: ", undoAction)
+
+func Redo():
+	if !undoRedoActive:
+		return
+	var redoAction = redoActions.pop_front()
+	for action in redoAction:
+		action.Redo()
+	InsertAction(redoAction)
+	ClearControlGroup()
+	LogAction("Redo: ", redoAction)
+
+func AddAction(newAction: Array[Action]):
+	InsertAction(newAction)
+	LogAction("Action: ", newAction)
+	CheckGraveyard()
+
+func InsertAction(newAction: Array[Action]):
+	actions.insert(0, newAction)
+	if actions.size() > 20:
+		actions.pop_back()
+
+func LogAction(message: String, actionsToLog: Array[Action]):
+	var actionNames: Array[String] = []
+	for action in actionsToLog:
+		actionNames.append(action.name)
+	message += ", ".join(actionNames)
+	Game.ins.toolbar.AddActionLabel(message)
+
+func CreateAction(actMame: String):
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var createAction: ActionCreate = ActionCreate.new()
+	createAction.Create(currentPartGroup)
+	createAction.name = actMame
+	currentAction.append(createAction)
+
+	AddAction(currentAction)
+
+func MouseAction():
+	if currentPartGroup.size() == 0 && deletingParts.size() == 0:
+		return
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	if currentPartGroup.size() > 0:
+		var moveAction: ActionMove = ActionMove.new()
+		moveAction.Create(currentPartGroup, prevPositions)
+		moveAction.name = "Move"
+		currentAction.append(moveAction)
+		if currentPartGroup[0].rotation != prevRotations[0]:
+			var rotateAction: ActionRotate = ActionRotate.new()
+			rotateAction.Create(currentPartGroup, prevRotations)
+			rotateAction.name = "Rotate"
+			currentAction.append(rotateAction)
+		if currentPartGroup[0].scale.x != prevScales[0]:
+			var scaleAction: ActionScale = ActionScale.new()
+			scaleAction.Create(currentPartGroup, prevScales)
+			scaleAction.name = "Scale"
+			currentAction.append(scaleAction)
+		if LayerMismatch():
+			var layerAction: ActionLayer = ActionLayer.new()
+			layerAction.Create(currentPartGroup, prevIndexes)
+			layerAction.name = "Layer"
+			currentAction.append(layerAction)
+		if currentPartGroup[0].flip_h != prevFlipHs[0]:
+			var flipHAction: ActionFlipH = ActionFlipH.new()
+			flipHAction.Create(currentPartGroup, prevFlipHs)
+			flipHAction.name = "FlipH"
+			currentAction.append(flipHAction)
+		if currentPartGroup[0].flip_v != prevFlipVs[0]:
+			var flipVAction: ActionFlipV = ActionFlipV.new()
+			flipVAction.Create(currentPartGroup, prevFlipVs)
+			flipVAction.name = "FlipV"
+			currentAction.append(flipVAction)
+	if deletingParts.size() > 0:
+		var deleteAction: ActionDelete = ActionDelete.new()
+		deleteAction.Create(deletingParts, prevDelPositions, prevDelIndexes, prevDelRotations, prevDelScales, prevDelFlipHs, prevDelFlipVs)
+		deleteAction.name = "Delete"
+		currentAction.append(deleteAction)
+		deletingParts.clear()
+	AddAction(currentAction)
+
+func DeleteAction():
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var deleteAction: ActionDelete = ActionDelete.new()
+	deleteAction.Create(currentPartGroup, prevPositions, prevIndexes, prevRotations, prevScales, prevFlipHs, prevFlipVs)
+	deleteAction.name = "Delete"
+	currentAction.append(deleteAction)
+	AddAction(currentAction)
+
+var keyRotating: bool = false
+
+func RotateAction():
+	if creatingNew: return
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var positionAction: ActionMove = ActionMove.new()
+	positionAction.Create(currentPartGroup, prevPositions)
+	positionAction.name = "Move"
+	currentAction.append(positionAction)
+	var rotateAction: ActionRotate = ActionRotate.new()
+	rotateAction.Create(currentPartGroup, prevRotations)
+	rotateAction.name = "Rotate"
+	currentAction.append(rotateAction)
+	AddAction(currentAction)
+
+var keyScaling: bool = false
+
+func ScaleAction():
+	if creatingNew: return
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var positionAction: ActionMove = ActionMove.new()
+	positionAction.Create(currentPartGroup, prevPositions)
+	positionAction.name = "Move"
+	currentAction.append(positionAction)
+	var scaleAction: ActionScale = ActionScale.new()
+	scaleAction.Create(currentPartGroup, prevScales)
+	scaleAction.name = "Scale"
+	currentAction.append(scaleAction)
+	AddAction(currentAction)
+
+func LayerAction():
+	if mouseGrabbed || !LayerMismatch():
+		return
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var layerAction: ActionLayer = ActionLayer.new()
+	layerAction.Create(currentPartGroup, prevIndexes)
+	layerAction.name = "Layer"
+	currentAction.append(layerAction)
+	AddAction(currentAction)
+
+func FlipHAction():
+	if creatingNew || mouseGrabbed: return
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var flipHAction: ActionFlipH = ActionFlipH.new()
+	flipHAction.Create(currentPartGroup, prevFlipHs)
+	flipHAction.name = "FlipH"
+	currentAction.append(flipHAction)
+	AddAction(currentAction)
+
+func FlipVAction():
+	if creatingNew || mouseGrabbed: return
+	redoActions.clear()
+	var currentAction: Array[Action] = []
+	var flipVAction: ActionFlipV = ActionFlipV.new()
+	flipVAction.Create(currentPartGroup, prevFlipVs)
+	flipVAction.name = "FlipV"
+	currentAction.append(flipVAction)
+	AddAction(currentAction)
+
+func LayerMismatch() -> bool:
+	for i in currentPartGroup.size():
+		if currentPartGroup[i].get_index() != prevIndexes[i]:
+			return true
+	return false
+
+func CheckGraveyard():
+	for part in partsGraveyard:
+		if !ExistsInActions(part):
+			part.queue_free()
+			partsGraveyard.erase(part)
+			print("Deleted a graveyard thing")
+		
+func ExistsInActions(part: Part) -> bool:
+	for action in actions:
+			for act in action:
+				for partToCheck in act.parts:
+					if part == partToCheck:
+						return true
+	for action in redoActions:
+			for act in action:
+				for partToCheck in act.parts:
+					if part == partToCheck:
+						return true
+	return false
+
+func MoveToDelete(part: Part):
+	deletingParts.append(part)
+	prevDelPositions.append(prevPositions[currentPartGroup.find(part)])
+	prevDelRotations.append(prevRotations[currentPartGroup.find(part)])
+	prevDelScales.append(prevScales[currentPartGroup.find(part)])
+	prevDelIndexes.append(prevIndexes[currentPartGroup.find(part)])
+	prevDelFlipHs.append(prevFlipHs[currentPartGroup.find(part)])
+	prevDelFlipVs.append(prevFlipVs[currentPartGroup.find(part)])
+	prevPositions.remove_at(currentPartGroup.find(part))
+	prevRotations.remove_at(currentPartGroup.find(part))
+	prevScales.remove_at(currentPartGroup.find(part))
+	prevIndexes.remove_at(currentPartGroup.find(part))
+	prevFlipHs.remove_at(currentPartGroup.find(part))
+	prevFlipVs.remove_at(currentPartGroup.find(part))
+	part.SetControlGroup(false)
+	
 func _process(_delta):
 	if fileDialog.visible:
 		return
@@ -190,9 +459,14 @@ func _process(_delta):
 	if Input.is_action_just_released("Interact"):
 		if currentPartGroup.size() > 0:
 			var partsToDelete: Array[Part] = []
-			for part in currentPartGroup:
-				if !part.IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
-					partsToDelete.append(part)
+			var i: int = 0
+			while i < currentPartGroup.size():
+				if !currentPartGroup[i].IsInSafeZone(fishRef.get_node("FishBody") as Sprite2D):
+					partsToDelete.append(currentPartGroup[i])
+					if !creatingNew:
+						MoveToDelete(currentPartGroup[i])
+						i -= 1
+				i += 1
 			if partsToDelete.size() > 0:
 				AudioPlayer.ins.PlaySound(5)
 			while partsToDelete.size() > 0:
@@ -206,6 +480,10 @@ func _process(_delta):
 						AudioPlayer.ins.PlayMatSound(soundId, AudioPlayer.SoundType.SFX, 1.3, randf() * 0.4 + 0.8)
 						soundsPlayed.append(soundId)
 		SetMouseGrabbed(false)
+	if Input.is_action_just_pressed("Undo") && actions.size() > 0 && !mouseGrabbed:
+		Undo()
+	if Input.is_action_just_pressed("Redo") && redoActions.size() > 0 && !mouseGrabbed:
+		Redo()
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !mouseGrabbed:
 		SelectAll()
 	if currentPartGroup.size() > 0:
@@ -215,6 +493,8 @@ func _process(_delta):
 		if Input.is_action_just_pressed("RotateRight") && Input.is_action_pressed("Control") && !mouseGrabbed:
 			Duplicate()
 		if Input.is_action_just_pressed("Delete")  && !Input.is_action_pressed("Control"):
+			if mouseGrabbed && !creatingNew:
+				DeleteAction()
 			DeleteAllSelected()
 			SetMouseGrabbed(false)
 			return
@@ -223,26 +503,46 @@ func _process(_delta):
 				FlipV()
 			else:
 				FlipH()
-		if Input.is_action_pressed("ScaleUp") && !Input.is_action_pressed("Control"):
+		if Input.is_action_pressed("ScaleUp") && !Input.is_action_pressed("Control") && !keyRotating:
+			if !keyScaling && !mouseGrabbed:
+				ResetScale()
+			keyScaling = true
 			if Input.is_action_pressed("Shift"):
 				ChangeScale(1.05)
 			else:
 				ChangeScale(1.01)
-		elif Input.is_action_pressed("ScaleDown") && !Input.is_action_pressed("Control"):
+		elif Input.is_action_pressed("ScaleDown") && !Input.is_action_pressed("Control") && !keyRotating:
+			if !keyScaling && !mouseGrabbed:
+				ResetScale()
+			keyScaling = true
 			if Input.is_action_pressed("Shift"):
 				ChangeScale(0.95)
 			else:
 				ChangeScale(0.99)
-		if Input.is_action_pressed("RotateLeft") && !Input.is_action_pressed("Control"):
+		else:
+			if keyScaling && !mouseGrabbed:
+				ScaleAction()
+			keyScaling = false
+		if Input.is_action_pressed("RotateLeft") && !Input.is_action_pressed("Control") && !keyScaling:
+			if !keyRotating && !mouseGrabbed:
+				ResetRotation()
+			keyRotating = true
 			if Input.is_action_pressed("Shift"):
 				RotatePart(-0.05)
 			else:
 				RotatePart(-0.01)
-		elif Input.is_action_pressed("RotateRight") && !Input.is_action_pressed("Control"):
+		elif Input.is_action_pressed("RotateRight") && !Input.is_action_pressed("Control") && !keyScaling:
+			if !keyRotating && !mouseGrabbed:
+				ResetRotation()
+			keyRotating = true
 			if Input.is_action_pressed("Shift"):
 				RotatePart(0.05)
 			else:
 				RotatePart(0.01)
+		else:
+			if keyRotating && !mouseGrabbed:
+				RotateAction()
+			keyRotating = false
 		if Input.is_action_just_pressed("MoveUp") && !Input.is_action_pressed("Control"):
 			if Input.is_action_pressed("Shift"):
 				MoveToTop()
@@ -268,6 +568,20 @@ func _process(_delta):
 					ChangeScale(1.1)
 			for part in currentPartGroup:
 				part.UpdateMovePosition()
+
+func ResetScale():
+	prevPositions.clear()
+	prevScales.clear()
+	for part in currentPartGroup:
+		prevPositions.append(part.position)
+		prevScales.append(part.scale.x)
+
+func ResetRotation():
+	prevPositions.clear()
+	prevRotations.clear()
+	for part in currentPartGroup:
+		prevPositions.append(part.position)
+		prevRotations.append(part.rotation)
 
 func ClickedOut():
 	ClearControlGroup()
@@ -310,15 +624,19 @@ func SelectPart(selectedPart: Part, clearGroup: bool = true, anim = true):
 	SetMouseGrabbed(true)
 	if anim:
 		for part in currentPartGroup:
-			#part.ResetMoveValues()
 			part.SpawnAnimation()
-		AudioPlayer.ins.PlaySound(0)
+		if Game.ins.cursorTeeth:
+			AudioPlayer.ins.PlayFishSound(3, AudioPlayer.SoundType.SFX, 1.0, (randf() * 0.4) + 1.5)
+		else:
+			AudioPlayer.ins.PlaySound(0)
 
-func GetAll() -> Array[Part]:
+func GetAll(control: bool = false) -> Array[Part]:
 	var allParts: Array[Part] = []
 	for part in fishRef.get_children():
 		if part.is_in_group("Part") && !part.deleted:
 			allParts.append(part)
+			if control && !part.controlGrouped:
+				part.SetControlGroup(true)
 	return allParts
 
 func SelectAll():
@@ -333,11 +651,13 @@ func SelectAll():
 	else:
 		AudioPlayer.ins.PlaySound(0)
 
+var duplicatingNew: bool = false
+
 func Duplicate(selectedPart: Part = null):
 	if selectedPart:
 		SelectPart(selectedPart, true, false)
 	var dupedParts: Array[Part] = []
-	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	SortCurrentPartGroupLesser()
 	for part in currentPartGroup:
 		var dupedPart: Part = part.duplicate()
 		dupedPart.partData = part.partData
@@ -352,38 +672,66 @@ func Duplicate(selectedPart: Part = null):
 		part.SpawnAnimation()
 	if selectedPart != null:
 		SetMouseGrabbed(true)
-	AudioPlayer.ins.PlaySound(0)
+		duplicatingNew = true
+	else:
+		CreateAction("Duplicate")
+	if selectedPart != null:
+		if Game.ins.cursorTeeth:
+			AudioPlayer.ins.PlayFishSound(3, AudioPlayer.SoundType.SFX, 1.0,(randf() * 0.4) + 1.5)
+		else:
+			AudioPlayer.ins.PlaySound(0)
+	else:
+		AudioPlayer.ins.PlaySound(0)
 
 func MoveUp():
-	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
+	SortCurrentPartGroupGreater()
+	ResetIndexes()
 	for part in currentPartGroup:
 		var index = part.get_index()
 		if index < fishRef.get_child_count():
 			fishRef.move_child(part, index + 1)
+	LayerAction()
 
 func MoveDown():
-	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	SortCurrentPartGroupLesser()
+	ResetIndexes()
 	for i in currentPartGroup.size():
 		var index = currentPartGroup[i].get_index()
 		if index > layerLimit && (i - currentPartGroup.size()) != (index - fishRef.get_child_count() - 1):
 			fishRef.move_child(currentPartGroup[i], index - 1)
+	LayerAction()
 
 func MoveToTop():
-	currentPartGroup.sort_custom(func (a, b): return a.get_index() < b.get_index())
+	SortCurrentPartGroupLesser()
+	ResetIndexes()
 	for part in currentPartGroup:
 		fishRef.move_child(part, fishRef.get_child_count() - 1)
+	LayerAction()
 
 func MoveToBottom():
-	currentPartGroup.sort_custom(func (a, b): return a.get_index() > b.get_index())
+	SortCurrentPartGroupGreater()
+	ResetIndexes()
 	for part in currentPartGroup:
 		fishRef.move_child(part, layerLimit)
+	LayerAction()
+
+func ResetIndexes():
+	if mouseGrabbed:
+		return
+	prevIndexes.clear()
+	for part in currentPartGroup:
+		prevIndexes.append(part.get_index())
 
 func SetCanGoBehind(val: bool):
 	if val:
 		layerLimit = 0
 	else:
 		layerLimit = 1
+		if fishRef.get_node("FishBody").get_index() != 0:
+			actions.clear()
+			redoActions.clear()
 		fishRef.move_child(fishRef.get_node("FishBody"), 0)
+		
 
 func ColorPickChanged(newColor: Color, val: int = 1):
 	match val:
@@ -398,13 +746,20 @@ func ColorPickChanged(newColor: Color, val: int = 1):
 			colorMaterial.set_shader_parameter("blue_color", newColor)
 
 func DeleteAllSelected():
+	if !mouseGrabbed:
+		ResetForDelete()
+		DeleteAction()
 	while currentPartGroup.size() > 0:
 		currentPartGroup[0].Delete()
 	AudioPlayer.ins.PlaySound(5)
 
 func DeleteAll(insta: bool = true):
 	var toDelete: Array[Part] = []
-	for part in GetAll():
+	currentPartGroup = GetAll(!insta)
+	if !insta:
+		ResetForDelete()
+		DeleteAction()
+	for part in currentPartGroup:
 		toDelete.append(part)
 	while toDelete.size() > 0:
 		if insta:
@@ -417,6 +772,23 @@ func DeleteAll(insta: bool = true):
 	else:
 		currentPartGroup.clear()
 
+func ResetForDelete():
+	if mouseGrabbed:
+		return
+	prevPositions.clear()
+	prevRotations.clear()
+	prevScales.clear()
+	prevIndexes.clear()
+	prevFlipHs.clear()
+	prevFlipVs.clear()
+	for part in currentPartGroup:
+		prevPositions.append(part.position)
+		prevRotations.append(part.rotation)
+		prevScales.append(part.scale.x)
+		prevIndexes.append(part.get_index())
+		prevFlipHs.append(part.flip_h)
+		prevFlipVs.append(part.flip_v)
+
 func SetOverride(value: bool):
 	overrideColours = value
 	if overrideColours:
@@ -427,20 +799,84 @@ func SetOverride(value: bool):
 			button.SetMat()
 
 func FlipH():
+	ResetFlipHs()
 	for part in currentPartGroup:
 		part.FlipH()
 		part.SpawnAnimation()
+	FlipHAction()
 	AudioPlayer.ins.PlaySound(0)
 
 func FlipV():
+	ResetFlipVs()
 	for part in currentPartGroup:
 		part.FlipV()
 		part.SpawnAnimation()
+	FlipVAction()
 	AudioPlayer.ins.PlaySound(0)
+
+func ResetFlipHs():
+	if mouseGrabbed:
+		return
+	prevFlipHs.clear()
+	for part in currentPartGroup:
+		prevFlipHs.append(part.flip_h)
+	
+func ResetFlipVs():
+	if mouseGrabbed:
+		return
+	prevFlipVs.clear()
+	for part in currentPartGroup:
+		prevFlipVs.append(part.flip_v)
 
 func ChangeSelectedColourChannel(color: Color, channel: int):
 	for part in currentPartGroup:
 		part.SetColorChannel(color, channel)
+
+func SortCurrentPartGroupLesser():
+	currentPartGroup.sort_custom(func (a, b): 
+		if a.get_index() < b.get_index():
+			var holdPos = prevPositions[currentPartGroup.find(b)]
+			prevPositions[currentPartGroup.find(b)] = prevPositions[currentPartGroup.find(a)]
+			prevPositions[currentPartGroup.find(a)] = holdPos
+			var holdRot = prevRotations[currentPartGroup.find(b)]
+			prevRotations[currentPartGroup.find(b)] = prevRotations[currentPartGroup.find(a)]
+			prevRotations[currentPartGroup.find(a)] = holdRot
+			var holdScale = prevScales[currentPartGroup.find(b)]
+			prevScales[currentPartGroup.find(b)] = prevScales[currentPartGroup.find(a)]
+			prevScales[currentPartGroup.find(a)] = holdScale
+			var holdFlipH = prevFlipHs[currentPartGroup.find(b)]
+			prevFlipHs[currentPartGroup.find(b)] = prevFlipHs[currentPartGroup.find(a)]
+			prevFlipHs[currentPartGroup.find(a)] = holdFlipH
+			var holdFlipV = prevFlipVs[currentPartGroup.find(b)]
+			prevFlipVs[currentPartGroup.find(b)] = prevFlipVs[currentPartGroup.find(a)]
+			prevFlipVs[currentPartGroup.find(a)] = holdFlipV
+			var holdIndex = prevIndexes[currentPartGroup.find(b)]
+			prevIndexes[currentPartGroup.find(b)] = prevIndexes[currentPartGroup.find(a)]
+			prevIndexes[currentPartGroup.find(a)] = holdIndex
+		return a.get_index() < b.get_index())
+
+func SortCurrentPartGroupGreater():
+	currentPartGroup.sort_custom(func (a, b): 
+		if a.get_index() > b.get_index():
+			var holdPos = prevPositions[currentPartGroup.find(b)]
+			prevPositions[currentPartGroup.find(b)] = prevPositions[currentPartGroup.find(a)]
+			prevPositions[currentPartGroup.find(a)] = holdPos
+			var holdRot = prevRotations[currentPartGroup.find(b)]
+			prevRotations[currentPartGroup.find(b)] = prevRotations[currentPartGroup.find(a)]
+			prevRotations[currentPartGroup.find(a)] = holdRot
+			var holdScale = prevScales[currentPartGroup.find(b)]
+			prevScales[currentPartGroup.find(b)] = prevScales[currentPartGroup.find(a)]
+			prevScales[currentPartGroup.find(a)] = holdScale
+			var holdFlipH = prevFlipHs[currentPartGroup.find(b)]
+			prevFlipHs[currentPartGroup.find(b)] = prevFlipHs[currentPartGroup.find(a)]
+			prevFlipHs[currentPartGroup.find(a)] = holdFlipH
+			var holdFlipV = prevFlipVs[currentPartGroup.find(b)]
+			prevFlipVs[currentPartGroup.find(b)] = prevFlipVs[currentPartGroup.find(a)]
+			prevFlipVs[currentPartGroup.find(a)] = holdFlipV
+			var holdIndex = prevIndexes[currentPartGroup.find(b)]
+			prevIndexes[currentPartGroup.find(b)] = prevIndexes[currentPartGroup.find(a)]
+			prevIndexes[currentPartGroup.find(a)] = holdIndex
+		return a.get_index() > b.get_index())
 
 var img: Image
 

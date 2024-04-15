@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://yd6dj0lc5o1m"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_kdeht"]
+[ext_resource type="Texture2D" uid="uid://dhpk8w57ia660" path="res://Assets/Art/Sprites/ActualParts/accessories_earring4.png" id="2_dsqs1"]
+
+[resource]
+script = ExtResource("1_kdeht")
+name = "Shrimp Earring"
+texture = ExtResource("2_dsqs1")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.956863, 0.694118, 0.866667, 1)
+greenChannel = true
+defaultGreen = Color(0.980392, 0.917647, 0.968627, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 9

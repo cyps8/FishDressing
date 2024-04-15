@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://d3lu04e2xumsg"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_d555q"]
+[ext_resource type="Texture2D" uid="uid://fygynq877oc2" path="res://Assets/Art/Sprites/ActualParts/accessories_anemone.png" id="2_hn6id"]
+
+[resource]
+script = ExtResource("1_d555q")
+name = "Anemone Hat"
+texture = ExtResource("2_hn6id")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.458824, 0.905882, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.882353, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 9

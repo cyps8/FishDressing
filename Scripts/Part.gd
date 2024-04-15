@@ -79,7 +79,8 @@ func UpdateDuplicateRefs(part: Part):
 	currentScale = part.currentScale
 	currentRotation = part.currentRotation
 
-	material = part.material.duplicate(true)
+	if material:
+		material = part.material.duplicate(true)
 
 func GenerateClickMask():
 	var img = texture_normal.get_image()
@@ -164,7 +165,7 @@ func RotateBy(value: float):
 func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 	var fBSize = fishSprite.texture.get_size() * fishSprite.scale
 	var partPos = position + (size * scale * 0.5).rotated(rotation)
-	if partPos.x > fishSprite.position.x - (fBSize.x * 0.5) - 50 and partPos.x < fishSprite.position.x + (fBSize.x * 0.5) + 50 and partPos.y > fishSprite.position.y - (fBSize.y * 0.5) - 50 and partPos.y < fishSprite.position.y + (fBSize.y * 0.5) + 50:
+	if partPos.x > fishSprite.position.x - (fBSize.x * 0.5) - 75 and partPos.x < fishSprite.position.x + (fBSize.x * 0.5) + 75 and partPos.y > fishSprite.position.y - (fBSize.y * 0.5) - 75 and partPos.y < fishSprite.position.y + (fBSize.y * 0.5) + 50:
 		return true
 	return false
 
@@ -206,7 +207,11 @@ func FlipV():
 	GenerateClickMask()
 
 func MouseGrabbed(val: bool):
-	if isGrabbed == val:
+	if val:
+		mouse_default_cursor_shape = Control.CURSOR_DRAG
+	else:
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	if isGrabbed == val || deleted || !is_inside_tree():
 		return
 	isGrabbed = val
 	if !controlGrouped:
@@ -214,9 +219,12 @@ func MouseGrabbed(val: bool):
 	else:
 		ResetMoveValues(!val)
 
+var deleteTween: Tween
+
 func Delete():
 	if deleted:
 		return
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	SetControlGroup(false)
 	deleted = true
 	SetDanger(true)
@@ -225,8 +233,23 @@ func Delete():
 	pivot_offset = size * 0.5
 	position += (pivot_offset * (scale.x - 1.0))
 	position = ori + (position - ori).rotated(rotation)
-	var deleteTween: Tween = create_tween()
+	deleteTween = create_tween()
 	deleteTween.tween_property(self, "scale", Vector2(0.0, 0.0), 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	deleteTween.parallel()
 	deleteTween.tween_property(self, "rotation", rotation + deg_to_rad(360), 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
-	deleteTween.tween_callback(queue_free)
+	deleteTween.tween_callback(get_parent().remove_child.bind(self))
+	var grave = func(): Game.ins.hud.partsGraveyard.append(self)
+	deleteTween.tween_callback(grave)
+
+func UndoWhileDeleting() -> bool:
+	pivot_offset = Vector2(0, 0)
+	deleted = false
+	if !button_down.is_connected(Pressed):
+		button_down.connect(Pressed)
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	SetDanger(false)
+	if deleteTween && deleteTween.is_running():
+		deleteTween.kill()
+		return true
+	return false
+	

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c2hrqkshytlgh"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_usyno"]
+[ext_resource type="Texture2D" uid="uid://deok1rm0c1ih4" path="res://Assets/Art/Sprites/ActualParts/accessories_hook.png" id="2_lu3ga"]
+
+[resource]
+script = ExtResource("1_usyno")
+name = "Pirate Hook"
+texture = ExtResource("2_lu3ga")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.0745098, 0.188235, 0.376471, 1)
+greenChannel = true
+defaultGreen = Color(1, 1, 0.941176, 1)
+blueChannel = true
+defaultBlue = Color(1, 0, 0, 1)
+tags = 16
+materialSound = 4

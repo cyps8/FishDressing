@@ -2,6 +2,11 @@ extends CanvasLayer
 
 var menuActive: bool = false
 
+var confExit: ConfirmationDialog
+
+func _ready():
+	confExit = $ConfExit
+
 func ResumeButton():
 	if !menuActive:
 		return
@@ -25,4 +30,15 @@ func SettingsButton():
 func MenuButton():
 	if !menuActive:
 		return
+	if Game.ins.hud.is_inside_tree():
+		confExit.visible = true
+		var cancel: bool = await ConfirmMenu
+		if !cancel:
+			return
 	Game.ins.ReturnToMenu()
+
+signal ConfirmMenu(val: bool)
+
+func MenuConfirmation(val: bool):
+	AudioPlayer.ins.PlaySound(3)
+	ConfirmMenu.emit(val)

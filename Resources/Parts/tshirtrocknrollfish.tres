@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dkbyecnusknhp"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_x530y"]
+[ext_resource type="Texture2D" uid="uid://bt87vf4088fls" path="res://Assets/Art/Sprites/ActualParts/accessories_tshirt3.png" id="2_m744n"]
+
+[resource]
+script = ExtResource("1_x530y")
+name = "Rock n Roll Fish T-Shirt"
+texture = ExtResource("2_m744n")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.588235, 0.52549, 0.956863, 1)
+greenChannel = true
+defaultGreen = Color(0, 0.823529, 0.803922, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4
+materialSound = 1

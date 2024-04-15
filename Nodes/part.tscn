@@ -10,6 +10,7 @@
 texture_filter = 1
 offset_right = 128.0
 offset_bottom = 128.0
+mouse_default_cursor_shape = 6
 button_mask = 3
 texture_normal = ExtResource("5_obuv5")
 script = ExtResource("1_bleap")

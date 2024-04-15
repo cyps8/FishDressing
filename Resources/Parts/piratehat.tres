@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bk4rq516uut73"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_vt30g"]
+[ext_resource type="Texture2D" uid="uid://cg88lgcu1ic1d" path="res://Assets/Art/Sprites/ActualParts/accessories_hat9.png" id="2_wel5u"]
+
+[resource]
+script = ExtResource("1_vt30g")
+name = "Pirate Hat"
+texture = ExtResource("2_wel5u")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.0745098, 0.188235, 0.376471, 1)
+greenChannel = true
+defaultGreen = Color(1, 0, 0, 1)
+blueChannel = true
+defaultBlue = Color(1, 1, 0.823529, 1)
+tags = 2
+materialSound = 1
