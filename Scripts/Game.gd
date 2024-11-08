@@ -23,6 +23,8 @@ var particles: CPUParticles2D
 
 var cursorTeeth: bool = false
 
+var startTime: int
+
 @export var cursors: Array[Texture2D]
 
 @export var music: Array[AudioStream]
@@ -45,7 +47,33 @@ func CursorTeeth(val: bool):
 	else:
 		Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_DRAG, Vector2(5, 5))
 
+func SetupDRP():
+	DiscordRPC.app_id = 1303839403910762567 # Application ID
+	DiscordRPC.details = "A fish dress up game!"
+	DiscordRPC.state = "In the ocean"
+	DiscordRPC.large_image = "clownfish" # Image key from "Art Assets"
+	DiscordRPC.large_image_text = "Clownfish"
+
+	startTime = int(Time.get_unix_time_from_system())
+	DiscordRPC.start_timestamp = startTime
+
+	DiscordRPC.refresh()
+
+func SetDRPMainMenu():
+	DiscordRPC.start_timestamp = startTime
+	DiscordRPC.state = "In the ocean"
+
+	DiscordRPC.refresh()
+
+func SetDRPFish():
+	DiscordRPC.start_timestamp = startTime
+	DiscordRPC.state = "Dressing a " + selectedFish.name
+	DiscordRPC.large_image = selectedFish.systemName
+
+	DiscordRPC.refresh()
+
 func _ready():
+	SetupDRP()
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW,Vector2(5, 5))
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_POINTING_HAND, Vector2(5, 5))
 	Input.set_custom_mouse_cursor(cursors[2], Input.CURSOR_IBEAM, Vector2(15, 55))
@@ -105,6 +133,7 @@ func ReturnToMenu():
 	var delay: Tween = create_tween()
 	delay.tween_interval(0.5)
 	delay.tween_callback(ShowMenu)
+	SetDRPMainMenu()
 
 func HideMenu():
 	mainMenu.SetActive(false)

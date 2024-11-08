@@ -30,6 +30,8 @@ var rPickerRef: ColorPickerButton
 var gPickerRef: ColorPickerButton
 var bPickerRef: ColorPickerButton
 
+var scrollRef: ScrollContainer
+
 var overrideColours: bool = false
 var overrideButton: CheckButton
 
@@ -66,6 +68,8 @@ func EditorOpened():
 
 	currentCategory = 0
 	categories.current_tab = 0
+	UpdateTags()
+	scrollRef.scroll_vertical = 0
 
 	rPickerRef.color = Color.CYAN
 	gPickerRef.color = Color.YELLOW
@@ -91,6 +95,8 @@ func _ready():
 	gPickerRef = %ColorG
 	bPickerRef = %ColorB
 	categories = %Categories
+
+	scrollRef = %Scroll
 
 	nameEdit = %EnterName
 	nameType = %FishType

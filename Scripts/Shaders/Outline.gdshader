@@ -2,9 +2,9 @@ shader_type canvas_item;
 render_mode unshaded;
 
 const vec2 OFFSETS[16] = {
-	vec2(-0.71, -0.71), vec2(-1, 0), vec2(-0.71, 0.71), vec2(0, -1), vec2(0, 1), 
+	vec2(-0.71, -0.71), vec2(-1, 0), vec2(-0.71, 0.71), vec2(0, -1), vec2(0, 1),
 	vec2(0.71, -0.71), vec2(1, 0), vec2(0.71, 0.71),
-	vec2(0.92, 0.38), vec2(0.38, 0.92), vec2(-0.92, 0.38), 
+	vec2(0.92, 0.38), vec2(0.38, 0.92), vec2(-0.92, 0.38),
 	vec2(-0.38, 0.92), vec2(0.92, -0.38), vec2(0.38, -0.92), vec2(-0.92, -0.38), vec2(-0.38, -0.92)
 };
 
@@ -24,7 +24,7 @@ void fragment() {
 		vec2 coordinate_offset = SCREEN_UV + size * OFFSETS[i];
 		outline += texture(screen_texture, coordinate_offset).a;
 	}
-	
+
 	// Force outline to 1 or 0
 	outline = sign(outline);
 
@@ -36,6 +36,6 @@ void fragment() {
 	if (c.a > 0.0001) {
 		c.rgb /= c.a;
 	}
-	
+
 	COLOR = mix(c, line_color, outline - c.a);
 }

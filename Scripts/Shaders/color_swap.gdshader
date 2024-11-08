@@ -33,10 +33,10 @@ void fragment() {
 		{
 			red_component.b += 0.5 * red_component.b * (1.0 - localStrength.r);
 			red_component.r -= 0.5 * red_component.r * (1.0 - localStrength.r);
-			
+
 			green_component.b += 0.5 * green_component.b * (1.0 - localStrength.g);
 			green_component.r -= 0.5 * green_component.r * (1.0 - localStrength.g);
-			
+
 			blue_component.b += 0.5 * blue_component.b * (1.0 - localStrength.b);
 			blue_component.r -= 0.5 * blue_component.r * (1.0 - localStrength.b);
 		}

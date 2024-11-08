@@ -1,4 +1,4 @@
-[gd_scene load_steps=202 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=204 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -39,6 +39,7 @@
 [ext_resource type="Resource" uid="uid://di2f7q0wfu6vs" path="res://Resources/Parts/bikinipattern.tres" id="19_2aeos"]
 [ext_resource type="Resource" uid="uid://bnhtcjjstv2k8" path="res://Resources/Fish/Salmon.tres" id="19_e6o20"]
 [ext_resource type="Resource" uid="uid://dvxll7rq7qco4" path="res://Resources/Parts/tutu.tres" id="20_d1xmd"]
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="20_umf6p"]
 [ext_resource type="Resource" uid="uid://2bp3kg1p7fe5" path="res://Resources/Fish/WhaleShark.tres" id="20_ydo2a"]
 [ext_resource type="Resource" uid="uid://cua7wwb2h6xjt" path="res://Resources/Fish/Shark.tres" id="21_htqcw"]
 [ext_resource type="Resource" uid="uid://cod5qxhk3ogxk" path="res://Resources/Parts/earring.tres" id="21_kxf1u"]
@@ -170,6 +171,7 @@
 [ext_resource type="AudioStream" uid="uid://wrx4sivbg2l8" path="res://Assets/Audio/SFX/Materials/glitch_material.ogg" id="116_yl8oa"]
 [ext_resource type="AudioStream" uid="uid://bfy1wc0ffoshe" path="res://Assets/Audio/SFX/Materials/hair_material.ogg" id="117_wvah0"]
 [ext_resource type="AudioStream" uid="uid://dussyy4hmrjhw" path="res://Assets/Audio/SFX/Materials/metal_material.ogg" id="118_apyn2"]
+[ext_resource type="Script" path="res://Scripts/Fishdata.gd" id="119_57fel"]
 [ext_resource type="AudioStream" uid="uid://c2k6288qjo2j5" path="res://Assets/Audio/SFX/Materials/plastic_material.ogg" id="119_d7u8p"]
 [ext_resource type="AudioStream" uid="uid://bjrumujyx33t2" path="res://Assets/Audio/SFX/Materials/rubber_material.ogg" id="120_a3j6v"]
 [ext_resource type="AudioStream" uid="uid://bgmso1bemdmkm" path="res://Assets/Audio/SFX/Materials/shell_material.ogg" id="121_7hc3e"]
@@ -200,19 +202,19 @@ shader = ExtResource("1_0doew")
 shader_parameter/line_thickness = 8.0
 shader_parameter/line_color = Color(0.129412, 0.129412, 0.129412, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oe62a"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fu7jy"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycj3h"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ag2ck"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rnnn"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ag2ck"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycj3h"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lgp1"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fu7jy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oe62a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jp7pg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8lgp1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7iium"]
 resource_local_to_scene = true
@@ -327,8 +329,8 @@ visible = false
 script = ExtResource("5_ah6qd")
 partIns = ExtResource("7_awn31")
 decorButtonIns = ExtResource("8_eernm")
-partDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("15_7r0db"), ExtResource("95_jydkl"), ExtResource("94_sy50j"), ExtResource("92_fyi83"), ExtResource("93_8d670"), ExtResource("87_u5g4a"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("83_mqi3q"), ExtResource("85_myrft"), ExtResource("84_4lvtx"), ExtResource("86_nkv62"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("76_kjmyi"), ExtResource("75_kgk2d"), ExtResource("77_p1qnt"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("78_81h6d"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("74_7fe4i"), ExtResource("82_ytppc"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("89_o4mx3"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("88_qjj60"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("96_dd1mu"), ExtResource("91_4ihta"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("79_lmgo0"), ExtResource("80_dk6br"), ExtResource("81_ow2jj"), ExtResource("82_tu2li")])
-testPartDataList = Array[Resource("res://Scripts/PartData.gd")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
+partDataList = Array[ExtResource("20_umf6p")]([ExtResource("15_7r0db"), ExtResource("95_jydkl"), ExtResource("94_sy50j"), ExtResource("92_fyi83"), ExtResource("93_8d670"), ExtResource("87_u5g4a"), ExtResource("16_5d0bq"), ExtResource("17_32h41"), ExtResource("83_mqi3q"), ExtResource("85_myrft"), ExtResource("84_4lvtx"), ExtResource("86_nkv62"), ExtResource("17_jsg24"), ExtResource("16_jtmys"), ExtResource("47_4svyo"), ExtResource("46_362h0"), ExtResource("58_4yjuv"), ExtResource("59_yfvb3"), ExtResource("20_d1xmd"), ExtResource("16_1tedx"), ExtResource("18_74gv8"), ExtResource("19_2aeos"), ExtResource("15_s1cx2"), ExtResource("76_kjmyi"), ExtResource("75_kgk2d"), ExtResource("77_p1qnt"), ExtResource("21_kxf1u"), ExtResource("22_t75il"), ExtResource("23_pvsiq"), ExtResource("78_81h6d"), ExtResource("27_8q2ii"), ExtResource("53_60jmc"), ExtResource("52_83r24"), ExtResource("28_aps35"), ExtResource("50_3e21i"), ExtResource("29_56opn"), ExtResource("74_7fe4i"), ExtResource("82_ytppc"), ExtResource("51_w5ocs"), ExtResource("31_dwfcs"), ExtResource("30_51bse"), ExtResource("31_o7xot"), ExtResource("34_6ri8v"), ExtResource("35_4jym6"), ExtResource("33_4yh3o"), ExtResource("34_hcst8"), ExtResource("35_usv1q"), ExtResource("36_pcx1q"), ExtResource("57_0egem"), ExtResource("40_ju1vl"), ExtResource("41_08gok"), ExtResource("42_1nlun"), ExtResource("54_x1n26"), ExtResource("43_w5h3p"), ExtResource("44_ycpuy"), ExtResource("89_o4mx3"), ExtResource("45_j3m4x"), ExtResource("48_x4t6b"), ExtResource("88_qjj60"), ExtResource("49_ytxfr"), ExtResource("55_20xe7"), ExtResource("56_048po"), ExtResource("60_lfgmg"), ExtResource("61_ddr6f"), ExtResource("62_6qmmj"), ExtResource("63_icmkg"), ExtResource("64_ry3pm"), ExtResource("96_dd1mu"), ExtResource("91_4ihta"), ExtResource("60_obymy"), ExtResource("61_8twpi"), ExtResource("62_ggtai"), ExtResource("63_xua50"), ExtResource("79_lmgo0"), ExtResource("80_dk6br"), ExtResource("81_ow2jj"), ExtResource("82_tu2li")])
+testPartDataList = Array[ExtResource("20_umf6p")]([ExtResource("9_7h8tb"), ExtResource("10_o1q3g"), ExtResource("11_cruwb"), ExtResource("12_6a04t"), ExtResource("13_6qgkw"), ExtResource("69_su5xo")])
 colorMaterial = ExtResource("12_2sx1l")
 
 [node name="c" type="Control" parent="HUD"]
@@ -358,6 +360,7 @@ offset_right = 1913.0
 offset_bottom = 1019.0
 
 [node name="Scroll" type="ScrollContainer" parent="HUD/c/Panel"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 43.0
 offset_top = 137.0
@@ -382,11 +385,11 @@ offset_right = 234.0
 offset_bottom = 810.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -419,11 +422,11 @@ offset_right = 328.0
 offset_bottom = 810.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -456,11 +459,11 @@ offset_right = 417.0
 offset_bottom = 810.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -505,17 +508,12 @@ offset_top = 43.0
 offset_right = 543.0
 offset_bottom = 132.0
 mouse_default_cursor_shape = 2
-tab_count = 5
 tab_alignment = 1
-tab_0/title = ""
+tab_count = 5
 tab_0/icon = ExtResource("66_y13vy")
-tab_1/title = ""
 tab_1/icon = ExtResource("66_yj4ta")
-tab_2/title = ""
 tab_2/icon = ExtResource("67_jb2wy")
-tab_3/title = ""
 tab_3/icon = ExtResource("68_oc0b2")
-tab_4/title = ""
 tab_4/icon = ExtResource("69_a3glx")
 script = ExtResource("80_evdmd")
 
@@ -541,13 +539,13 @@ offset_left = -124.0
 offset_top = 51.0
 offset_right = 526.0
 offset_bottom = 127.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_placeholder_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 15
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxEmpty_8lgp1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jp7pg")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8lgp1")
 placeholder_text = "enter name..."
 alignment = 1
 max_length = 15
@@ -636,7 +634,7 @@ texture = ExtResource("50_vwc7o")
 layer = 2
 visible = false
 script = ExtResource("17_ab2uv")
-fishDataList = Array[Resource("res://Scripts/Fishdata.gd")]([ExtResource("18_bd57s"), ExtResource("19_e6o20"), ExtResource("20_ydo2a"), ExtResource("21_htqcw"), ExtResource("22_0o110"), ExtResource("26_xitak")])
+fishDataList = Array[ExtResource("119_57fel")]([ExtResource("18_bd57s"), ExtResource("19_e6o20"), ExtResource("20_ydo2a"), ExtResource("21_htqcw"), ExtResource("22_0o110"), ExtResource("26_xitak")])
 
 [node name="c" type="Control" parent="FishPicker"]
 layout_mode = 3
@@ -952,10 +950,10 @@ wobbleDegrees = 1.5
 
 [node name="AccessibilitySettings" type="Label" parent="Settings/c/Panel"]
 layout_mode = 0
-offset_left = 598.0
-offset_top = 49.0
-offset_right = 883.0
-offset_bottom = 91.0
+offset_left = 640.0
+offset_top = 43.0
+offset_right = 926.0
+offset_bottom = 85.0
 theme_override_font_sizes/font_size = 30
 text = "Accessibility Settings"
 horizontal_alignment = 1
@@ -998,11 +996,11 @@ offset_right = 806.0
 offset_bottom = 164.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 0, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -1044,11 +1042,11 @@ offset_right = 806.0
 offset_bottom = 235.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 0, 0, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -1090,6 +1088,29 @@ offset_bottom = 804.0
 text = "Back"
 script = ExtResource("6_j1bsi")
 backButton = true
+
+[node name="DisplaySettings" type="Label" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 685.0
+offset_top = 391.0
+offset_right = 906.0
+offset_bottom = 433.0
+theme_override_font_sizes/font_size = 30
+text = "Display Settings"
+horizontal_alignment = 1
+
+[node name="FullScreenButton" type="CheckButton" parent="Settings/c/Panel"]
+layout_mode = 0
+offset_left = 572.0
+offset_top = 446.0
+offset_right = 993.0
+offset_bottom = 492.0
+mouse_default_cursor_shape = 2
+button_pressed = true
+text = "Fullscreen"
+alignment = 1
+script = ExtResource("6_j1bsi")
+wobbleDegrees = 1.5
 
 [node name="CogMenu" type="CanvasLayer" parent="."]
 layer = 12
@@ -1490,11 +1511,11 @@ offset_right = 145.0
 offset_bottom = 474.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -1526,11 +1547,11 @@ offset_right = 239.0
 offset_bottom = 474.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -1562,11 +1583,11 @@ offset_right = 328.0
 offset_bottom = 474.0
 tooltip_text = "Change colour"
 mouse_default_cursor_shape = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ag2ck")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7rnnn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ycj3h")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fu7jy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oe62a")
 color = Color(1, 1, 1, 1)
 edit_alpha = false
 script = ExtResource("74_sltjo")
@@ -1823,6 +1844,8 @@ scale_amount_min = 0.3
 scale_amount_max = 0.6
 scale_amount_curve = SubResource("Curve_oben7")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/CreditsButton" to="MainMenu" method="CreditsButton"]
 [connection signal="pressed" from="MainMenu/C/Group/OptionsButton" to="MainMenu" method="SettingsButton"]
@@ -1857,6 +1880,7 @@ scale_amount_curve = SubResource("Curve_oben7")
 [connection signal="color_changed" from="Settings/c/Panel/SelectColour" to="Settings" method="ChangeSelectColour"]
 [connection signal="color_changed" from="Settings/c/Panel/DangerColour" to="Settings" method="ChangeDangerColour"]
 [connection signal="pressed" from="Settings/c/Panel/BackButton" to="Settings" method="BackButton"]
+[connection signal="toggled" from="Settings/c/Panel/FullScreenButton" to="Settings" method="ToggleFullscreen"]
 [connection signal="pressed" from="CogMenu/c/Panel/ResumeButton" to="CogMenu" method="ResumeButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/SettingsButton" to="CogMenu" method="SettingsButton"]
 [connection signal="pressed" from="CogMenu/c/Panel/MenuButton" to="CogMenu" method="MenuButton"]

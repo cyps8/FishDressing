@@ -43,6 +43,7 @@ func Pick():
 	picked = true
 	Game.ins.HideFishPicker()
 	Game.ins.ShowHUD()
+	Game.ins.SetDRPFish()
 
 func SwapFish(direction: int):
 	if picked:

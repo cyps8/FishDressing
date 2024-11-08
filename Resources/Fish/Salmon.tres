@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("1_50oir")
 name = "Salmon"
+systemName = "salmon"
 texture = ExtResource("2_vm885")

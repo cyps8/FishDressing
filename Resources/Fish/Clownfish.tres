@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("1_kar3t")
 name = "Clownfish"
+systemName = "clownfish"
 texture = ExtResource("2_hkx0t")

@@ -6,4 +6,5 @@
 [resource]
 script = ExtResource("1_bmnpi")
 name = "Shark"
+systemName = "shark"
 texture = ExtResource("2_hbehf")
