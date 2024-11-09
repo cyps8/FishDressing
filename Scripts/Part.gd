@@ -3,6 +3,8 @@ extends TextureButton
 
 class_name Part
 
+var id: int = 0
+
 var selectOffset: Vector2 = Vector2(0, 0)
 var currentScale: float = 1.0
 var currentRotation: float = 0.0
@@ -33,6 +35,11 @@ var fakeMousePos: Vector2 = Vector2.ZERO
 
 var isGrabbed: bool = true
 var animPos: Vector2 = Vector2.ZERO
+
+var justCreated: bool = false
+
+func SetId(setId: int):
+	id = setId
 
 func SetTexture(tex: Texture2D):
 	texture_normal = tex
@@ -169,7 +176,9 @@ func IsInSafeZone(fishSprite: Sprite2D) -> bool:
 		return true
 	return false
 
-func SpawnAnimation():
+func SpawnAnimation(create: bool = false):
+	if create:
+		justCreated = true
 	animPos = position
 	if spawnTween && spawnTween.is_running():
 		spawnTween.kill()
@@ -184,7 +193,10 @@ func SpawnAnimation():
 func ResetMoveValues(fake: bool = false):
 	if spawnTween && spawnTween.is_running():
 		scale = Vector2(defaultScale, defaultScale)
-		position = animPos
+		if !justCreated:
+			position = animPos
+		else:
+			SetDanger(false)
 		spawnTween.kill()
 	if fake:
 		SetFakeMouse()
@@ -193,6 +205,7 @@ func ResetMoveValues(fake: bool = false):
 		selectOffset = get_viewport().get_mouse_position() - position
 	currentScale = 1.0
 	currentRotation = 0.0
+	justCreated = false
 
 func FlipH():
 	flip_h = !flip_h
@@ -238,9 +251,7 @@ func Delete():
 	deleteTween.parallel()
 	deleteTween.tween_property(self, "rotation", rotation + deg_to_rad(360), 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	deleteTween.tween_callback(get_parent().remove_child.bind(self))
-	var grave = func(): Game.ins.hud.partsGraveyard.append(self)
-	deleteTween.tween_callback(grave)
-
+	
 func UndoWhileDeleting() -> bool:
 	pivot_offset = Vector2(0, 0)
 	deleted = false

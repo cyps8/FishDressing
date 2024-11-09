@@ -57,12 +57,8 @@ func _process(_delta):
 		globalTools.get_node("DeleteAll").disabled = false
 		globalTools.get_node("SelectAll").disabled = false
 
-	if Game.ins.hud.undoRedoActive:
-		globalTools.get_node("Undo").disabled = !Game.ins.hud.actions.size() > 0
-		globalTools.get_node("Redo").disabled = !Game.ins.hud.redoActions.size() > 0
-	else:
-		globalTools.get_node("Undo").disabled = true
-		globalTools.get_node("Redo").disabled = true
+	globalTools.get_node("Undo").disabled = !Game.ins.hud.undoStates.size() > 0
+	globalTools.get_node("Redo").disabled = !Game.ins.hud.redoStates.size() > 0
 
 	if scalingDown:
 		Game.ins.hud.ChangeScale(0.98)

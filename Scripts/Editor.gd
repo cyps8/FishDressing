@@ -81,13 +81,10 @@ func EditorOpened():
 	colorMaterial.set_shader_parameter("green_color", pickedColorG)
 	colorMaterial.set_shader_parameter("blue_color", pickedColorB)
 
-	actions.clear()
-	redoActions.clear()
+	currentState = SaveState.new()
 
-	for part in partsGraveyard:
-		if part:
-			part.queue_free()
-	partsGraveyard.clear()
+	undoStates.clear()
+	redoStates.clear()
 
 func _ready():
 	overrideButton = %OverrideDefault
@@ -125,9 +122,28 @@ func InText(value: bool):
 
 var creatingNew: bool = false
 
+func InstaCreateNewDecor(info: DecorInfo):
+	var newDecor = partIns.instantiate() as Part
+	newDecor.id = info.id
+	newDecor.partData = partDataList[info.id]
+	MouseGrabbed.connect(newDecor.MouseGrabbed)
+	newDecor.SetTexture(partDataList[info.id].texture)
+	newDecor.GenerateClickMask()
+	newDecor.SetColors(info.colourR, info.colourG, info.colourB)
+	newDecor.position = info.position
+	newDecor.rotation = info.rotation
+	newDecor.scale = Vector2(info.scale, info.scale)
+	newDecor.flip_h = info.flippedH
+	newDecor.flip_v = info.flippedV
+	fishRef.add_child(newDecor)
+	if info.belowFish:
+		fishRef.move_child(newDecor, fishRef.get_child_count() - 1)
+	newDecor.ResetMoveValues(true)
+
 func CreateNewDecor(id: int = 0):
 	creatingNew = true
 	var newDecor = partIns.instantiate() as Part
+	newDecor.id = id
 	newDecor.partData = partDataList[id]
 	MouseGrabbed.connect(newDecor.MouseGrabbed)
 	newDecor.SetTexture(partDataList[id].texture)
@@ -143,7 +159,7 @@ func CreateNewDecor(id: int = 0):
 	ClearControlGroup()
 	newDecor.SetControlGroup(true)
 	SetMouseGrabbed(true)
-	newDecor.SpawnAnimation()
+	newDecor.SpawnAnimation(true)
 	AudioPlayer.ins.PlaySound(0)
 
 func _enter_tree():
@@ -164,7 +180,7 @@ func UpdateTags():
 				decor.visible = true
 		return
 	else:
-		var tagToCompare: PartData.Tag
+		var tagToCompare: PartData.Tag = PartData.Tag.HEAD
 		match currentCategory:
 			1:
 				tagToCompare = PartData.Tag.HEAD
@@ -200,11 +216,9 @@ var prevDelIndexes: Array[int] = []
 var prevDelFlipHs: Array[bool] = []
 var prevDelFlipVs: Array[bool] = []
 
-var actions: Array[Array] = []
-
-var redoActions: Array[Array] = []
-
-var partsGraveyard: Array[Part] = []
+var currentState: SaveState
+var undoStates: Array[SaveState] = []
+var redoStates: Array[SaveState] = []
 
 var deletingParts: Array[Part] = []
 
@@ -241,40 +255,51 @@ func SetMouseGrabbed(value: bool):
 		else:
 			MouseAction()
 
-var undoRedoActive: bool = false
-
-func ActivateUndoRedo(val: bool):
-	undoRedoActive = val
-
 func Undo():
-	if !undoRedoActive:
-		return
-	var undoAction: Array[Action] = actions.pop_front()
-	redoActions.insert(0, undoAction)
-	for action in undoAction:
-		action.Undo()
+	var undoState: SaveState = undoStates.pop_front()
+	redoStates.insert(0, currentState)
+	LoadState(undoState)
+
 	ClearControlGroup()
-	LogAction("Undo: ", undoAction)
+	Log("Undo")
 
 func Redo():
-	if !undoRedoActive:
-		return
-	var redoAction = redoActions.pop_front()
-	for action in redoAction:
-		action.Redo()
-	InsertAction(redoAction)
+	var redoState: SaveState = redoStates.pop_front()
+	InsertUndoState(currentState)
+	LoadState(redoState)
+	
 	ClearControlGroup()
-	LogAction("Redo: ", redoAction)
+	Log("Redo")
 
 func AddAction(newAction: Array[Action]):
-	InsertAction(newAction)
+	InsertUndoState(currentState)
+	SaveCurrentState()
 	LogAction("Action: ", newAction)
-	CheckGraveyard()
 
-func InsertAction(newAction: Array[Action]):
-	actions.insert(0, newAction)
-	if actions.size() > 20:
-		actions.pop_back()
+func LoadState(state: SaveState):
+	DeleteAll()
+	for part in state.parts:
+		InstaCreateNewDecor(part)
+	currentState = state
+
+func SaveCurrentState():
+	var bodyPos: int = fishRef.get_node("FishBody").get_index()
+
+	currentState = SaveState.new()
+
+	for part in fishRef.get_children():
+		if part.get_index() == bodyPos || part.deleted:
+			continue
+		var newInfo = DecorInfo.new(part.id, part.position, part.rotation, part.scale.x, part.flip_h, part.flip_v, part.currentRedColor, part.currentGreenColor, part.currentBlueColor, (part.get_index() < bodyPos))
+		currentState.parts.append(newInfo)
+
+func InsertUndoState(state: SaveState):
+	undoStates.insert(0, state)
+	if undoStates.size() > 50:
+		undoStates.pop_back()
+
+func Log(message: String):
+	Game.ins.toolbar.AddActionLabel(message)
 
 func LogAction(message: String, actionsToLog: Array[Action]):
 	var actionNames: Array[String] = []
@@ -283,12 +308,12 @@ func LogAction(message: String, actionsToLog: Array[Action]):
 	message += ", ".join(actionNames)
 	Game.ins.toolbar.AddActionLabel(message)
 
-func CreateAction(actMame: String):
-	redoActions.clear()
+func CreateAction(actName: String):
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var createAction: ActionCreate = ActionCreate.new()
 	createAction.Create(currentPartGroup)
-	createAction.name = actMame
+	createAction.name = actName
 	currentAction.append(createAction)
 
 	AddAction(currentAction)
@@ -296,7 +321,7 @@ func CreateAction(actMame: String):
 func MouseAction():
 	if currentPartGroup.size() == 0 && deletingParts.size() == 0:
 		return
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	if currentPartGroup.size() > 0:
 		var moveAction: ActionMove = ActionMove.new()
@@ -337,7 +362,7 @@ func MouseAction():
 	AddAction(currentAction)
 
 func DeleteAction():
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var deleteAction: ActionDelete = ActionDelete.new()
 	deleteAction.Create(currentPartGroup, prevPositions, prevIndexes, prevRotations, prevScales, prevFlipHs, prevFlipVs)
@@ -349,7 +374,7 @@ var keyRotating: bool = false
 
 func RotateAction():
 	if creatingNew: return
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var positionAction: ActionMove = ActionMove.new()
 	positionAction.Create(currentPartGroup, prevPositions)
@@ -365,7 +390,7 @@ var keyScaling: bool = false
 
 func ScaleAction():
 	if creatingNew: return
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var positionAction: ActionMove = ActionMove.new()
 	positionAction.Create(currentPartGroup, prevPositions)
@@ -380,7 +405,7 @@ func ScaleAction():
 func LayerAction():
 	if mouseGrabbed || !LayerMismatch():
 		return
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var layerAction: ActionLayer = ActionLayer.new()
 	layerAction.Create(currentPartGroup, prevIndexes)
@@ -390,7 +415,7 @@ func LayerAction():
 
 func FlipHAction():
 	if creatingNew || mouseGrabbed: return
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var flipHAction: ActionFlipH = ActionFlipH.new()
 	flipHAction.Create(currentPartGroup, prevFlipHs)
@@ -400,7 +425,7 @@ func FlipHAction():
 
 func FlipVAction():
 	if creatingNew || mouseGrabbed: return
-	redoActions.clear()
+	redoStates.clear()
 	var currentAction: Array[Action] = []
 	var flipVAction: ActionFlipV = ActionFlipV.new()
 	flipVAction.Create(currentPartGroup, prevFlipVs)
@@ -412,26 +437,6 @@ func LayerMismatch() -> bool:
 	for i in currentPartGroup.size():
 		if currentPartGroup[i].get_index() != prevIndexes[i]:
 			return true
-	return false
-
-func CheckGraveyard():
-	for part in partsGraveyard:
-		if !ExistsInActions(part):
-			part.queue_free()
-			partsGraveyard.erase(part)
-			print("Deleted a graveyard thing")
-		
-func ExistsInActions(part: Part) -> bool:
-	for action in actions:
-			for act in action:
-				for partToCheck in act.parts:
-					if part == partToCheck:
-						return true
-	for action in redoActions:
-			for act in action:
-				for partToCheck in act.parts:
-					if part == partToCheck:
-						return true
 	return false
 
 func MoveToDelete(part: Part):
@@ -486,9 +491,9 @@ func _process(_delta):
 						AudioPlayer.ins.PlayMatSound(soundId, AudioPlayer.SoundType.SFX, 1.3, randf() * 0.4 + 0.8)
 						soundsPlayed.append(soundId)
 		SetMouseGrabbed(false)
-	if Input.is_action_just_pressed("Undo") && actions.size() > 0 && !mouseGrabbed:
+	if Input.is_action_just_pressed("Undo") && undoStates.size() > 0 && !mouseGrabbed:
 		Undo()
-	if Input.is_action_just_pressed("Redo") && redoActions.size() > 0 && !mouseGrabbed:
+	if Input.is_action_just_pressed("Redo") && redoStates.size() > 0 && !mouseGrabbed:
 		Redo()
 	if Input.is_action_just_pressed("RotateLeft") && Input.is_action_pressed("Control") && !mouseGrabbed:
 		SelectAll()
@@ -666,6 +671,7 @@ func Duplicate(selectedPart: Part = null):
 	SortCurrentPartGroupLesser()
 	for part in currentPartGroup:
 		var dupedPart: Part = part.duplicate()
+		dupedPart.id = part.id
 		dupedPart.partData = part.partData
 		dupedPart.UpdateDuplicateRefs(part)
 		fishRef.add_child(dupedPart)
@@ -734,8 +740,8 @@ func SetCanGoBehind(val: bool):
 	else:
 		layerLimit = 1
 		if fishRef.get_node("FishBody").get_index() != 0:
-			actions.clear()
-			redoActions.clear()
+			undoStates.clear()
+			redoStates.clear()
 		fishRef.move_child(fishRef.get_node("FishBody"), 0)
 		
 
