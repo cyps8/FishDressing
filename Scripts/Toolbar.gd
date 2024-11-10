@@ -23,6 +23,8 @@ var refPart: Part
 var sliderScaling: bool = false
 var sliderRotating: bool = false
 
+var colChanged: bool = false
+
 @export var actionLabelIns: PackedScene
 
 var actions: VBoxContainer
@@ -68,6 +70,10 @@ func _process(_delta):
 		Game.ins.hud.RotatePart(-0.05)
 	if rotatingRight:
 		Game.ins.hud.RotatePart(0.05)
+
+	if colChanged && Input.is_action_just_released("JustLeft"):
+		colChanged = false
+		Game.ins.hud.ColorChangeAction()
 
 func UpdateValues():
 	refPart = Game.ins.hud.currentPartGroup[Game.ins.hud.currentPartGroup.size() - 1]
@@ -199,6 +205,7 @@ var picking: bool = false
 func ColorPickChanged(_newColor: Color, _val: int = 0):
 	if picking:
 		Game.ins.hud.ChangeSelectedColourChannel(_newColor, _val)
+		colChanged = true
 
 func PickerState(value: bool):
 	picking = value

@@ -25,6 +25,8 @@ var cursorTeeth: bool = false
 
 var startTime: int
 
+@export var demo: bool
+
 @export var cursors: Array[Texture2D]
 
 @export var music: Array[AudioStream]
@@ -74,6 +76,9 @@ func SetDRPFish():
 
 func _ready():
 	SetupDRP()
+
+	%Demo.visible = demo
+
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW,Vector2(5, 5))
 	Input.set_custom_mouse_cursor(cursors[1], Input.CURSOR_POINTING_HAND, Vector2(5, 5))
 	Input.set_custom_mouse_cursor(cursors[2], Input.CURSOR_IBEAM, Vector2(15, 55))

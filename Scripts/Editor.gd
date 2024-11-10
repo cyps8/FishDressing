@@ -122,7 +122,7 @@ func InText(value: bool):
 
 var creatingNew: bool = false
 
-func InstaCreateNewDecor(info: DecorInfo):
+func InstaCreateNewDecor(info: DecorInfo, belowLayer: int = 0):
 	var newDecor = partIns.instantiate() as Part
 	newDecor.id = info.id
 	newDecor.partData = partDataList[info.id]
@@ -137,7 +137,7 @@ func InstaCreateNewDecor(info: DecorInfo):
 	newDecor.flip_v = info.flippedV
 	fishRef.add_child(newDecor)
 	if info.belowFish:
-		fishRef.move_child(newDecor, fishRef.get_child_count() - 1)
+		fishRef.move_child(newDecor, belowLayer)
 	newDecor.ResetMoveValues(true)
 
 func CreateNewDecor(id: int = 0):
@@ -278,8 +278,10 @@ func AddAction(newAction: Array[Action]):
 
 func LoadState(state: SaveState):
 	DeleteAll()
+	var i: int = 0
 	for part in state.parts:
-		InstaCreateNewDecor(part)
+		InstaCreateNewDecor(part, i)
+		i += 1
 	currentState = state
 
 func SaveCurrentState():
@@ -431,6 +433,14 @@ func FlipVAction():
 	flipVAction.Create(currentPartGroup, prevFlipVs)
 	flipVAction.name = "FlipV"
 	currentAction.append(flipVAction)
+	AddAction(currentAction)
+
+func ColorChangeAction():
+	redoStates.clear()
+	var currentAction: Array[Action] = []
+	var action: Action = Action.new()
+	action.name = "Color"
+	currentAction.append(action)
 	AddAction(currentAction)
 
 func LayerMismatch() -> bool:
