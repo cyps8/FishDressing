@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://i7432nyytfd3"]
+
+[ext_resource type="Script" path="res://Scripts/SaveButton.gd" id="1_c2cxk"]
+[ext_resource type="Theme" uid="uid://ns1ce5pc8bkk" path="res://Resources/Themes/MainTheme.tres" id="1_gmctd"]
+[ext_resource type="Texture2D" uid="uid://48igagdlhxqr" path="res://Assets/Art/Sprites/Fish/clownfish.png" id="1_mqjva"]
+
+[node name="Save" type="Button"]
+custom_minimum_size = Vector2(200, 300)
+theme = ExtResource("1_gmctd")
+toggle_mode = true
+script = ExtResource("1_c2cxk")
+
+[node name="Fish" type="Sprite2D" parent="."]
+position = Vector2(101, 148)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_mqjva")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 208.0
+offset_right = 193.0
+offset_bottom = 272.0
+text = "EXAMPLE"
+horizontal_alignment = 1
+vertical_alignment = 1

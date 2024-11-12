@@ -9,9 +9,7 @@ var holdL: bool = false
 var holdCD: float = 0
 
 func _ready():
-	if !OS.has_feature("editor"):
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index(busName), linear_to_db(0.8))
-	value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(busName)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(busName), linear_to_db(0.8))
 	value_changed.connect(Callable(_OnChanged))
 	mouse_entered.connect(Callable(_Focused))
 	mouse_exited.connect(Callable(_Unfocused))

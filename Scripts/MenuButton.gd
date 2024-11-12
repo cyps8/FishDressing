@@ -6,11 +6,12 @@ var wobbleTween: Tween
 @export var silentButton: bool = false
 @export var disableForWeb: bool = false
 @export var backButton: bool = false
+@export var disableForDemo: bool = false
 
 @export var wobbleDegrees: float = 3.0
 
 func _ready():
-	if OS.get_name() == "Web" && disableForWeb:
+	if (OS.get_name() == "Web" && disableForWeb) || (Game.ins.demo && disableForDemo):
 		disabled = true
 
 	mouse_entered.connect(Callable(_Focused))

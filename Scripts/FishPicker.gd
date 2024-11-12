@@ -1,7 +1,5 @@
 extends CanvasLayer
 
-@export var fishDataList: Array[FishData]
-
 var fishRef: Sprite2D
 var fishName: Label
 
@@ -57,8 +55,8 @@ func SwapFish(direction: int):
 
 func OverflowInt(num: int) -> int:
 	if num < 0:
-		num = fishDataList.size() - 1
-	if num >= fishDataList.size():
+		num = Game.ins.fishDataList.size() - 1
+	if num >= Game.ins.fishDataList.size():
 		num = 0
 	return num
 
@@ -66,14 +64,14 @@ func SetFish(value: int):
 	if picked:
 		return
 	if value < 0:
-		value = randi_range(0, fishDataList.size() - 1)
+		value = randi_range(0, Game.ins.fishDataList.size() - 1)
 	currentFish = value
 	Fish()
 
 func Fish():
-	Game.ins.selectedFish = fishDataList[currentFish]
-	fishRef.texture = fishDataList[currentFish].texture
-	fishName.text = fishDataList[currentFish].name
+	Game.ins.selectedFish = Game.ins.fishDataList[currentFish]
+	fishRef.texture = Game.ins.fishDataList[currentFish].texture
+	fishName.text = Game.ins.fishDataList[currentFish].name
 	if swapFishTween:
 		swapFishTween.kill()
 	swapFishTween = create_tween()
@@ -83,8 +81,8 @@ func Fish():
 	swapFishTween.parallel()
 	swapFishTween.tween_property(fishName, "scale", Vector2(1, 1), 0.15).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 
-	leftShadow.texture_normal = fishDataList[OverflowInt(currentFish - 1)].texture
-	rightShadow.texture_normal = fishDataList[OverflowInt(currentFish + 1)].texture
+	leftShadow.texture_normal = Game.ins.fishDataList[OverflowInt(currentFish - 1)].texture
+	rightShadow.texture_normal = Game.ins.fishDataList[OverflowInt(currentFish + 1)].texture
 
 func MoveShadows(dir: float = 1):
 	leftShadow.position = leftDefPos

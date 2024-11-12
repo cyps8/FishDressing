@@ -13,6 +13,7 @@ var settings: CanvasLayer
 var cogMenu: CanvasLayer
 var toolbar: CanvasLayer
 var credits: CanvasLayer
+var saveSystem: CanvasLayer
 var musicPlayer: AudioStreamPlayer
 
 var selectedFish: FishData
@@ -21,9 +22,10 @@ var cameraFlash: ColorRect
 
 var particles: CPUParticles2D
 
+var calmerMusic: bool = false
 var cursorTeeth: bool = false
 
-var startTime: int
+var editorOpen: bool = false
 
 @export var demo: bool
 
@@ -31,10 +33,19 @@ var startTime: int
 
 @export var music: Array[AudioStream]
 
+@export var drpIns: PackedScene
+
+@export var fishDataList: Array[FishData]
+
+var drpRef: Node
+
 func _init():
 	ins = self
 
 func CalmerMusic(val: bool):
+	calmerMusic = val
+	if musicPlayer == null:
+		musicPlayer = $MusicPlayer
 	var pos: float = musicPlayer.get_playback_position()
 	if val:
 		musicPlayer.stream = music[1]
@@ -46,37 +57,33 @@ func CursorTeeth(val: bool):
 	cursorTeeth = val
 	if cursorTeeth:
 		Input.set_custom_mouse_cursor(cursors[3], Input.CURSOR_DRAG, Vector2(5, 5))
+		print("Cursor Teeth")
 	else:
 		Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_DRAG, Vector2(5, 5))
 
-func SetupDRP():
-	DiscordRPC.app_id = 1303839403910762567 # Application ID
-	DiscordRPC.details = "A fish dress up game!"
-	DiscordRPC.state = "In the ocean"
-	DiscordRPC.large_image = "clownfish" # Image key from "Art Assets"
-	DiscordRPC.large_image_text = "Clownfish"
+func is_discord_rpc_supported() -> bool:
+	return OS.get_name() != "Web" and GDExtensionManager.is_extension_loaded("res://addons/discord-rpc-gd/bin/discord-rpc-gd.gdextension")
 
-	startTime = int(Time.get_unix_time_from_system())
-	DiscordRPC.start_timestamp = startTime
-
-	DiscordRPC.refresh()
-
+func TryInitDRP():
+	if !is_discord_rpc_supported():
+		return
+	var drp = drpIns.instantiate()
+	add_child(drp)
+	drpRef = drp
+	drpRef.SetUp()
+	
 func SetDRPMainMenu():
-	DiscordRPC.start_timestamp = startTime
-	DiscordRPC.state = "In the ocean"
-
-	DiscordRPC.refresh()
+	if drpRef == null:
+		return
+	drpRef.Update("In the Ocean")
 
 func SetDRPFish():
-	DiscordRPC.start_timestamp = startTime
-	DiscordRPC.state = "Dressing a " + selectedFish.name
-	DiscordRPC.large_image = selectedFish.systemName
-
-	DiscordRPC.refresh()
+	if drpRef == null:
+		return
+	drpRef.Update("Dressing a " + selectedFish.name, selectedFish.systemName)
 
 func _ready():
-	SetupDRP()
-
+	TryInitDRP()
 	%Demo.visible = demo
 
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW,Vector2(5, 5))
@@ -118,6 +125,10 @@ func _ready():
 	credits.visible = true
 	remove_child(credits)
 
+	saveSystem = $SaveSystem
+	saveSystem.visible = true
+	remove_child(saveSystem)
+
 	cameraFlash = $Camera/Flash
 	$Camera.visible = true
 
@@ -140,6 +151,29 @@ func ReturnToMenu():
 	delay.tween_callback(ShowMenu)
 	SetDRPMainMenu()
 
+func LoadSave():
+	if mainMenu.is_inside_tree():
+		HideMenu()
+	if fish.is_inside_tree():
+		HideFish()
+	if fishPicker.is_inside_tree():
+		HideFishPicker()
+	if hud.is_inside_tree():
+		hud.ResetEditor()
+		HideHUD()
+	if cogMenu.is_inside_tree():
+		HideCogMenu()
+	var delay: Tween = create_tween()
+	delay.tween_interval(1.1)
+	delay.tween_callback(ActuallyLoad)
+
+func ActuallyLoad():
+	ShowFish()
+	SaveMan.ins.SwapFish()
+	ShowHUD()
+	SaveMan.ins.LoadFish()
+	SetDRPFish()
+
 func HideMenu():
 	mainMenu.SetActive(false)
 	var hideMenuTween: Tween = create_tween()
@@ -155,6 +189,7 @@ func ShowMenu():
 
 func ShowHUD():
 	Bubbles()
+	editorOpen = true
 	add_child(hud)
 	hud.EditorOpened()
 	hud.offset = Vector2(0, 900)
@@ -167,6 +202,7 @@ func ShowHUD():
 	showToolbarTween.tween_property(toolbar, "offset:x", 0, 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 func HideHUD():
+	editorOpen = false
 	var hideHUDTween: Tween = create_tween()
 	hideHUDTween.tween_property(hud, "offset:y", 900, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	hideHUDTween.tween_callback(remove_child.bind(hud))
@@ -217,6 +253,7 @@ func HideSettings():
 	var hideSettingsTween: Tween = create_tween()
 	hideSettingsTween.tween_property(settings, "offset:y", -900, 0.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	hideSettingsTween.tween_callback(remove_child.bind(settings))
+	settings.SaveSettings()
 
 func ShowCogMenu():
 	add_child(cogMenu)
@@ -242,6 +279,19 @@ func HideCredits():
 	var hideCreditsTween: Tween = create_tween()
 	hideCreditsTween.tween_property(credits, "offset:y", -900, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
 	hideCreditsTween.tween_callback(remove_child.bind(credits))
+
+func ShowSaveSystem():
+	add_child(saveSystem)
+	saveSystem.Update()
+	saveSystem.offset = Vector2(0, -900)
+	var showSaveSystemTween: Tween = create_tween()
+	showSaveSystemTween.tween_property(saveSystem, "offset:y", 0, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	showSaveSystemTween.tween_callback(saveSystem.SetActive.bind(true))
+
+func HideSaveSystem():
+	var hideSaveSystemTween: Tween = create_tween()
+	hideSaveSystemTween.tween_property(saveSystem, "offset:y", -900, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	hideSaveSystemTween.tween_callback(remove_child.bind(saveSystem))
 
 func Bubbles():
 	if particles.emitting:

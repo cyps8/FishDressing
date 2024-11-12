@@ -4,12 +4,13 @@ class_name ActionCreate
 
 var indexes: Array[int]
 
-func Create(newParts: Array[Part]):
-    for part in newParts:
-        parts.append(part)
-    parts.sort_custom(func (a, b): return a.get_index() < b.get_index())
-    for part in parts:
-        indexes.append(part.get_index())
+func Create(_newParts: Array[Part]):
+    pass
+    # for part in newParts:
+    #     parts.append(part)
+    # parts.sort_custom(func (a, b): return a.get_index() < b.get_index())
+    # for part in parts:
+    #     indexes.append(part.get_index())
 
 func Undo():
     for part in parts:

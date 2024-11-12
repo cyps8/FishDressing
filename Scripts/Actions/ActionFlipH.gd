@@ -4,11 +4,12 @@ class_name ActionFlipH
 
 var original: Array[bool]
 
-func Create(newParts: Array[Part], startFlip: Array[bool]):
-	for part in newParts:
-		parts.append(part)
-	for i in parts.size():
-		original.append(startFlip[i])
+func Create(_newParts: Array[Part], _startFlip: Array[bool]):
+	pass
+	# for part in newParts:
+	# 	parts.append(part)
+	# for i in parts.size():
+	# 	original.append(startFlip[i])
 
 func Undo():
 	for i in parts.size():

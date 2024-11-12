@@ -11,6 +11,11 @@ func StartButton():
 	delay.tween_callback(Game.ins.ShowFish)
 	delay.tween_callback(Game.ins.ShowFishPicker)
 
+func LoadButton():
+	if !menuActive:
+		return
+	Game.ins.ShowSaveSystem()
+
 func CreditsButton():
 	if !menuActive:
 		return

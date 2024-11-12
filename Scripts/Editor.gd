@@ -36,6 +36,7 @@ var overrideColours: bool = false
 var overrideButton: CheckButton
 
 var showTestParts: bool = false
+var canGoBehind: bool = false
 var layerLimit: int = 1
 
 var currentCategory: int = 0
@@ -85,6 +86,8 @@ func EditorOpened():
 
 	undoStates.clear()
 	redoStates.clear()
+
+	Game.ins.CursorTeeth(Game.ins.cursorTeeth)
 
 func _ready():
 	overrideButton = %OverrideDefault
@@ -514,9 +517,9 @@ func _process(_delta):
 		if Input.is_action_just_pressed("RotateRight") && Input.is_action_pressed("Control") && !mouseGrabbed:
 			Duplicate()
 		if Input.is_action_just_pressed("Delete")  && !Input.is_action_pressed("Control"):
+			DeleteAllSelected()
 			if mouseGrabbed && !creatingNew:
 				DeleteAction()
-			DeleteAllSelected()
 			SetMouseGrabbed(false)
 			return
 		if Input.is_action_just_pressed("Flip") && !Input.is_action_pressed("Control"):
@@ -745,6 +748,7 @@ func ResetIndexes():
 		prevIndexes.append(part.get_index())
 
 func SetCanGoBehind(val: bool):
+	canGoBehind = val
 	if val:
 		layerLimit = 0
 	else:
@@ -770,9 +774,10 @@ func ColorPickChanged(newColor: Color, val: int = 1):
 func DeleteAllSelected():
 	if !mouseGrabbed:
 		ResetForDelete()
-		DeleteAction()
 	while currentPartGroup.size() > 0:
 		currentPartGroup[0].Delete()
+	if !mouseGrabbed:
+		DeleteAction()
 	AudioPlayer.ins.PlaySound(5)
 
 func DeleteAll(insta: bool = true):
@@ -780,7 +785,6 @@ func DeleteAll(insta: bool = true):
 	currentPartGroup = GetAll(!insta)
 	if !insta:
 		ResetForDelete()
-		DeleteAction()
 	for part in currentPartGroup:
 		toDelete.append(part)
 	while toDelete.size() > 0:
@@ -790,6 +794,7 @@ func DeleteAll(insta: bool = true):
 			toDelete[0].Delete()
 		toDelete.remove_at(0)
 	if !insta:
+		DeleteAction()
 		AudioPlayer.ins.PlaySound(5)
 	else:
 		currentPartGroup.clear()
