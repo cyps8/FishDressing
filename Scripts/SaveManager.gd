@@ -7,6 +7,7 @@ static var ins: SaveMan
 var saves: Array[Save]
 
 var activeSave: Save
+var backupToLoad: Save
 
 var iconCap: SubViewport
 var iconFish: Fish
@@ -18,7 +19,8 @@ func _ready():
 	iconCap = $IconCapture
 	iconFish = $IconCapture/Fish
 
-	await FindSaves()
+	if OS.get_name() != "Web" && !Game.ins.demo:
+		await FindSaves()
 
 func NewSave():
 	var save = Save.new()
@@ -34,6 +36,58 @@ func NewSave():
 	saves.append(save)
 	CreateFishFile(save)
 	activeSave = save
+
+func NewBackUp():
+	var save = Save.new()
+	save.name = Game.ins.selectedFish.name
+	save.fishId = Game.ins.fishDataList.find(Game.ins.selectedFish)
+	save.saveState = Editor.ins.currentState
+	CreateBackUpFile(save)
+
+func CreateBackUpFile(save: Save):
+	if FileAccess.file_exists("user://backup.backup"):
+		DirAccess.remove_absolute("user://backup.backup")
+	var saveFile = FileAccess.open("user://backup.backup", FileAccess.WRITE)
+	saveFile.store_8(save.name.length())
+	saveFile.store_string(save.name)
+	saveFile.store_8(save.fishId)
+	saveFile.store_16(save.saveState.parts.size())
+	for part in save.saveState.parts:
+		saveFile.store_8(part.id)
+		saveFile.store_float(part.position.x)
+		saveFile.store_float(part.position.y)
+		saveFile.store_float(part.rotation)
+		saveFile.store_float(part.scale)
+		saveFile.store_8(part.flippedH as int)
+		saveFile.store_8(part.flippedV as int)
+		saveFile.store_float(part.colourR.r)
+		saveFile.store_float(part.colourR.g)
+		saveFile.store_float(part.colourR.b)
+		saveFile.store_float(part.colourG.r)
+		saveFile.store_float(part.colourG.g)
+		saveFile.store_float(part.colourG.b)
+		saveFile.store_float(part.colourB.r)
+		saveFile.store_float(part.colourB.g)
+		saveFile.store_float(part.colourB.b)
+		saveFile.store_8(part.belowFish as int)
+
+func DeleteBackUp():
+	if FileAccess.file_exists("user://backup.backup"):
+		DirAccess.remove_absolute("user://backup.backup")
+
+func LoadBackUp():
+	var saveFile = FileAccess.open("user://backup.backup", FileAccess.READ)
+	var save = Save.new()
+	var nameLength = saveFile.get_8()
+	save.name = saveFile.get_buffer(nameLength).get_string_from_utf8()
+	save.fishId = saveFile.get_8()
+	var partCount = int(saveFile.get_16())
+	var newState = SaveState.new()
+	for i in range(partCount):
+		var newInfo = DecorInfo.new(saveFile.get_8(), Vector2(saveFile.get_float(), saveFile.get_float()), saveFile.get_float(), saveFile.get_float(), saveFile.get_8() == 1, saveFile.get_8() == 1, Color(saveFile.get_float(), saveFile.get_float(), saveFile.get_float()), Color(saveFile.get_float(), saveFile.get_float(), saveFile.get_float()), Color(saveFile.get_float(), saveFile.get_float(), saveFile.get_float()), saveFile.get_8() == 1)
+		newState.parts.append(newInfo)
+	save.saveState = newState
+	LoadSave(save, true)
 
 func UpdateSave():
 	activeSave.saveState = Editor.ins.currentState
@@ -59,16 +113,26 @@ func GetNumber() -> int:
 				fine = false
 	return num
 
-func LoadSave(file: Save):
-	activeSave = file
+func LoadSave(file: Save, backup: bool = false):
+	if backup:
+		backupToLoad = file
+	else:
+		activeSave = file
 	Game.ins.LoadSave()
 
 func SwapFish():
-	Game.ins.fish.SwapFish(activeSave.fishId)
+	if activeSave == null:
+		Game.ins.fish.SwapFish(backupToLoad.fishId)
+	else:
+		Game.ins.fish.SwapFish(activeSave.fishId)
 
 func LoadFish():
-	Editor.ins.nameEdit.text = activeSave.name
-	Editor.ins.LoadState(activeSave.saveState)
+	if activeSave == null:
+		Editor.ins.nameEdit.text = backupToLoad.name
+		Editor.ins.LoadState(backupToLoad.saveState)
+	else:
+		Editor.ins.nameEdit.text = activeSave.name
+		Editor.ins.LoadState(activeSave.saveState)
 
 func FindSaves():
 	var dir = DirAccess.open("user://")

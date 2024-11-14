@@ -1,4 +1,4 @@
-[gd_scene load_steps=212 format=3 uid="uid://bergx8lgo33nd"]
+[gd_scene load_steps=213 format=3 uid="uid://bergx8lgo33nd"]
 
 [ext_resource type="Shader" path="res://Scripts/Shaders/Outline.gdshader" id="1_0doew"]
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_e3qh4"]
@@ -193,6 +193,7 @@
 [ext_resource type="Script" path="res://Scripts/SaveSystem.gd" id="190_kxyp2"]
 [ext_resource type="Script" path="res://Scripts/SaveManager.gd" id="191_s77jo"]
 [ext_resource type="PackedScene" uid="uid://i7432nyytfd3" path="res://Nodes/save_button.tscn" id="191_vpsy3"]
+[ext_resource type="Script" path="res://Scripts/SteamManager.gd" id="194_fcobr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kt6u2"]
 shader = ExtResource("3_tpo2n")
@@ -300,6 +301,7 @@ shader_parameter/line_color = Color(0.109804, 0.109804, 0.109804, 1)
 
 [node name="Root" type="Node2D"]
 script = ExtResource("1_e3qh4")
+demo = true
 cursors = Array[Texture2D]([ExtResource("2_bgw34"), ExtResource("3_5s4b2"), ExtResource("4_silel"), ExtResource("5_ri2v4")])
 music = Array[AudioStream]([ExtResource("6_8wsab"), ExtResource("92_q27mk")])
 drpIns = ExtResource("8_0aruw")
@@ -1287,13 +1289,14 @@ text = "Return to menu"
 script = ExtResource("6_j1bsi")
 
 [node name="ConfExit" type="ConfirmationDialog" parent="CogMenu"]
-initial_position = 2
-size = Vector2i(268, 100)
+initial_position = 1
+size = Vector2i(351, 100)
+unresizable = true
 theme = ExtResource("86_8slkc")
-ok_button_text = "YES!!"
-dialog_text = "     Want to exit to main menu?
+ok_button_text = "Exit!"
+dialog_text = "     Want to exit to main menu without saving?
    This fish will be flushed away..."
-cancel_button_text = "Oops..."
+cancel_button_text = "Cancel!"
 
 [node name="Toolbar" type="CanvasLayer" parent="."]
 layer = 5
@@ -2060,6 +2063,18 @@ position = Vector2(479, 270)
 scale = Vector2(0.375, 0.375)
 texture = ExtResource("50_vwc7o")
 
+[node name="LoadBackup" type="ConfirmationDialog" parent="."]
+title = "Load Backup?"
+initial_position = 1
+size = Vector2i(334, 100)
+theme = ExtResource("86_8slkc")
+ok_button_text = "Yes Please!"
+dialog_text = "Ocean unexpectadly closed, recover fish?"
+cancel_button_text = "No thanks!"
+
+[node name="SteamManager" type="Node" parent="."]
+script = ExtResource("194_fcobr")
+
 [connection signal="pressed" from="MainMenu/C/Group/StartButton" to="MainMenu" method="StartButton"]
 [connection signal="pressed" from="MainMenu/C/Group/SaveSystemButton" to="MainMenu" method="LoadButton"]
 [connection signal="pressed" from="MainMenu/C/Group/CreditsButton" to="MainMenu" method="CreditsButton"]
@@ -2103,6 +2118,7 @@ texture = ExtResource("50_vwc7o")
 [connection signal="pressed" from="CogMenu/c/Panel/MenuButton" to="CogMenu" method="MenuButton"]
 [connection signal="canceled" from="CogMenu/ConfExit" to="CogMenu" method="MenuConfirmation" binds= [false]]
 [connection signal="confirmed" from="CogMenu/ConfExit" to="CogMenu" method="MenuConfirmation" binds= [true]]
+[connection signal="custom_action" from="CogMenu/ConfExit" to="CogMenu" method="SaveAndExit"]
 [connection signal="pressed" from="Toolbar/c/GlobalTools/DeleteAll" to="Toolbar" method="DeleteAll"]
 [connection signal="pressed" from="Toolbar/c/GlobalTools/SelectAll" to="Toolbar" method="SelectAll"]
 [connection signal="pressed" from="Toolbar/c/GlobalTools/Undo" to="Toolbar" method="Undo"]
@@ -2142,3 +2158,5 @@ texture = ExtResource("50_vwc7o")
 [connection signal="pressed" from="SaveSystem/c/Panel/Back" to="SaveSystem" method="BackButton"]
 [connection signal="pressed" from="SaveSystem/c/Panel/Delete" to="SaveSystem" method="DeletePressed"]
 [connection signal="pressed" from="SaveSystem/c/Panel/Load" to="SaveSystem" method="LoadPressed"]
+[connection signal="canceled" from="LoadBackup" to="." method="BackupCancel"]
+[connection signal="confirmed" from="LoadBackup" to="." method="BackupConf"]

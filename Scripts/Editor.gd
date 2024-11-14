@@ -298,6 +298,8 @@ func SaveCurrentState():
 		var newInfo = DecorInfo.new(part.id, part.position, part.rotation, part.scale.x, part.flip_h, part.flip_v, part.currentRedColor, part.currentGreenColor, part.currentBlueColor, (part.get_index() < bodyPos))
 		currentState.parts.append(newInfo)
 
+	SaveMan.ins.NewBackUp()
+
 func InsertUndoState(state: SaveState):
 	undoStates.insert(0, state)
 	if undoStates.size() > 50:

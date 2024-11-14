@@ -136,6 +136,15 @@ func _ready():
 
 	musicPlayer = $MusicPlayer
 
+	if OS.get_name() != "Web" && FileAccess.file_exists("user://backup.backup"):
+		$LoadBackup.visible = true
+
+func BackupConf():
+	SaveMan.ins.LoadBackUp()
+
+func BackupCancel():
+	SaveMan.ins.DeleteBackUp()
+
 func ReturnToMenu():
 	if fish.is_inside_tree():
 		HideFish()
@@ -202,6 +211,7 @@ func ShowHUD():
 	showToolbarTween.tween_property(toolbar, "offset:x", 0, 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 
 func HideHUD():
+	SaveMan.ins.DeleteBackUp()
 	editorOpen = false
 	var hideHUDTween: Tween = create_tween()
 	hideHUDTween.tween_property(hud, "offset:y", 900, 1).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
