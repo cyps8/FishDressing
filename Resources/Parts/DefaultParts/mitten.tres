@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cbpcmexikbqkm"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_iifax"]
+[ext_resource type="Texture2D" uid="uid://couis1pdgmdbb" path="res://Assets/Art/Sprites/ActualParts/accessories_mitten.png" id="2_q6i5e"]
+
+[resource]
+script = ExtResource("1_iifax")
+name = "Mitten"
+texture = ExtResource("2_q6i5e")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.924437, 0.999518, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.0470588, 0.345098, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 1

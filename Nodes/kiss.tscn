@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://m4mf56hm7aal"]
+
+[ext_resource type="Texture2D" uid="uid://cn66wq1tlbgkl" path="res://Assets/Art/Sprites/ActualParts/kiss.png" id="1_hq38c"]
+[ext_resource type="Script" path="res://Scripts/Kiss.gd" id="2_rm7y6"]
+
+[node name="Kiss" type="Sprite2D"]
+texture = ExtResource("1_hq38c")
+script = ExtResource("2_rm7y6")

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://s7vnhmno65a3"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_rjroi"]
+[ext_resource type="Texture2D" uid="uid://de8us3poc4npd" path="res://Assets/Art/Sprites/ActualParts/accessories_mistletoe.png" id="2_m0pbh"]
+
+[resource]
+script = ExtResource("1_rjroi")
+name = "Mistletoe"
+texture = ExtResource("2_m0pbh")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.454902, 0.529412, 0.164706, 1)
+greenChannel = true
+defaultGreen = Color(0.86391, 0.87, 0.6873, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 11

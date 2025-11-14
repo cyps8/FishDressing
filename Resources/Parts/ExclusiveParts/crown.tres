@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c0pp7b0ml6qkj"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_qm1r8"]
+[ext_resource type="Texture2D" uid="uid://bnlm1viucejex" path="res://Assets/Art/Sprites/ActualParts/accessories_crown.png" id="2_wc61b"]
+
+[resource]
+script = ExtResource("1_qm1r8")
+name = "Crown"
+texture = ExtResource("2_wc61b")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 0.345098, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 34
+materialSound = 4

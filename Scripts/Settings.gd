@@ -43,6 +43,9 @@ func ToggleFullscreen(toggle: bool):
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
+func SetEvent(id: int):
+	Game.ins.SetEvent(id)
+
 var masterSliderRef: HSlider
 var musicSliderRef: HSlider
 var sfxSliderRef: HSlider
@@ -51,6 +54,8 @@ var canGoBehindRef: CheckButton
 var showTestPartsRef: CheckButton
 var cursorTeethRef: CheckButton
 var calmerMusicRef: CheckButton
+
+var eventOptions: OptionButton
 
 var selectColourRef: ColorPickerButton
 var dangerColourRef: ColorPickerButton
@@ -66,6 +71,8 @@ func _ready():
 	showTestPartsRef = %SecretSprites
 	cursorTeethRef = %CursorTeeth
 	calmerMusicRef = %CalmerMusic
+
+	eventOptions = %EventOptions
 
 	selectColourRef = %SelectColour
 	dangerColourRef = %DangerColour
@@ -93,9 +100,11 @@ func SaveSettings():
 	saveFile.store_float(danCol.g)
 	saveFile.store_float(danCol.b)
 	saveFile.store_8(fullScreen as int)
+	saveFile.store_8(Game.ins.currentEvent as int)
 
 func LoadSettings():
 	if OS.get_name() == "Web":
+		Game.ins.SetEvent(Game.Event.Auto)
 		return
 	if not FileAccess.file_exists("user://settings.save"):
 		SaveSettings()
@@ -106,7 +115,6 @@ func LoadSettings():
 	musicSliderRef.value = saveFile.get_float()
 	sfxSliderRef.value = saveFile.get_float()
 	Game.ins.CalmerMusic(saveFile.get_8())
-	calmerMusicRef.button_pressed = Game.ins.calmerMusic
 	Game.ins.CursorTeeth(saveFile.get_8())
 	cursorTeethRef.button_pressed = Game.ins.cursorTeeth
 	CanGoBehind(saveFile.get_8())
@@ -119,3 +127,8 @@ func LoadSettings():
 	dangerColourRef.color = dangerMaterial.get_shader_parameter("color_hue")
 	ToggleFullscreen(saveFile.get_8())
 	fullscreenRef.button_pressed = fullScreen
+	if saveFile.eof_reached():
+		Game.ins.UpdateEvent()
+	else:
+		Game.ins.SetEvent(saveFile.get_8())
+		eventOptions.selected = Game.ins.currentEvent

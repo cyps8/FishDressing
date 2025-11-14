@@ -11,3 +11,5 @@ var fishId: int
 var saveState: SaveState
 
 var saveIcon: Texture
+
+var lastModified: int

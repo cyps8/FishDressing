@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://ugmyub3i1rmr"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_xny6s"]
+[ext_resource type="Texture2D" uid="uid://clgvhik331m1a" path="res://Assets/Art/Sprites/ActualParts/accessories_penguin.png" id="2_laqdv"]
+
+[resource]
+script = ExtResource("1_xny6s")
+name = "Baby Penguin"
+texture = ExtResource("2_laqdv")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.593134, 0.593134, 0.593134, 1)
+greenChannel = true
+defaultGreen = Color(0.103744, 0.103744, 0.103744, 1)
+blueChannel = true
+defaultBlue = Color(0.946588, 0.946665, 0.90465, 1)
+tags = 16
+materialSound = 9

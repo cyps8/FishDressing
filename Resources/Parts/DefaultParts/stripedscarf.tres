@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bi1g7up8s04q8"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_rtc5f"]
+[ext_resource type="Texture2D" uid="uid://3qtkkdlef45q" path="res://Assets/Art/Sprites/ActualParts/accessories_scarf2.png" id="2_m3qcb"]
+
+[resource]
+script = ExtResource("1_rtc5f")
+name = "Striped Scarf"
+texture = ExtResource("2_m3qcb")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.480177, 0.761333, 0.45878, 1)
+greenChannel = true
+defaultGreen = Color(0, 0.435294, 0.278431, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 1

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://b73gnevnvwvhr"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_irvi1"]
+[ext_resource type="Texture2D" uid="uid://bty80x4ev5r8o" path="res://Assets/Art/Sprites/ActualParts/accessories_hand.png" id="2_0mj70"]
+
+[resource]
+script = ExtResource("1_irvi1")
+name = "Fake Hand"
+texture = ExtResource("2_0mj70")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.816689, 0.347582, 0.866066, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 5

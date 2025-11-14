@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://u4v6dcg2nad8"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_rmxg2"]
+[ext_resource type="Texture2D" uid="uid://da83w6w7txjfv" path="res://Assets/Art/Sprites/ActualParts/accessories_mic.png" id="2_aukwh"]
+
+[resource]
+script = ExtResource("1_rmxg2")
+name = "Microphone"
+texture = ExtResource("2_aukwh")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.373, 0.315, 0.75, 1)
+greenChannel = true
+defaultGreen = Color(0.351563, 0.351563, 0.351563, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 5

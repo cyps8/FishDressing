@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cr7tly3jf18sq"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_cgyk6"]
+[ext_resource type="Texture2D" uid="uid://b1t46sb8h833p" path="res://Assets/Art/Sprites/ActualParts/accessories_sweater.png" id="2_3xbgv"]
+
+[resource]
+script = ExtResource("1_cgyk6")
+name = "Fish Christmas Sweater"
+texture = ExtResource("2_3xbgv")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.96, 0, 0, 1)
+greenChannel = true
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = true
+defaultBlue = Color(0.0941176, 0.835294, 0, 1)
+tags = 4
+materialSound = 11

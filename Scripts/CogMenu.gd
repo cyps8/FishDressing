@@ -38,15 +38,21 @@ func SettingsButton():
 	Game.ins.ShowSettings()
 
 func LoadButton():
+	if SaveMan.ins.saving:
+		return
 	if !menuActive:
 		return
 	Game.ins.ShowSaveSystem()
 
 func SaveButton():
+	if SaveMan.ins.saving:
+		return
 	SaveMan.ins.UpdateSave()
 	SaveMan.ins.DeleteBackUp()
 
 func NewSaveButton():
+	if SaveMan.ins.saving:
+		return
 	SaveMan.ins.NewSave()
 	SaveMan.ins.DeleteBackUp()
 

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bmghdpdcy8v6w"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_rq8bn"]
+[ext_resource type="Texture2D" uid="uid://c5sap8gp1qi3w" path="res://Assets/Art/Sprites/ActualParts/accessories_snowflake.png" id="2_6gh4h"]
+
+[resource]
+script = ExtResource("1_rq8bn")
+name = "Snowflake"
+texture = ExtResource("2_6gh4h")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.909804, 1, 1, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 11

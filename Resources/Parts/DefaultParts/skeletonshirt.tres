@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://busby8x4vg43m"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_bh7sb"]
+[ext_resource type="Texture2D" uid="uid://bfm7mbuol1e6f" path="res://Assets/Art/Sprites/ActualParts/accessories_tshirt4.png" id="2_w8mq3"]
+
+[resource]
+script = ExtResource("1_bh7sb")
+name = "Skeleton T-Shirt"
+texture = ExtResource("2_w8mq3")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.176419, 0.176419, 0.176419, 1)
+greenChannel = true
+defaultGreen = Color(0.933732, 0.944406, 0.858439, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 4
+materialSound = 1

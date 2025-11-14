@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://ckda3yjoeixpw"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_7ykuf"]
+[ext_resource type="Texture2D" uid="uid://blp516slhmgxs" path="res://Assets/Art/Sprites/ActualParts/accessories_guitar2.png" id="2_bn7h8"]
+
+[resource]
+script = ExtResource("1_7ykuf")
+name = "Electric Guitar"
+texture = ExtResource("2_bn7h8")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.92, 0.0736, 0.0736, 1)
+greenChannel = true
+defaultGreen = Color(0.94, 0.851013, 0.2726, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 12

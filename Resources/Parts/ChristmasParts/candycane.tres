@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://klip6xtllnph"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_3a64q"]
+[ext_resource type="Texture2D" uid="uid://d1oh1gn4w00j7" path="res://Assets/Art/Sprites/ActualParts/accessories_candycane.png" id="2_5l4sf"]
+
+[resource]
+script = ExtResource("1_3a64q")
+name = "Candy Cane"
+texture = ExtResource("2_5l4sf")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.97, 0.0291, 0.0291, 1)
+greenChannel = true
+defaultGreen = Color(0.97, 0.97, 0.97, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 11

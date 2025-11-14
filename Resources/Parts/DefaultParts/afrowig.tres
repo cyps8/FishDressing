@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cuni7v86gyu0n"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_b4d23"]
+[ext_resource type="Texture2D" uid="uid://c2x5fc2q7o077" path="res://Assets/Art/Sprites/ActualParts/accessories_wig2.png" id="2_utugo"]
+
+[resource]
+script = ExtResource("1_b4d23")
+name = "Afro"
+texture = ExtResource("2_utugo")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.525, 0.05, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

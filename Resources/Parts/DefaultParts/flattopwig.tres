@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://f52j28ljpbhd"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_b1d5l"]
+[ext_resource type="Texture2D" uid="uid://bimcwton0q4uj" path="res://Assets/Art/Sprites/ActualParts/accessories_wig7.png" id="2_v3vq2"]
+
+[resource]
+script = ExtResource("1_b1d5l")
+name = "Flat Top Wig"
+texture = ExtResource("2_v3vq2")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.349045, 0.249355, 0.183015, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

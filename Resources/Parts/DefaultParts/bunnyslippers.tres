@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c6pyb8xgng3kb"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_u2nma"]
+[ext_resource type="Texture2D" uid="uid://dmh3arjig3nut" path="res://Assets/Art/Sprites/ActualParts/accessories_shoe3.png" id="2_pq1tu"]
+
+[resource]
+script = ExtResource("1_u2nma")
+name = "Sea Bunny Slug Slippers"
+texture = ExtResource("2_pq1tu")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.96, 0.96, 0.96, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 8
+materialSound = 9

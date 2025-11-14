@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://y0c4lnfkwab0"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_sgqwv"]
+[ext_resource type="Texture2D" uid="uid://0fshcwdsld3l" path="res://Assets/Art/Sprites/ActualParts/accessories_arm.png" id="2_0yc0c"]
+
+[resource]
+script = ExtResource("1_sgqwv")
+name = "Muscular Arm"
+texture = ExtResource("2_0yc0c")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0.52549, 0.0156863, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 6

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://br0sa0x7q203e"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_0lnp7"]
+[ext_resource type="Texture2D" uid="uid://sodyxbyv5c0y" path="res://Assets/Art/Sprites/ActualParts/accessories_scarf3.png" id="2_ujipj"]
+
+[resource]
+script = ExtResource("1_0lnp7")
+name = "Scarf"
+texture = ExtResource("2_ujipj")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.823415, 0, 0.177599, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 1

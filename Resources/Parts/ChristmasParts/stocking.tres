@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://l5c3pcmdo54b"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_7mb7e"]
+[ext_resource type="Texture2D" uid="uid://csnpbpwv3mefc" path="res://Assets/Art/Sprites/ActualParts/accessories_stocking.png" id="2_2ouep"]
+
+[resource]
+script = ExtResource("1_7mb7e")
+name = "Stocking"
+texture = ExtResource("2_2ouep")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.06, 0.06, 1)
+greenChannel = true
+defaultGreen = Color(0.95, 0.95, 0.95, 1)
+blueChannel = true
+defaultBlue = Color(0.0315, 0.35, 0.0315, 1)
+tags = 16
+materialSound = 11

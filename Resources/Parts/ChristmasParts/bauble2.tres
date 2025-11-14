@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://b7owtri83r8s7"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_ve7g2"]
+[ext_resource type="Texture2D" uid="uid://ccuh1oxealu86" path="res://Assets/Art/Sprites/ActualParts/accessories_ornament2.png" id="2_5bdtw"]
+
+[resource]
+script = ExtResource("1_ve7g2")
+name = "Bauble"
+texture = ExtResource("2_5bdtw")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.1008, 0.14208, 0.72, 1)
+greenChannel = true
+defaultGreen = Color(1, 1, 0.7, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 11

@@ -42,6 +42,27 @@ func Pick():
 	Game.ins.HideFishPicker()
 	Game.ins.ShowHUD()
 	Game.ins.SetDRPFish()
+	SteamManager.ins.SetRPDressing()
+	FishAchievement()
+	SteamManager.ins.IncFishDressed()
+
+func FishAchievement():
+	match Game.ins.fishDataList[currentFish].systemName:
+		"shark":
+			SteamManager.ins.UnlockAchievement("DressShark")
+		"whaleshark":
+			SteamManager.ins.UnlockAchievement("DressWhaleShark1")
+			SteamManager.ins.UnlockAchievement("DressWhaleShark2")
+		"salmon":
+			SteamManager.ins.UnlockAchievement("DressSalmon")
+		"pufferfish":
+			SteamManager.ins.UnlockAchievement("DressPufferfish")
+		"clownfish":
+			SteamManager.ins.UnlockAchievement("DressClownfish")
+		"catfish":
+			SteamManager.ins.UnlockAchievement("DressCatfish")
+		"seahorse":
+			SteamManager.ins.UnlockAchievement("DressSeahorse")
 
 func SwapFish(direction: int):
 	if picked:

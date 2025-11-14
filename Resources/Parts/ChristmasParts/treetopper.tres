@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://5kwc1khfqbin"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_xvm43"]
+[ext_resource type="Texture2D" uid="uid://vttay85ux7o4" path="res://Assets/Art/Sprites/ActualParts/accessories_treetopper.png" id="2_gc0at"]
+
+[resource]
+script = ExtResource("1_xvm43")
+name = "Tree Topper"
+texture = ExtResource("2_gc0at")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.95, 0.871467, 0.361, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 11

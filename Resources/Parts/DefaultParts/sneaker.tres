@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://vnducktk3c5x"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_v07wt"]
+[ext_resource type="Texture2D" uid="uid://cx8c7yp04g8tr" path="res://Assets/Art/Sprites/ActualParts/accessories_shoe4.png" id="2_xc1fj"]
+
+[resource]
+script = ExtResource("1_v07wt")
+name = "Sneaker"
+texture = ExtResource("2_xc1fj")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.709804, 0.0627451, 0.0627451, 1)
+greenChannel = true
+defaultGreen = Color(0.969137, 0.969137, 0.969137, 1)
+blueChannel = true
+defaultBlue = Color(0.8, 0.8, 0.8, 1)
+tags = 8
+materialSound = 1

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c7hdlp51hgjln"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_hpcn2"]
+[ext_resource type="Texture2D" uid="uid://cn66wq1tlbgkl" path="res://Assets/Art/Sprites/ActualParts/kiss.png" id="2_kauog"]
+
+[resource]
+script = ExtResource("1_hpcn2")
+name = "Kiss"
+texture = ExtResource("2_kauog")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.124572, 0.0864938, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 17
+materialSound = 14

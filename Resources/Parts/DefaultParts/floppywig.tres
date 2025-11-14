@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c17c354wv55qr"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_81uxp"]
+[ext_resource type="Texture2D" uid="uid://d1jiw5chfmvgp" path="res://Assets/Art/Sprites/ActualParts/accessories_wig4.png" id="2_2qc6h"]
+
+[resource]
+script = ExtResource("1_81uxp")
+name = "Floppy Wig"
+texture = ExtResource("2_2qc6h")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.615789, 0.302533, 3.85046e-07, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

@@ -6,7 +6,7 @@
 [ext_resource type="Material" uid="uid://cur4klb3sdnwb" path="res://Resources/Materials/ColorMat.tres" id="2_48yvv"]
 
 [node name="Button" type="Button"]
-custom_minimum_size = Vector2(120, 120)
+custom_minimum_size = Vector2(115, 115)
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_8ry3l")
 icon_alignment = 1

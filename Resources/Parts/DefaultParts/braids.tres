@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dnf4ebxquhp0c"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_5jg6v"]
+[ext_resource type="Texture2D" uid="uid://bjhx3lygsgvgp" path="res://Assets/Art/Sprites/ActualParts/accessories_braid.png" id="2_jt0px"]
+
+[resource]
+script = ExtResource("1_5jg6v")
+name = "Braids"
+texture = ExtResource("2_jt0px")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.991333, 0.74, 1)
+greenChannel = true
+defaultGreen = Color(0.92, 0.0828, 0.33396, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

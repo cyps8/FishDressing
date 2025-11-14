@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bvep64g5e2ig4"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_vr8nd"]
+[ext_resource type="Texture2D" uid="uid://jw36hvso60qv" path="res://Assets/Art/Sprites/ActualParts/accessories_moustache2.png" id="2_1jp2i"]
+
+[resource]
+script = ExtResource("1_vr8nd")
+name = "Horseshoe Moustache"
+texture = ExtResource("2_1jp2i")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.596426, 0.160963, 0.155038, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 0
+materialSound = 0

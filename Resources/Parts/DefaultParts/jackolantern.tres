@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c8hp8mw4r21du"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_owfy5"]
+[ext_resource type="Texture2D" uid="uid://7pgm0ebss36h" path="res://Assets/Art/Sprites/ActualParts/accessories_pumpkin2.png" id="2_qnpqt"]
+
+[resource]
+script = ExtResource("1_owfy5")
+name = "Jack-O-Lantern"
+texture = ExtResource("2_qnpqt")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.431373, 0, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.909804, 0, 1)
+blueChannel = true
+defaultBlue = Color(0, 0.333333, 0, 1)
+tags = 0
+materialSound = 6

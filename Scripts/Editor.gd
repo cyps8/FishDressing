@@ -12,6 +12,10 @@ static var ins: Editor
 
 @export var testPartDataList: Array[PartData]
 
+@export var exclusivePartDataList: Array[PartData]
+
+@export var christmasParDataList: Array[PartData]
+
 var decorButtons: Array[DecorButton] = []
 
 var currentPartGroup: Array[Part] = []
@@ -53,6 +57,8 @@ var clickedOut: TextureButton
 var fileDialog: FileDialog
 var stickerCap: SubViewport
 var confCancel: ConfirmationDialog
+
+@export var kissIns: PackedScene
 
 signal MouseGrabbed(val: bool)
 
@@ -109,7 +115,11 @@ func _ready():
 
 	ResetEditor()
 
+	partDataList.append_array(exclusivePartDataList)
+
 	partDataList.append_array(testPartDataList)
+
+	partDataList.append_array(christmasParDataList)
 
 	for i in partDataList.size():
 		var newButton: DecorButton = decorButtonIns.instantiate()
@@ -136,8 +146,10 @@ func InstaCreateNewDecor(info: DecorInfo, belowLayer: int = 0):
 	newDecor.position = info.position
 	newDecor.rotation = info.rotation
 	newDecor.scale = Vector2(info.scale, info.scale)
-	newDecor.flip_h = info.flippedH
-	newDecor.flip_v = info.flippedV
+	if info.flippedH:
+		newDecor.FlipH()
+	if info.flippedV:
+		newDecor.FlipV()
 	fishRef.add_child(newDecor)
 	if info.belowFish:
 		fishRef.move_child(newDecor, belowLayer)
@@ -179,6 +191,8 @@ func UpdateTags():
 		for decor in decorButtons:
 			if decor.partData.tags & PartData.Tag.TEST != 0:
 				decor.visible = showTestParts
+			elif decor.partData.tags & PartData.Tag.EXCLUSIVE != 0:
+				decor.visible = !Game.ins.demo
 			else:
 				decor.visible = true
 		return
@@ -197,6 +211,8 @@ func UpdateTags():
 			if decor.partData.tags & tagToCompare != 0:
 				if decor.partData.tags & PartData.Tag.TEST != 0:
 					decor.visible = showTestParts
+				elif decor.partData.tags & PartData.Tag.EXCLUSIVE != 0:
+					decor.visible = !Game.ins.demo
 				else:
 					decor.visible = true
 			else:
@@ -278,6 +294,8 @@ func AddAction(newAction: Array[Action]):
 	InsertUndoState(currentState)
 	SaveCurrentState()
 	LogAction("Action: ", newAction)
+	if SteamManager.ins.steamRunning:
+		CheckForAchievements()
 
 func LoadState(state: SaveState):
 	DeleteAll()
@@ -324,6 +342,9 @@ func CreateAction(actName: String):
 	currentAction.append(createAction)
 
 	AddAction(currentAction)
+
+	SteamManager.ins.IncPartsCreated()
+	SteamManager.ins.UnlockAchievement("Shimple")
 
 func MouseAction():
 	if currentPartGroup.size() == 0 && deletingParts.size() == 0:
@@ -923,6 +944,8 @@ func MakeSticker():
 	SaveImg()
 	stickerCap.remove_child(fishRef)
 	Game.ins.add_child(fishRef)
+
+	SteamManager.ins.UnlockAchievement("MakeSticker")
 	
 
 func TakePicture():
@@ -936,6 +959,8 @@ func TakePicture():
 	CameraEffects()
 	Game.ins.hud.visible = true
 	Game.ins.toolbar.visible = true
+
+	SteamManager.ins.UnlockAchievement("MakePicture")
 
 func SaveImg():
 	if OS.get_name() == "Web":
@@ -1003,3 +1028,142 @@ signal Canceled(val: bool)
 
 func DeleteAllConfirmation(val: bool):
 	Canceled.emit(val)
+
+func KissPressed():
+	AudioPlayer.ins.PlaySound(8)
+	var newKiss = kissIns.instantiate()
+	Game.ins.kisses.add_child(newKiss)
+	newKiss.rotation = randf() - 0.5
+	newKiss.position = Vector2(randf() * 200 - 100, randf() * 200 - 100)
+
+	SteamManager.ins.IncFishKissed()
+	SteamManager.ins.UnlockAchievement("KissFish")
+
+func CheckForAchievements():
+	OneOfEach()
+	Goth()
+	Snow()
+	Bright()
+	Pirate()
+	Progress()
+	Soup()
+	SoupSoupSoup()
+
+func OneOfEach():
+	var noOfParts: int = partDataList.size()
+	var partsFound: Array[int] = []
+	for part in currentState.parts:
+		if !part.id in partsFound:
+			partsFound.append(part.id)
+			if partsFound.size() == noOfParts:
+				SteamManager.ins.UnlockAchievement("OneOfEachPart")
+				return
+
+func Goth():
+	var count: int = 0
+	for part in currentState.parts:
+		var hasCol: bool = false
+		if partDataList[part.id].redChannel:
+			hasCol = true
+			if part.colourR != Color(0.0, 0.0, 0.0, 1.0):
+				return
+		if partDataList[part.id].greenChannel:
+			hasCol = true
+			if part.colourG != Color(0.0, 0.0, 0.0, 1.0):
+				return
+		if partDataList[part.id].blueChannel:
+			hasCol = true
+			if part.colourB != Color(0.0, 0.0, 0.0, 1.0):
+				return
+		if !(hasCol || part.id == 26):
+			return
+		count += 1
+	if count >= 10:
+		SteamManager.ins.UnlockAchievement("Gothfish")
+
+func Snow():
+	var count: int = 0
+	for part in currentState.parts:
+		var hasCol: bool = false
+		if partDataList[part.id].redChannel:
+			hasCol = true
+			if part.colourR != Color(1.0, 1.0, 1.0, 1.0):
+				return
+		if partDataList[part.id].greenChannel:
+			hasCol = true
+			if part.colourG != Color(1.0, 1.0, 1.0, 1.0):
+				return
+		if partDataList[part.id].blueChannel:
+			hasCol = true
+			if part.colourB != Color(1.0, 1.0, 1.0, 1.0):
+				return
+		if !(hasCol || part.id == 26):
+			return
+		count += 1
+	if count >= 10:
+		SteamManager.ins.UnlockAchievement("Snowfish")
+
+func Bright():
+	var count: int = 0
+	for part in currentState.parts:
+		var hasCol: bool = false
+		if partDataList[part.id].redChannel:
+			hasCol = true
+			if part.colourR.s != 1.0 || part.colourR.v != 1.0:
+				return
+		if partDataList[part.id].greenChannel:
+			hasCol = true
+			if part.colourG.s != 1.0 || part.colourG.v != 1.0:
+				return
+		if partDataList[part.id].blueChannel:
+			hasCol = true
+			if part.colourB.s != 1.0 || part.colourB.v != 1.0:
+				return
+		if !(hasCol):
+			return
+		count += 1
+	if count >= 10:
+		SteamManager.ins.UnlockAchievement("Brightfish")
+
+func Pirate():
+	var partsToFind: Array[bool] = [false, false, false, false]
+	for part in currentState.parts:
+		if part.id == 84:
+			partsToFind[0] = true
+		elif part.id == 85:
+			partsToFind[1] = true
+		elif part.id == 86:
+			partsToFind[2] = true
+		elif part.id == 87:
+			partsToFind[3] = true
+		else:
+			return
+	if partsToFind[0] && partsToFind[1] && partsToFind[2] && partsToFind[3]:
+		SteamManager.ins.UnlockAchievement("Piratefish")
+
+func Progress():
+	var partsToFind: Array[bool] = [false, false, false]
+	for part in currentState.parts:
+		if part.id == 54:
+			partsToFind[0] = true
+		elif part.id == 55:
+			partsToFind[1] = true
+		elif part.id == 56:
+			partsToFind[2] = true
+		else:
+			return
+	if partsToFind[0] && partsToFind[1] && partsToFind[2]:
+		SteamManager.ins.UnlockAchievement("ProgressFish")
+
+func Soup():
+	for part in currentState.parts:
+		if part.id == 62 && part.position.y < 150:
+			SteamManager.ins.UnlockAchievement("Soup")
+
+func SoupSoupSoup():
+	var soupCount: int = 0
+	for part in currentState.parts:
+		if part.id == 62 && part.position.y < 150:
+			soupCount += 1
+			if soupCount >= 10:
+				SteamManager.ins.UnlockAchievement("SoupSoupSoup")

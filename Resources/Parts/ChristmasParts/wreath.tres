@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cvvvyanwpp1uj"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_uglgw"]
+[ext_resource type="Texture2D" uid="uid://uv3mf4let4y" path="res://Assets/Art/Sprites/ActualParts/accessories_wreath.png" id="2_1yh6i"]
+
+[resource]
+script = ExtResource("1_uglgw")
+name = "Wreath"
+texture = ExtResource("2_1yh6i")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.0265, 0.53, 0.0348917, 1)
+greenChannel = true
+defaultGreen = Color(0.91, 0.0819, 0.0819, 1)
+blueChannel = true
+defaultBlue = Color(1, 0.981667, 0.45, 1)
+tags = 16
+materialSound = 11

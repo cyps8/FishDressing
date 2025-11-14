@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://bqq14uvdauwfq"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_5xp27"]
+[ext_resource type="Texture2D" uid="uid://cuapuhujx25l5" path="res://Assets/Art/Sprites/ActualParts/accessories_keyboard.png" id="2_qpskf"]
+
+[resource]
+script = ExtResource("1_5xp27")
+name = "Keyboard"
+texture = ExtResource("2_qpskf")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.128577, 0.0749257, 0.220409, 1)
+greenChannel = true
+defaultGreen = Color(0.947199, 0.947199, 0.947199, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 13

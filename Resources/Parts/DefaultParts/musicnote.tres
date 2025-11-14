@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dif0ibomoroi1"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_e35jq"]
+[ext_resource type="Texture2D" uid="uid://bopi06ppayy34" path="res://Assets/Art/Sprites/ActualParts/accessories_music.png" id="2_sttqh"]
+
+[resource]
+script = ExtResource("1_e35jq")
+name = "Music Note"
+texture = ExtResource("2_sttqh")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.0744, 0.93, 0.7161, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 13

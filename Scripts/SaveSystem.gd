@@ -54,6 +54,12 @@ func Update():
 		button.toggled.connect(Callable(self, "SaveSelected").bind(i, button))
 		button.save = SaveMan.ins.saves[i]
 		button.Update()
+	var sortedNodes = savesGrid.get_children()
+	sortedNodes.sort_custom(Callable(func(a, b): return a.save.lastModified > b.save.lastModified))
+	for node in savesGrid.get_children():
+		savesGrid.remove_child(node)
+	for node in sortedNodes:
+		savesGrid.add_child(node)
 
 func SaveSelected(on: bool, id: int, button: Button):
 	if on:

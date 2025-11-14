@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://ckqlsnsenro7t"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_b6ir1"]
+[ext_resource type="Texture2D" uid="uid://crn32bcs1d1hb" path="res://Assets/Art/Sprites/ActualParts/accessories_wig8.png" id="2_1k0ak"]
+
+[resource]
+script = ExtResource("1_b6ir1")
+name = "Curly Wig"
+texture = ExtResource("2_1k0ak")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.519, 0.22, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

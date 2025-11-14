@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://b253ro70awj"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_o31hi"]
+[ext_resource type="Texture2D" uid="uid://iju4qrdo0ju0" path="res://Assets/Art/Sprites/ActualParts/accessories_beard2.png" id="2_3ond7"]
+
+[resource]
+script = ExtResource("1_o31hi")
+name = "Big Beard"
+texture = ExtResource("2_3ond7")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.917647, 1, 0.929412, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 3

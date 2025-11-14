@@ -15,6 +15,9 @@ var toolbar: CanvasLayer
 var credits: CanvasLayer
 var saveSystem: CanvasLayer
 var musicPlayer: AudioStreamPlayer
+var kisses: Node2D
+var snowEffect: CanvasLayer
+var mainMenuSnowEffect: CPUParticles2D
 
 var selectedFish: FishData
 
@@ -42,22 +45,23 @@ var drpRef: Node
 func _init():
 	ins = self
 
-func CalmerMusic(val: bool):
-	calmerMusic = val
-	if musicPlayer == null:
-		musicPlayer = $MusicPlayer
-	var pos: float = musicPlayer.get_playback_position()
-	if val:
-		musicPlayer.stream = music[1]
-	else:
-		musicPlayer.stream = music[0]
-	musicPlayer.play(pos)
+func CalmerMusic(_val: bool):
+	pass
+	# calmerMusic = val
+	# if musicPlayer == null:
+	# 	musicPlayer = $MusicPlayer
+	# var pos: float = musicPlayer.get_playback_position()
+	# if val:
+	# 	musicPlayer.stream = music[1]
+	# else:
+	# 	musicPlayer.stream = music[0]
+	# musicPlayer.play(pos)
 
 func CursorTeeth(val: bool):
 	cursorTeeth = val
 	if cursorTeeth:
 		Input.set_custom_mouse_cursor(cursors[3], Input.CURSOR_DRAG, Vector2(5, 5))
-		print("Cursor Teeth")
+		SteamManager.ins.UnlockAchievement("CursorTeeth")
 	else:
 		Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_DRAG, Vector2(5, 5))
 
@@ -84,6 +88,7 @@ func SetDRPFish():
 
 func _ready():
 	TryInitDRP()
+	SteamManager.ins.SetRPMenu()
 	%Demo.visible = demo
 
 	Input.set_custom_mouse_cursor(cursors[0], Input.CURSOR_ARROW,Vector2(5, 5))
@@ -129,12 +134,21 @@ func _ready():
 	saveSystem.visible = true
 	remove_child(saveSystem)
 
+	snowEffect = $SnowEffect
+	snowEffect.visible = true
+	remove_child(snowEffect)
+	mainMenuSnowEffect = $MainMenu/C/Group/SnowParticles
+	mainMenuSnowEffect.visible = false
+	UpdateEvent()
+
 	cameraFlash = $Camera/Flash
 	$Camera.visible = true
 
 	particles = $BubbleEffect/Particles
 
 	musicPlayer = $MusicPlayer
+
+	kisses = $Kisses
 
 	if OS.get_name() != "Web" && FileAccess.file_exists("user://backup.backup"):
 		$LoadBackup.visible = true
@@ -159,6 +173,7 @@ func ReturnToMenu():
 	delay.tween_interval(0.5)
 	delay.tween_callback(ShowMenu)
 	SetDRPMainMenu()
+	SteamManager.ins.SetRPMenu()
 
 func LoadSave():
 	if mainMenu.is_inside_tree():
@@ -182,6 +197,7 @@ func ActuallyLoad():
 	ShowHUD()
 	SaveMan.ins.LoadFish()
 	SetDRPFish()
+	SteamManager.ins.SetRPDressing()
 
 func HideMenu():
 	mainMenu.SetActive(false)
@@ -312,3 +328,35 @@ func Bubbles():
 	else:
 		particles.emitting = true
 	AudioPlayer.ins.PlaySound(7, AudioPlayer.SoundType.SFX, 1.2)
+
+enum Event { Auto, Default, Christmas }
+
+var currentEvent: Event
+
+func UpdateEvent():
+	SetEvent(currentEvent)
+
+func SetEvent(setEvent: Event):
+	currentEvent = setEvent
+
+	if currentEvent == Event.Auto:
+		var date: Dictionary = Time.get_date_dict_from_system()
+		if date.month == 12:
+			currentEvent = Event.Christmas
+		else:
+			currentEvent = Event.Default
+
+	match currentEvent:
+		Event.Default:
+			MusicPlayer.ins.SetMusic(0)
+		Event.Christmas:
+			MusicPlayer.ins.SetMusic(1)
+
+	if currentEvent == Event.Christmas:
+		if snowEffect && !snowEffect.is_inside_tree():
+			add_child(snowEffect)
+			mainMenuSnowEffect.visible = true
+	else:
+		if snowEffect && snowEffect.is_inside_tree():
+			remove_child(snowEffect)
+			mainMenuSnowEffect.visible = false

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://drr74yayuayop"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_xg5n4"]
+[ext_resource type="Texture2D" uid="uid://divxnp3l80840" path="res://Assets/Art/Sprites/ActualParts/accessories_fin2.png" id="2_g567w"]
+
+[resource]
+script = ExtResource("1_xg5n4")
+name = "Fake Fin"
+texture = ExtResource("2_g567w")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.564706, 0.576471, 0.647059, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 5

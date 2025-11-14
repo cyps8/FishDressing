@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://db2kngcpnnrdv"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_4733s"]
+[ext_resource type="Texture2D" uid="uid://cjr7tq4lr1xrj" path="res://Assets/Art/Sprites/ActualParts/accessories_boot.png" id="2_a140o"]
+
+[resource]
+script = ExtResource("1_4733s")
+name = "Froggy Boot"
+texture = ExtResource("2_a140o")
+colorShader = true
+redChannel = true
+defaultRed = Color(0, 0.247059, 0, 1)
+greenChannel = true
+defaultGreen = Color(0.47824, 0.84, 0.2016, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 8
+materialSound = 6

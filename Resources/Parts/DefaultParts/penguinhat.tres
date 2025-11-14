@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://c5k3baxay4oq6"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_5pkdp"]
+[ext_resource type="Texture2D" uid="uid://d0pw1vdi700m8" path="res://Assets/Art/Sprites/ActualParts/accessories_penguinhat.png" id="2_q84d0"]
+
+[resource]
+script = ExtResource("1_5pkdp")
+name = "Penguin Hat"
+texture = ExtResource("2_q84d0")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 1, 0.952941, 1)
+greenChannel = true
+defaultGreen = Color(1, 0.498039, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 2
+materialSound = 1

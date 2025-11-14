@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://tofc08f8faeb"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_gd52q"]
+[ext_resource type="Texture2D" uid="uid://b3hhwx7bccdtx" path="res://Assets/Art/Sprites/ActualParts/accessories_fin1.png" id="2_ke0ti"]
+
+[resource]
+script = ExtResource("1_gd52q")
+name = "Fake Flipper"
+texture = ExtResource("2_ke0ti")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.913725, 0.882353, 0.807843, 1)
+greenChannel = true
+defaultGreen = Color(0.360784, 0.415686, 0.54902, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 5

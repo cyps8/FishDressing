@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://dug0kf6mc7epl"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_e6ahv"]
+[ext_resource type="Texture2D" uid="uid://dnf2qe7kukt5f" path="res://Assets/Art/Sprites/ActualParts/accessories_ornament1.png" id="2_iubtp"]
+
+[resource]
+script = ExtResource("1_e6ahv")
+name = "Patterned Bauble"
+texture = ExtResource("2_iubtp")
+colorShader = true
+redChannel = true
+defaultRed = Color(0.6486, 0.644, 0.92, 1)
+greenChannel = true
+defaultGreen = Color(0.95907, 0.485283, 0.697702, 1)
+blueChannel = true
+defaultBlue = Color(0.800491, 0.800491, 0.800491, 1)
+tags = 16
+materialSound = 11

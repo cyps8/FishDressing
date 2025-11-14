@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cooightu1rpta"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_sk60b"]
+[ext_resource type="Texture2D" uid="uid://dbtlbmjr113iq" path="res://Assets/Art/Sprites/ActualParts/accessories_present1.png" id="2_nc7m4"]
+
+[resource]
+script = ExtResource("1_sk60b")
+name = "Present"
+texture = ExtResource("2_nc7m4")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.04, 0.04, 1)
+greenChannel = true
+defaultGreen = Color(0.94, 0.76516, 0.0658, 1)
+blueChannel = true
+defaultBlue = Color(0.07, 0.597, 1, 1)
+tags = 16
+materialSound = 11

@@ -12,6 +12,8 @@ var backupToLoad: Save
 var iconCap: SubViewport
 var iconFish: Fish
 
+var saving: bool = false
+
 func _init():
 	ins = self
 
@@ -23,6 +25,7 @@ func _ready():
 		await FindSaves()
 
 func NewSave():
+	saving = true
 	var save = Save.new()
 	save.id = GetNumber()
 	if Editor.ins.nameEdit.text == "":
@@ -33,9 +36,11 @@ func NewSave():
 	save.saveState = Editor.ins.currentState
 	save.saveIcon = await MakeIcon(save)
 	img.save_png("user://fishpng" + str(save.id) + ".png")
+	save.lastModified = Time.get_unix_time_from_system() as int
 	saves.append(save)
 	CreateFishFile(save)
 	activeSave = save
+	saving = false
 
 func NewBackUp():
 	var save = Save.new()
@@ -90,12 +95,15 @@ func LoadBackUp():
 	LoadSave(save, true)
 
 func UpdateSave():
+	saving = true
 	activeSave.saveState = Editor.ins.currentState
 	activeSave.saveIcon = await MakeIcon(activeSave)
 	DirAccess.remove_absolute("user://fishpng" + str(activeSave.id) + ".png")
 	img.save_png("user://fishpng" + str(activeSave.id) + ".png")
 	DirAccess.remove_absolute("user://fishsave" + str(activeSave.id) + ".save")
+	activeSave.lastModified = Time.get_unix_time_from_system() as int
 	CreateFishFile(activeSave)
+	saving = false
 
 func DeleteSave(i: int):
 	DirAccess.remove_absolute("user://fishpng" + str(saves[i].id) + ".png")
@@ -156,6 +164,7 @@ func OpenFishFile(file: String):
 		var newInfo = DecorInfo.new(saveFile.get_8(), Vector2(saveFile.get_float(), saveFile.get_float()), saveFile.get_float(), saveFile.get_float(), saveFile.get_8() == 1, saveFile.get_8() == 1, Color(saveFile.get_float(), saveFile.get_float(), saveFile.get_float()), Color(saveFile.get_float(), saveFile.get_float(), saveFile.get_float()), Color(saveFile.get_float(), saveFile.get_float(), saveFile.get_float()), saveFile.get_8() == 1)
 		newState.parts.append(newInfo)
 	save.saveState = newState
+	save.lastModified = FileAccess.get_modified_time("user://" + file)
 	if FileAccess.file_exists("user://fishpng" + str(save.id) + ".png"):
 		img = Image.load_from_file("user://fishpng" + str(save.id) + ".png")
 		save.saveIcon = ImageTexture.create_from_image(img)

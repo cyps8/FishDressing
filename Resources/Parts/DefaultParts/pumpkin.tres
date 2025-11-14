@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cw8kya8bd8khs"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_jakpt"]
+[ext_resource type="Texture2D" uid="uid://ykryurrtpu60" path="res://Assets/Art/Sprites/ActualParts/accessories_pumpkin1.png" id="2_rqrv7"]
+
+[resource]
+script = ExtResource("1_jakpt")
+name = "Pumpkin"
+texture = ExtResource("2_rqrv7")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.431373, 0, 1)
+greenChannel = true
+defaultGreen = Color(0, 0.333333, 0, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 6

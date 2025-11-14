@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartData" load_steps=3 format=3 uid="uid://cdigl1w1s18bh"]
+
+[ext_resource type="Script" path="res://Scripts/PartData.gd" id="1_2amed"]
+[ext_resource type="Texture2D" uid="uid://bakyrgk0trp6" path="res://Assets/Art/Sprites/ActualParts/accessories_bell.png" id="2_nii3b"]
+
+[resource]
+script = ExtResource("1_2amed")
+name = "Bell"
+texture = ExtResource("2_nii3b")
+colorShader = true
+redChannel = true
+defaultRed = Color(1, 0.8515, 0.19, 1)
+greenChannel = false
+defaultGreen = Color(1, 1, 1, 1)
+blueChannel = false
+defaultBlue = Color(1, 1, 1, 1)
+tags = 16
+materialSound = 11

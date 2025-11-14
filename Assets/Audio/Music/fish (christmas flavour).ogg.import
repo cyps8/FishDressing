@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bg64fc3jq8nem"
+path="res://.godot/imported/fish (christmas flavour).ogg-186efb9ed7ccc703504d2f11ae37b71f.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/fish (christmas flavour).ogg"
+dest_files=["res://.godot/imported/fish (christmas flavour).ogg-186efb9ed7ccc703504d2f11ae37b71f.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=111.0
+beat_count=0
+bar_beats=4
